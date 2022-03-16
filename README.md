@@ -1,2 +1,2 @@
-# UCN_2semesterProjekt
-FÃ¸rsteÃ¥rs projekt pÃ¥ UCN Datamatiker Uddannelse.
+# UCN - 2. semester projekt - Førsteårsprøve
+Førsteårs projekt på UCN Datamatiker Uddannelse.
