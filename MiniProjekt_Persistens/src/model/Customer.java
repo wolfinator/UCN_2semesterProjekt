@@ -22,7 +22,7 @@ public class Customer extends Person{
 		return isClub;
 	}
 
-	public void setClub(boolean isClub) {
+	public void setIsClub (boolean isClub) {
 		this.isClub = isClub;
 	}
 }
