@@ -7,7 +7,7 @@ public class Customer extends Person{
 	public Customer(String customerID, boolean isClub, String name,String email,String phoneNo,String address,String zipcode,String city) {
 		super(name, email, phoneNo, address, zipcode, city);
 		this.customerID = customerID;
-		this.setClub(isClub);
+		this.isClub = isClub;
 	}
 
 	public String getCustomerID() {
