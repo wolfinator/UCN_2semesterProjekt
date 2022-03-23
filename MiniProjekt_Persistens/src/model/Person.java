@@ -8,6 +8,16 @@ public abstract class Person {
 	private String zipcode;
 	private String city;
 	
+	public Person(String name, String email, String phoneNo, String address, String zipcode, String city) {
+		super();
+		this.name = name;
+		this.email = email:
+		this.phoneNo = phoneNo;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.city = city;
+	}
+	
 	public String getName() {
 		return name;
 	}
