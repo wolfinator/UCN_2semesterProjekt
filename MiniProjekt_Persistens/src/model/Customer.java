@@ -1,18 +1,29 @@
 package model;
 
 public class Customer extends Person{
-	private String CustomerID;
+	private String customerID;
+	private boolean isClub;
 	
-	public Customer() {
+	public Customer(String customerID, boolean isClub, String name,String email,String phoneNo,String address,String zipcode,String city) {
 		super(name, email, phoneNo, address, zipcode, city);
-	
+		this.customerID = customerID;
+		this.setClub(isClub);
 	}
 
 	public String getCustomerID() {
-		return CustomerID;
+		return customerID;
 	}
 
 	public void setCustomerID(String customerID) {
-		CustomerID = customerID;
+		this.customerID = customerID;
+	}
+
+	public boolean isClub() {
+		return isClub;
+	}
+
+	public void setClub(boolean isClub) {
+		this.isClub = isClub;
 	}
 }
+	
