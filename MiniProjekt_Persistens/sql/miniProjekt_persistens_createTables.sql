@@ -3,7 +3,7 @@ go
 drop table SaleLineItem;
 drop table SaleOrder;
 drop table Product;
-drop table Supplier;
+
 drop table Customer;
 drop table Employee;
 drop table Person;
