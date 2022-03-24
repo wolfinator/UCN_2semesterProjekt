@@ -18,98 +18,153 @@ public class Product {
 	private String calibre; 
 	private String materiel; 
 	private String type; 
-	
 
-	public Product(String id, String supplierId, String name, String productNo, String description, double purchasePrice, double salesPrice, double rentPrice, String countryOfOrigin, int stock, int minStock, String size, String colour, String calibre, String materiel, String type) {
+	public Product(String id, String supplierId, String name, String productNo, String description,
+			double purchasePrice, double salesPrice, double rentPrice, String countryOfOrigin, int stock, int minStock,
+			String size, String colour, String calibre, String materiel, String type) {
+		super();
 		this.id = id;
-		this.supplierId = supplierId; 
-		
+		this.supplierId = supplierId;
+		this.name = name;
+		this.productNo = productNo;
+		this.description = description;
+		this.purchasePrice = purchasePrice;
+		this.salesPrice = salesPrice;
+		this.rentPrice = rentPrice;
+		this.countryOfOrigin = countryOfOrigin;
+		this.stock = stock;
+		this.minStock = minStock;
+		this.size = size;
+		this.colour = colour;
+		this.calibre = calibre;
+		this.materiel = materiel;
+		this.type = type;
+
+	public String getId() {
+		return id;
 	}
 
-	public void setId(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setSupplierId(String string) {
-		// TODO Auto-generated method stub
-		
+	public String getSupplierId() {
+		return supplierId;
 	}
 
-	public void setName(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
 	}
 
-	public void setProductNo(String string) {
-		// TODO Auto-generated method stub
-		
+	public String getName() {
+		return name;
 	}
 
-	public void setDescription(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setPurchasePrice(double double1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setSalesPrice(double double1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setRentPrice(double double1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setCountryOfOrigin(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setStock(int int1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setMinStock(int int1) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setSize(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setColour(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setCalibre(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setMateriel(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setType(String string) {
-		// TODO Auto-generated method stub
-		
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getProductNo() {
-		// TODO Auto-generated method stub
-		return null;
+		return productNo;
 	}
-	
-	
+
+	public void setProductNo(String productNo) {
+		this.productNo = productNo;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(double purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public double getSalesPrice() {
+		return salesPrice;
+	}
+
+	public void setSalesPrice(double salesPrice) {
+		this.salesPrice = salesPrice;
+	}
+
+	public double getRentPrice() {
+		return rentPrice;
+	}
+
+	public void setRentPrice(double rentPrice) {
+		this.rentPrice = rentPrice;
+	}
+
+	public String getCountryOfOrigin() {
+		return countryOfOrigin;
+	}
+
+	public void setCountryOfOrigin(String countryOfOrigin) {
+		this.countryOfOrigin = countryOfOrigin;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public int getMinStock() {
+		return minStock;
+	}
+
+	public void setMinStock(int minStock) {
+		this.minStock = minStock;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getColour() {
+		return colour;
+	}
+
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+
+	public String getCalibre() {
+		return calibre;
+	}
+
+	public void setCalibre(String calibre) {
+		this.calibre = calibre;
+	}
+
+	public String getMateriel() {
+		return materiel;
+	}
+
+	public void setMateriel(String materiel) {
+		this.materiel = materiel;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }
