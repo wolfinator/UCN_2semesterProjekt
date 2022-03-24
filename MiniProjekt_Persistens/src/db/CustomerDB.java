@@ -91,8 +91,7 @@ public class CustomerDB implements CustomerDbIF {
 		try {
 			customer.setIsClub(rs.getString(1));
 			customer.setId(rs.getString(2));
-			customer.setFname(rs.getString(3));
-			customer.setLname(rs.getString(4));
+			customer.setName(rs.getString(3) + (rs.getString(4)));
 			customer.setPhoneNo(rs.getString(5));
 			customer.setEmail(rs.getString(6));
 			customer.setPersonType(rs.getString(7));
