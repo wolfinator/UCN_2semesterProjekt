@@ -56,11 +56,11 @@ public class CustomerDB implements CustomerDbIF {
 		try {
 			ps_findByPhoneNo.setString(1, phoneNo);
 			
-			if (phoneNo != null && phoneNo.length() == 1) {
+			if (!phoneNo.isEmpty() && phoneNo.length() == 8) {
 				// Nothing interesting happens.
-			} else {
-				findByCustomerOrNamePS.setString(2, "");
-			}
+			} 
+				
+			
 
 			ResultSet rs = ps_findByPhoneNo.executeQuery();
 			rs.next();
