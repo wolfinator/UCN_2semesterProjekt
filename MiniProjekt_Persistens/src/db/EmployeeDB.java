@@ -17,7 +17,7 @@ public class EmployeeDB implements EmployeeDbIF {
 			+ " and personId = p.id, and p.addressId = a.id, and a.zipcode = c.zipcode";
 	private PreparedStatement ps_findById;
 
-	private EmployeeDB() throws DataAccessException {
+	public EmployeeDB() throws DataAccessException {
 
 	}
 
