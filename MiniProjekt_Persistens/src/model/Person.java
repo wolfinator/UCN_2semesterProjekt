@@ -9,8 +9,8 @@ public abstract class Person {
 	private String zipcode;
 	private String city;
 	
-	public Person(String name, String email, String phoneNo, String address, String zipcode, String city) {
-		super();
+	public Person(int id, String name, String email, String phoneNo, String address, String zipcode, String city) {
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phoneNo = phoneNo;

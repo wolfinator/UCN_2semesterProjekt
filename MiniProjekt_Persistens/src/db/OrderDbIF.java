@@ -6,7 +6,7 @@ import ctrl.DataAccessException;
 import model.Order;
 
 public interface OrderDbIF {
-	public Order insert(Order o) throws DataAccessException;
+	public boolean insert(Order o) throws DataAccessException;
 	
 	public Order findByOrderNo(String orderNo) throws DataAccessException;
 	

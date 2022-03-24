@@ -1,9 +1,9 @@
 package model;
 
-public class Product {
+public abstract class Product {
 	
 	private int id;
-	private String supplierId; 
+	private Supplier supplier;
 	private String name; 
 	private String productNo; 
 	private String description; 
@@ -13,18 +13,12 @@ public class Product {
 	private String countryOfOrigin; 
 	private int stock; 
 	private int minStock; 
-	private String size; 
-	private String colour; 
-	private String calibre; 
-	private String materiel; 
-	private String type; 
 
-	public Product(int id, String supplierId, String name, String productNo, String description,
-			double purchasePrice, double salesPrice, double rentPrice, String countryOfOrigin, int stock, int minStock,
-			String size, String colour, String calibre, String materiel, String type) {
-		super();
+	public Product(int id, Supplier supplier, String name, String productNo, String description,
+			       double purchasePrice, double salesPrice, double rentPrice, 
+			       String countryOfOrigin, int stock, int minStock) {
 		this.id = id;
-		this.supplierId = supplierId;
+		this.supplier = supplier;
 		this.name = name;
 		this.productNo = productNo;
 		this.description = description;
@@ -34,11 +28,6 @@ public class Product {
 		this.countryOfOrigin = countryOfOrigin;
 		this.stock = stock;
 		this.minStock = minStock;
-		this.size = size;
-		this.colour = colour;
-		this.calibre = calibre;
-		this.materiel = materiel;
-		this.type = type;
 	}
 	
 	public Product() {
@@ -53,12 +42,12 @@ public class Product {
 		this.id = id;
 	}
 
-	public String getSupplierId() {
-		return supplierId;
+	public Supplier getSupplier() {
+		return supplier;
 	}
 
-	public void setSupplierId(String supplierId) {
-		this.supplierId = supplierId;
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 
 	public String getName() {
@@ -132,44 +121,5 @@ public class Product {
 	public void setMinStock(int minStock) {
 		this.minStock = minStock;
 	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-
-	public String getCalibre() {
-		return calibre;
-	}
-
-	public void setCalibre(String calibre) {
-		this.calibre = calibre;
-	}
-
-	public String getMateriel() {
-		return materiel;
-	}
-
-	public void setMateriel(String materiel) {
-		this.materiel = materiel;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 }

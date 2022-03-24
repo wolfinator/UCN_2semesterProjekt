@@ -65,7 +65,7 @@ public class ProductDB implements ProductDbIF{
 		Product currProduct = new Product();
 		try {
 			currProduct.setId(rs.getInt("id")); 
-			currProduct.setSupplierId(rs.getString("supplier")); 
+			//currProduct.setSupplierId(rs.getString("supplier")); 
 			currProduct.setName(rs.getString("name")); 
 			currProduct.setProductNo(rs.getString("productNo")); 
 			currProduct.setDescription(rs.getString("description")); 
@@ -75,11 +75,6 @@ public class ProductDB implements ProductDbIF{
 			currProduct.setCountryOfOrigin(rs.getString("countryOfOrigin"));
 			currProduct.setStock(rs.getInt(0)); 
 			currProduct.setMinStock(rs.getInt(0)); 
-			currProduct.setSize(rs.getString("size")); 
-			currProduct.setColour(rs.getString("colour")); 
-			currProduct.setCalibre(rs.getString("calibre")); 
-			currProduct.setMateriel(rs.getString("materiel")); 
-			currProduct.setType(rs.getString("type")); 
 			if(fullAssociation) {
 				
 			}

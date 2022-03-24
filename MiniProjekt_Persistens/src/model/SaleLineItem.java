@@ -4,6 +4,11 @@ public class SaleLineItem {
 	private Product product;
 	private Order order;
 	private int amount;
+	
+	public SaleLineItem() {
+		
+	}
+	
 	public Product getProduct() {
 		return product;
 	}

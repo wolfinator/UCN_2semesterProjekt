@@ -59,7 +59,7 @@ public class EmployeeDB implements EmployeeDbIF {
 	private Employee buildObject(ResultSet rs) throws DataAccessException {
 		Employee employee = new Employee();
 		try {
-			employee.setEmployeeId(rs.getInt(1));
+			employee.setId(rs.getInt(1));
 			employee.setName(rs.getString(2) + ' ' + rs.getString(3));
 			employee.setPhoneNo(rs.getString(4));
 			employee.setEmail(rs.getString(5));

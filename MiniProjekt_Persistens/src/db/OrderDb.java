@@ -27,7 +27,7 @@ public class OrderDb implements OrderDbIF {
 	private PreparedStatement ps_findAll;
 
 	@Override
-	public Order insert(Order o) throws DataAccessException {
+	public boolean insert(Order o) throws DataAccessException {
 		DBConnection dbc = DBConnection.getInstance();
 		Connection con = dbc.getConnection();
 		
@@ -38,8 +38,8 @@ public class OrderDb implements OrderDbIF {
 			ps_insert.setDate(2, Date.valueOf(LocalDate.now()));
 			ps_insert.setBoolean(3, false);
 			ps_insert.setDate(4, null);
-			ps_insert.setInt(5, o.getEmployee().getEmployeeId());
-			ps_insert.setInt(6, o.getCustomer().getCustomerID());
+			ps_insert.setInt(5, o.getEmployee().getId());
+			ps_insert.setInt(6, o.getCustomer().getId());
 			
 			ps_insert.execute();
 			
@@ -64,7 +64,7 @@ public class OrderDb implements OrderDbIF {
 			e.printStackTrace();
 		}		
 		
-		return null;
+		return true;
 	}
 
 	@Override

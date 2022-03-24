@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Order {
 	private int id;
-	private Employee employee;
-	private Customer customer;
-	private LocalDate date;
 	private String orderNo;
+	private LocalDate date;
 	private boolean deliveryStatus;
 	private LocalDate deliveryDate;
+	private Employee employee;
+	private Customer customer;
 	
 	private List<SaleLineItem> saleLineItems;
 	

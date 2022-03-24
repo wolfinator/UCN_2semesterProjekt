@@ -6,7 +6,6 @@ import model.Customer;
 import model.Employee;
 import model.Order;
 import model.Product;
-import model.Receipt;
 import model.SaleLineItem;
 
 public class OrderCtrl {
@@ -57,10 +56,8 @@ public class OrderCtrl {
 		return sli;
 	}
 	
-	public Receipt endOrder() {
-		Receipt receipt = new Receipt();
-		//TODO Find ud af hvad receipt skal indebære.
-		return receipt;
+	public boolean endOrder() throws DataAccessException {
+		return orderDb.insert(currentOrder);
 	}
 	
 }
