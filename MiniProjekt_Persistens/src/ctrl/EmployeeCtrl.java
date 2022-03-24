@@ -8,7 +8,7 @@ public class EmployeeCtrl {
 	private static EmployeeCtrl instance;
 	
 	
-	private EmployeeCtrl() {
+	public EmployeeCtrl() {
 		employeeById = new Employee(1, "Jamal", "Jamal@Jamail.com", "42069696", "JamalHedeVej 2",  "9000", "Aalborg", 42069.95);
 	}
 	
