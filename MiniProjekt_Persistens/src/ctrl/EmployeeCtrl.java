@@ -1,27 +1,26 @@
 package ctrl;
 
+import db.EmployeeDB;
+import db.EmployeeDbIF;
 import model.Employee;
 
 public class EmployeeCtrl {
 
-	private Employee employeeById;
-	private static EmployeeCtrl instance;
+	private Employee employeeById;	
+	private EmployeeDbIF employeeDb;
 	
-	
-	public EmployeeCtrl() {
+	public EmployeeCtrl() throws DataAccessException {
 		employeeById = new Employee(1, "Jamal", "Jamal@Jamail.com", "42069696", "JamalHedeVej 2",  "9000", "Aalborg", 42069.95);
+		EmployeeDB employeeDb = new EmployeeDB();
 	}
 	
-	public static EmployeeCtrl getInstance() {
-		if(instance == null) {
-			instance = new EmployeeCtrl();
-		}
-		return instance;
+
+	public Employee findEmployeeById(int id) throws DataAccessException {
+		Employee e = employeeDb.findEmployeeById(id);
+		return e;
+		
 	}
-	
-	public Employee findEmployeeById() {
-		return employeeById;
-	}
+
 	
 	
 	

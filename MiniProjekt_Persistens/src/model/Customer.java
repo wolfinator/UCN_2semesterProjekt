@@ -3,6 +3,7 @@ package model;
 public class Customer extends Person{
 	private int customerID;
 	private boolean isClub;
+	public Object setP;
 	
 	public Customer(int customerID, boolean isClub, String name,String email,String phoneNo,String address,String zipcode,String city) {
 		super(name, email, phoneNo, address, zipcode, city);
@@ -22,8 +23,10 @@ public class Customer extends Person{
 		return isClub;
 	}
 
-	public void setIsClub (boolean isClub) {
+	public void setClub(boolean isClub) {
 		this.isClub = isClub;
 	}
+
+	
 }
 	
