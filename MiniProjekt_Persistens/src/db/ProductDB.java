@@ -135,7 +135,7 @@ public class ProductDB implements ProductDbIF{
 			findProductPS.setString(1, productNo);
 			ResultSet rs = findProductPS.executeQuery(); 
 			rs.next();
-			Product res = buildObject(rs, true); 
+			res = buildObject(rs, true); 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -146,7 +146,7 @@ public class ProductDB implements ProductDbIF{
 
 
 	@Override
-	public Product findByProdutID(int productID, boolean b) throws DataAccessException {
+	public Product findByProductID(int productID, boolean b) throws DataAccessException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -59,7 +59,9 @@ public class CustomerDB implements CustomerDbIF {
 		List<Customer> res = null;
 		try {
 			findByCustomerOrNamePS.setString(1, phoneNo);
+			
 			if (phoneNo != null && phoneNo.length() == 1) {
+				// Nothing interesting happens.
 			} else {
 				findByCustomerOrNamePS.setString(2, "");
 			}
@@ -72,12 +74,12 @@ public class CustomerDB implements CustomerDbIF {
 		return res;
 	}
 
-	private List<Customer> buildObjects(ResultSet rs) {
+	private List<Customer> buildObjects(ResultSet rs) throws DataAccessException {
 		List<Customer> res = new ArrayList<>();
 		try {
 			while (rs.next()) {
-				Customer currCustomer = buildObject(rs);
-				res.add(currCustomer);
+				Customer customer = buildObject(rs);
+				res.add(customer);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,35 +91,32 @@ public class CustomerDB implements CustomerDbIF {
 	private Customer buildObject(ResultSet rs) throws DataAccessException {
 		Customer customer = new Customer();
 		try {
-			customer.setIsClub(rs.getString(1));
-			customer.setId(rs.getString(2));
+			customer.setIsClub(rs.getBoolean(1));
+			customer.setId(rs.getInt(2));
 			customer.setName(rs.getString(3) + (rs.getString(4)));
 			customer.setPhoneNo(rs.getString(5));
-			customer.setEmail(rs.getString(6));
-			customer.setPersonType(rs.getString(7));
-			setAddress(rs.getString(8) + rs.getString(10) + rs.getInt(9);
+			customer.setEmail(rs.getString(6));			
 			
-			
+			}catch(SQLException e) {
+				e.printStackTrace();
 			}
-		}catch(
-
-	SQLException e)
-	{
-		e.printStackTrace();
-	}return Customer;
-
-	Customer findBypersonID(int personID) throws DataAccessException {
+		return customer;
+	}
+	
+	public Customer findByPersonID(int personID) throws DataAccessException {
+		Customer res = null;
 		return res;
 	}
 
-	List<Employee> findCustomer() throws DataAccessException {
+	public List<Customer> findCustomer() throws DataAccessException {
+		List<Customer> res = new ArrayList<>();
 		ResultSet rs;
 		try {
 			rs = this.findCustomerPS.executeQuery();
+			res = buildObjects(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		List<Customer> res = buildObjects(rs);
+		}		
 		return res;
 	}
 
@@ -128,26 +127,9 @@ public class CustomerDB implements CustomerDbIF {
 
 	@Override
 	public Customer insert(Customer customer) throws DataAccessException {
-		try {
-			insertPS.setString(1, Customer.getPersonId());
-			insertPS.setString(2, Customer.getIsClub());
-			insertPS.setString(3, Customer.getp.Id());
-			insertPS.setString(4, Customer.getFname());
-			insertPS.setString(5, Customer.getLname());
-			insertPS.setString(6, Customer.getPhoneNo());
-			insertPS.setString(7, Customer.getEmail());
-			insertPS.setString(8, Customer.getPersonType());
-			insertPS.setString(9, Customer.getHouseNumber());
-			insertPS.setString(10, Customer.getStreetName());
-			insertPS.setString(11, Customer.getC.zipcode());
-			insertPS.setString(12, Customer.getCity());
-			}
-	}catch(
-
-	SQLException e)
-	{
-		e.printStackTrace();
+		Customer res = null;
+		// Tror ikke vi skal fokusere på det her pt.
+		return res;
 	}
-
-	return res;
+	
 }

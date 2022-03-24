@@ -10,7 +10,7 @@ public interface CustomerDbIF {
 	
 	List<Customer> findByPhoneNo(String phoneNo) throws DataAccessException;
 	
-	Customer findBypersonID(int personID) throws DataAccessException;
+	Customer findByPersonID(int personID) throws DataAccessException;
 
 	List<Customer> findCustomer() throws DataAccessException;
 	

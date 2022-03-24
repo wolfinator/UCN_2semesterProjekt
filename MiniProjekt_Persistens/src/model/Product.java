@@ -39,6 +39,11 @@ public class Product {
 		this.calibre = calibre;
 		this.materiel = materiel;
 		this.type = type;
+	}
+	
+	public Product() {
+		
+	}
 
 	public String getId() {
 		return id;

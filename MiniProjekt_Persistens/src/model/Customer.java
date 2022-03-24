@@ -10,6 +10,10 @@ public class Customer extends Person{
 		this.customerID = customerID;
 		this.isClub = isClub;
 	}
+	
+	public Customer() {
+		
+	}
 
 	public int getCustomerID() {
 		return customerID;
