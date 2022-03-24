@@ -46,7 +46,8 @@ public class EmployeeDB implements EmployeeDbIF {
 				res.add(employee);
 			}
 		} catch (SQLException e) {
-
+			
+			System.out.println(e);
 		}	
 		return res;
 	}
@@ -66,7 +67,7 @@ public class EmployeeDB implements EmployeeDbIF {
 			employee.setSalary(rs.getDouble(12));
 
 		} catch (SQLException e) {
-
+			System.out.println(e);
 		}
 		return employee;
 
