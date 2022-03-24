@@ -1,6 +1,30 @@
 package model;
 
 public class Product {
+	
+	private String id;
+	private String supplierId; 
+	private String name; 
+	private String productNo; 
+	private String description; 
+	private double purchasePrice; 
+	private double salesPrice; 
+	private double rentPrice; 
+	private String countryOfOrigin; 
+	private int stock; 
+	private int minStock; 
+	private String size; 
+	private String colour; 
+	private String calibre; 
+	private String materiel; 
+	private String type; 
+	
+
+	public Product(String id, String supplierId, String name, String productNo, String description, double purchasePrice, double salesPrice, double rentPrice, String countryOfOrigin, int stock, int minStock, String size, String colour, String calibre, String materiel, String type) {
+		this.id = id;
+		this.supplierId = supplierId; 
+		
+	}
 
 	public void setId(String string) {
 		// TODO Auto-generated method stub
