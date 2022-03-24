@@ -17,16 +17,13 @@ public class CustomerDB implements CustomerDbIF {
 	// query: select personId, isClub,
 	// person: Id, fname, lname, phoneNo, email, personType, addressId
 
-	private static final String FIND_CUSTOMER_Q = "select isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  "
+	private static final String FIND_CUSTOMER_BYPHONENO_Q = "select isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  "
 			+ "from Person p, CityZipCode c, Address a, Customer cu " + "where personType = 1 " + "and personId = p.id "
 			+ "and p.addressId = a.id " + "and a.zipcode = c.zipcode" + "and p.phoneNo = ? ";
-	private PreparedStatement findCustomerPS;
+	private PreparedStatement ps_findByPhoneNo;
 
-	private static final String FIND_BY_CUSTOMER_OR_NAME_Q = FIND_CUSTOMER_Q + "where customer like? or name like?";
+	private static final String FIND_BY_CUSTOMER_OR_NAME_Q = "where customer like? or name like?";
 	private PreparedStatement findByCustomerOrNamePS;
-
-	private static final String FIND_BY_PERSONID_Q = FIND_CUSTOMER_Q + "where personId = ?";
-	private PreparedStatement findByPersonIdPS;
 
 	private static final String INSERT_Q = "insert into customer (personId, isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insertPS;
@@ -44,9 +41,8 @@ public class CustomerDB implements CustomerDbIF {
 	private void init() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
-			findCustomerPS = con.prepareStatement(FIND_CUSTOMER_Q);
+			ps_findByPhoneNo = con.prepareStatement(FIND_CUSTOMER_BYPHONENO_Q);
 			findByCustomerOrNamePS = con.prepareStatement(FIND_BY_CUSTOMER_OR_NAME_Q);
-			findByPersonIdPS = con.prepareStatement(FIND_BY_PERSONID_Q);
 			insertPS = con.prepareStatement(INSERT_Q);
 
 		} catch (SQLException e) {
@@ -55,19 +51,20 @@ public class CustomerDB implements CustomerDbIF {
 
 	}
 
-	public List<Customer> findByPhoneNo(String phoneNo) throws DataAccessException {
-		List<Customer> res = null;
+	public Customer findByPhoneNo(String phoneNo) throws DataAccessException {
+		Customer res = null;
 		try {
-			findByCustomerOrNamePS.setString(1, phoneNo);
+			ps_findByPhoneNo.setString(1, phoneNo);
 			
 			if (phoneNo != null && phoneNo.length() == 1) {
 				// Nothing interesting happens.
 			} else {
 				findByCustomerOrNamePS.setString(2, "");
 			}
-			findByCustomerOrNamePS.setString(3, phoneNo);
-			ResultSet rs = findByCustomerOrNamePS.executeQuery();
-			res = buildObjects(rs);
+
+			ResultSet rs = ps_findByPhoneNo.executeQuery();
+			rs.next();
+			res = buildObject(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -110,13 +107,7 @@ public class CustomerDB implements CustomerDbIF {
 
 	public List<Customer> findCustomer() throws DataAccessException {
 		List<Customer> res = new ArrayList<>();
-		ResultSet rs;
-		try {
-			rs = this.findCustomerPS.executeQuery();
-			res = buildObjects(rs);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
+
 		return res;
 	}
 

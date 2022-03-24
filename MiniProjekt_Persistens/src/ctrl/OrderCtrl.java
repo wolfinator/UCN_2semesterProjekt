@@ -1,5 +1,6 @@
 package ctrl;
 
+import db.OrderDb;
 import db.OrderDbIF;
 import model.Customer;
 import model.Employee;
@@ -18,7 +19,7 @@ public class OrderCtrl {
 	
 	private Order currentOrder;
 	
-	public OrderCtrl() {
+	public OrderCtrl() throws DataAccessException {
 		customerCtrl = new CustomerCtrl();
 		employeeCtrl = new EmployeeCtrl();
 		productCtrl = new ProductCtrl();
@@ -26,21 +27,21 @@ public class OrderCtrl {
 		orderDb = new OrderDb();
 	}
 	
-	public Order createOrder(int employeeId) {
+	public Order createOrder(int employeeId) throws DataAccessException {
 		currentOrder = new Order();
-		Employee employee = employeeCtrl.findById(employeeId);
+		Employee employee = employeeCtrl.findEmployeeById(employeeId);
 		currentOrder.setEmployee(employee);
 		return currentOrder;
 	}
 	
-	public Customer findCustomer(String phoneNo) {
+	public Customer findCustomer(String phoneNo) throws DataAccessException {
 		Customer customer = customerCtrl.findByPhoneNo(phoneNo);
 		currentOrder.setCustomer(customer);
 		return customer;
 	}
 	
-	public SaleLineItem addProduct(String productNo, int quantity) {
-		Product product = productCtrl.findProductByNo(productNo);
+	public SaleLineItem addProduct(String productNo, int quantity) throws DataAccessException {
+		Product product = productCtrl.findByProductNo(productNo);
 		
 		/*
 		 * Ved ikke om det er for weird at den returnerer

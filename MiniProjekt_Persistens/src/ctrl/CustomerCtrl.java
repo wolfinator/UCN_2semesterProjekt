@@ -12,8 +12,8 @@ public class CustomerCtrl {
 		customerDB = new CustomerDB();
 	}
 
-	public List<Customer> findByPhoneNo(String phoneNo) throws DataAccessException {
-		List<Customer> res = customerDB.findByPhoneNo(phoneNo, true);
+	public Customer findByPhoneNo(String phoneNo) throws DataAccessException {
+		Customer res = customerDB.findByPhoneNo(phoneNo);
 		return res;
 	}
 

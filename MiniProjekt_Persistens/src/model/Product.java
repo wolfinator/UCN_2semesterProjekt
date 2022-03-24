@@ -2,7 +2,7 @@ package model;
 
 public class Product {
 	
-	private String id;
+	private int id;
 	private String supplierId; 
 	private String name; 
 	private String productNo; 
@@ -19,7 +19,7 @@ public class Product {
 	private String materiel; 
 	private String type; 
 
-	public Product(String id, String supplierId, String name, String productNo, String description,
+	public Product(int id, String supplierId, String name, String productNo, String description,
 			double purchasePrice, double salesPrice, double rentPrice, String countryOfOrigin, int stock, int minStock,
 			String size, String colour, String calibre, String materiel, String type) {
 		super();
@@ -45,11 +45,11 @@ public class Product {
 		
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

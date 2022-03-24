@@ -12,8 +12,8 @@ public class ProductCtrl {
 		productDB = new ProductDB(); 
 	}
 	
-	public List<Product> findByProductNo(String productNo) throws DataAccessException {
-		List<Product> res = productDB.findByProductNo(productNo, true);
+	public Product findByProductNo(String productNo) throws DataAccessException {
+		Product res = productDB.findByProductNo(productNo);
 		return res;
 	}
 	

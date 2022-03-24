@@ -79,7 +79,7 @@ public class OrderDb implements OrderDbIF {
 		return null;
 	}
 	
-	public List<Order> buildObjects(ResultSet rs) throws SQLException {
+	private List<Order> buildObjects(ResultSet rs) throws SQLException {
 		List<Order> res = new ArrayList<>();
 		
 		while(rs.next()) {
@@ -90,7 +90,7 @@ public class OrderDb implements OrderDbIF {
 		return res;
 	}
 	
-	public Order buildObject(ResultSet rs) throws SQLException {
+	private Order buildObject(ResultSet rs) throws SQLException {
 		Order res = new Order();
 		
 		res.setCustomer(null); // TODO full association?

@@ -48,26 +48,6 @@ public class ProductDB implements ProductDbIF{
 		}
 	}
 
-	public List<Product> findByProductNo(String productNo, boolean fullAssociation) throws DataAccessException {
-		List<Product> res = null;
-		try {
-			findByProductOrNamePS.setString(1, "%" + productNo + "%");
-			if(productNo != null && productNo.length()==1) {
-				findByProductOrNamePS.setString(2, productNo);
-			}else {
-			findByProductOrNamePS.setString(2, "");
-			}
-			findByProductOrNamePS.setString(3, "%" + productNo + "%");
-			ResultSet rs = findByProductOrNamePS.executeQuery();
-			res = buildObjects(rs, fullAssociation);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-			
-		return res; 
-	}
-
-
 	private List<Product> buildObjects(ResultSet rs, boolean fullAssociation) throws DataAccessException {
 		List<Product> res = new ArrayList<>(); 
 		try {
@@ -84,7 +64,7 @@ public class ProductDB implements ProductDbIF{
 	private Product buildObject(ResultSet rs, boolean fullAssociation) throws DataAccessException {
 		Product currProduct = new Product();
 		try {
-			currProduct.setId(rs.getString("id")); 
+			currProduct.setId(rs.getInt("id")); 
 			currProduct.setSupplierId(rs.getString("supplier")); 
 			currProduct.setName(rs.getString("name")); 
 			currProduct.setProductNo(rs.getString("productNo")); 
