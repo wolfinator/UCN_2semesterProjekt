@@ -10,10 +10,10 @@ public interface CustomerDbIF {
 	
 	Customer findByPhoneNo(String phoneNo) throws DataAccessException;
 	
-	Customer findByPersonID(int personID) throws DataAccessException;
+	//Customer findByPersonID(int personID) throws DataAccessException;
 
-	List<Customer> findCustomer() throws DataAccessException;
+	//List<Customer> findCustomer() throws DataAccessException;
 	
-	Customer insert(Customer customer) throws DataAccessException;
+	//Customer insert(Customer customer) throws DataAccessException;
 
 }

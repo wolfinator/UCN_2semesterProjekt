@@ -13,7 +13,7 @@ public class ProductCtrl {
 	}
 	
 	public Product findByProductNo(String productNo) throws DataAccessException {
-		Product res = productDB.findByProductNo(productNo);
+		Product res = productDB.findProductByNo(productNo);
 		return res;
 	}
 	

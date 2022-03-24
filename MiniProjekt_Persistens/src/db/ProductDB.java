@@ -8,41 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ctrl.DataAccessException;
+import model.Clothing;
+import model.Equipment;
+import model.GunReplica;
 import model.Product;
 
 public class ProductDB implements ProductDbIF{
-	private ProductDbIF productDB;
 	//query: select id, supplierId, name, productNo, description, purchasePrice, salesPrice, rentPrice, countryOfOrigin, stock, minStock, size, colour, calibre, type
-	private static final String FIND_PRODUCT_Q = "select id, supplierId, name, productNo, description, purchasePrice, salesPrice, rentPrice, countryOfOrigin, stock, minStock, size, colour, calibre, type from product where ProductNo = ? ";
+	private static final String FIND_BY_PRODUCTNO_SQL = "select id, supplierId, name, productNo, description, "+
+														"purchasePrice, salesPrice, rentPrice, "+
+														"countryOfOrigin, stock, minStock, "+
+														"size, colour, calibre, materiel, type "+
+														"from product where ProductNo = ? ";
 	private PreparedStatement findProductPS; 
 	
-	private static final String FIND_BY_PRODUCT_OR_NAME_Q = FIND_PRODUCT_Q + "where product or name like ?";
-	private PreparedStatement findByProductOrNamePS; 
-	
-	private static final String FIND_BY_PRODUCTID_Q = FIND_PRODUCT_Q + "where productID = ?"; 
-	private PreparedStatement findByProductIDPS;
-	
-	private static final String INSERT_Q = "insert into product (id, supplierId, name, productNo, description, purchasePrice, salesPrice, rentPrice, countryOfOrigin, stock, minStock, size, colour, calibre, type)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private PreparedStatement insertPS;
-	 
-	
-	public ProductDB(ProductDbIF productDB) throws DataAccessException {
-		this.productDB = productDB; 
-		init(); 
-	}
-	
 	public ProductDB() throws DataAccessException {
-		productDB = new ProductDB(this); 
 		init();
 	}
 	
 	private void init() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
-			findProductPS = con.prepareStatement(FIND_PRODUCT_Q);
-			findByProductOrNamePS = con.prepareStatement(FIND_BY_PRODUCT_OR_NAME_Q);
-			findByProductIDPS = con.prepareStatement(FIND_BY_PRODUCTID_Q);
-			insertPS = con.prepareStatement(INSERT_Q);
+			findProductPS = con.prepareStatement(FIND_BY_PRODUCTNO_SQL);
+
 		}catch (SQLException e) {
 			e.printStackTrace(); //TODO not finished 
 		}
@@ -61,49 +49,88 @@ public class ProductDB implements ProductDbIF{
 		return res;
 	}
 
+	// 1   2      	  3 	4		   5			6			   7		   8		  9 
+	// id, supplierId, name, productNo, description, purchasePrice, salesPrice, rentPrice, countryOfOrigin, 
+	// 10	  11		12 	  13	  14	   15	    16
+	// stock, minStock, size, colour, calibre, materiel type
 	private Product buildObject(ResultSet rs, boolean fullAssociation) throws DataAccessException {
-		Product currProduct = new Product();
+		Product product = new Product();
+		
 		try {
-			currProduct.setId(rs.getInt("id")); 
+			product.setId(rs.getInt("id"));
+			//TODO make association with supplierDB or sumthing
 			//currProduct.setSupplierId(rs.getString("supplier")); 
-			currProduct.setName(rs.getString("name")); 
-			currProduct.setProductNo(rs.getString("productNo")); 
-			currProduct.setDescription(rs.getString("description")); 
-			currProduct.setPurchasePrice(rs.getDouble(0)); 
-			currProduct.setSalesPrice(rs.getDouble(0)); 
-			currProduct.setRentPrice(rs.getDouble(0)); 
-			currProduct.setCountryOfOrigin(rs.getString("countryOfOrigin"));
-			currProduct.setStock(rs.getInt(0)); 
-			currProduct.setMinStock(rs.getInt(0)); 
+			product.setName(rs.getString("name")); 
+			product.setProductNo(rs.getString("productNo")); 
+			product.setDescription(rs.getString("description")); 
+			product.setPurchasePrice(rs.getDouble(0)); 
+			product.setSalesPrice(rs.getDouble(0)); 
+			product.setRentPrice(rs.getDouble(0)); 
+			product.setCountryOfOrigin(rs.getString("countryOfOrigin"));
+			product.setStock(rs.getInt(0)); 
+			product.setMinStock(rs.getInt(0));
 			if(fullAssociation) {
 				
+			}
+			// Check to see what kind of product it is by checking for null values
+			if (isClothing(rs)) {
+				Clothing clothing = (Clothing) product;
+				clothing.setSize(rs.getString(12));
+				clothing.setColour(rs.getString(13));
+				product = clothing;
+			} else if (isEquipment(rs)){
+				Equipment equipment = (Equipment) product;
+				equipment.setType(rs.getString(16));
+				product = equipment;
+			} else if (isGunReplica(rs)) {
+				GunReplica gunReplica = (GunReplica) product;
+				gunReplica.setMateriel(rs.getString(15));
+				gunReplica.setCalibre(rs.getString(14));
+				product = gunReplica;
+			} else {
+				System.out.println("Something went very wrong");
 			}
 			
 		}catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return currProduct;
+		return product;
 	}
 
-	public List<Product> findAll(boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	private boolean isGunReplica(ResultSet rs) {
+		boolean res = true;
+		try {
+			rs.getString(14);
+			rs.getString(15);
+		} catch (SQLException e) {
+			res = false;
+		}
+		return res;
 	}
 
-	public Product insert(Product product) {
-		// TODO Auto-generated method stub
-		return null;
+	private boolean isEquipment(ResultSet rs) {
+		boolean res = true;
+		try {
+			rs.getString(16);
+		} catch (SQLException e) {
+			res = false;
+		}
+		return res;
 	}
 
-
-	public Product findByProductID(boolean b) {
-		// TODO Auto-generated method stub
-		return null;
+	private boolean isClothing(ResultSet rs) {
+		boolean res = true;
+		try {
+			rs.getString(12);
+			rs.getString(13);
+		} catch (SQLException e) {
+			res = false;
+		}
+		return res;
 	}
-
 
 	@Override
-	public Product findByProductNo(String productNo) throws DataAccessException {
+	public Product findProductByNo(String productNo) throws DataAccessException {
 		Product res = null; 
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
@@ -117,19 +144,5 @@ public class ProductDB implements ProductDbIF{
 			
 		}
 		return res;
-	}
-
-
-	@Override
-	public Product findByProductID(int productID, boolean b) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public List<Product> findProduct(boolean fullAssociation) throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

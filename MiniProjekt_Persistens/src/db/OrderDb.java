@@ -25,6 +25,14 @@ public class OrderDb implements OrderDbIF {
 	private PreparedStatement ps_insert;
 	private PreparedStatement ps_findByOrderNo;
 	private PreparedStatement ps_findAll;
+	
+	private CustomerDbIF customerDb;
+	private EmployeeDbIF employeeDb;
+	
+	public OrderDb() throws DataAccessException{
+		customerDb = new CustomerDB();
+		employeeDb = new EmployeeDB();
+	}
 
 	@Override
 	public boolean insert(Order o) throws DataAccessException {
@@ -66,19 +74,8 @@ public class OrderDb implements OrderDbIF {
 		
 		return true;
 	}
-
-	@Override
-	public Order findByOrderNo(String orderNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Order> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
+	// ikke brug for endnu
 	private List<Order> buildObjects(ResultSet rs) throws SQLException {
 		List<Order> res = new ArrayList<>();
 		
@@ -90,6 +87,7 @@ public class OrderDb implements OrderDbIF {
 		return res;
 	}
 	
+	// ikke brug for endnu
 	private Order buildObject(ResultSet rs) throws SQLException {
 		Order res = new Order();
 		
