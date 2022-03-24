@@ -17,13 +17,13 @@ public class CustomerCtrl {
 		return res;
 	}
 
-	public Customer findByPersonID(int personID, boolean b) throws DataAccessException {
+	public Customer findByPersonID(int personID) throws DataAccessException {
 		Customer res = customerDB.findByPersonID(true);
 		return res;
 	}
 
-	public List<Customer> findCustomer(boolean fullAssociation) throws DataAccessException {
-		List<Customer> res = customerDB.FindCustomer();
+	public List<Customer> findCustomer() throws DataAccessException {
+		List<Customer> res = customerDB.findCustomer();
 		return res;
 	}
 

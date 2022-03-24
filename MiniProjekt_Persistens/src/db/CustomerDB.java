@@ -17,13 +17,9 @@ public class CustomerDB implements CustomerDbIF {
 	// query: select personId, isClub,
 	// person: Id, fname, lname, phoneNo, email, personType, addressId
 
-	private static final String FIND_CUSTOMER_Q = "select personId, isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  " + 
-												  "from Person p, CityZipCode c, Address a, Customer cu " + 
-												  "where personType = 1 " +
-												  "and personId = p.id " +
-												  "and p.addressId = a.id " +
-												  "and a.zipcode = c.zipcode" +
-												  "and p.phoneNo = ? ";
+	private static final String FIND_CUSTOMER_Q = "select personId, isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  "
+			+ "from Person p, CityZipCode c, Address a, Customer cu " + "where personType = 1 " + "and personId = p.id "
+			+ "and p.addressId = a.id " + "and a.zipcode = c.zipcode" + "and p.phoneNo = ? ";
 	private PreparedStatement findCustomerPS;
 
 	private static final String FIND_BY_CUSTOMER_OR_NAME_Q = FIND_CUSTOMER_Q + "where customer like? or name like?";
@@ -59,28 +55,28 @@ public class CustomerDB implements CustomerDbIF {
 
 	}
 
-	public List<Customer> findByPhoneNo(String phoneNo, boolean fullAssociation) throws DataAccessException {
+	public List<Customer> findByPhoneNo(String phoneNo) throws DataAccessException {
 		List<Customer> res = null;
 		try {
 			findByCustomerOrNamePS.setString(1, phoneNo);
-			if (phoneNo != null && phoneNo.length() ==1) {
+			if (phoneNo != null && phoneNo.length() == 1) {
 			} else {
 				findByCustomerOrNamePS.setString(2, "");
 			}
-			findByCustomerOrNamePS.setString(3,phoneNo);
+			findByCustomerOrNamePS.setString(3, phoneNo);
 			ResultSet rs = findByCustomerOrNamePS.executeQuery();
-			res = buildObjects(rs, fullAssociation);	
+			res = buildObjects(rs);
 		} catch (SQLException e) {
-			e.printStackTrace(); 
+			e.printStackTrace();
 		}
 		return res;
 	}
 
-	private List<Customer> buildObjects(ResultSet rs, boolean fullAssociation) {
+	private List<Customer> buildObjects(ResultSet rs) {
 		List<Customer> res = new ArrayList<>();
 		try {
 			while (rs.next()) {
-				Customer currCustomer = buildObject(rs, fullAssociation);
+				Customer currCustomer = buildObject(rs);
 				res.add(currCustomer);
 			}
 		} catch (SQLException e) {
@@ -89,38 +85,72 @@ public class CustomerDB implements CustomerDbIF {
 		return res;
 	}
 
-	private Customer buildObject(ResultSet rs, boolean fullAssociation) {
-		Customer currCustomer = new Customer();
+	private Customer buildObject(ResultSet rs) throws DataAccessException {
+		Customer Customer = new Customer();
 		try {
-			currCustomer.setPersonID(rs.getString("personId"));
-			currCustomer.setIsClub(rs.getString("isClub"));
-			currCustomer.setP.Id(rs.getString("p.Id"));
-			currCustomer.setFname(rs.getString("fname"));
-			currCustomer.setLname(rs.getString("Lname"));
-			currCustomer.setphoneNo(rs.getString("phoneNo"));
-			currCustomer.setEmail(rs.getString("email"));
-			currCustomer.setPersonType(rs.getString("personType"));
-			currCustomer.sethouseNumber(rs.getString("houseNumber"));
-			currCustomer.setStreetName(rs.getString("streetName"));
-			currCustomer.setc.zipcode(rs.getString("c.zipcode"));
-			currCustomer.setCity(rs.getString("city"));
-			
+			Customer.setPersonID(rs.getString("personId"));
+			Customer.setIsClub(rs.getString("isClub"));
+			Customer.setId(rs.getString("Id"));
+			Customer.setFname(rs.getString("fname"));
+			Customer.setLname(rs.getString("Lname"));
+			Customer.setPhoneNo(rs.getString("phoneNo"));
+			Customer.setEmail(rs.getString("email"));
+			Customer.setPersonType(rs.getString("personType"));
+			Customer.sethouseNumber(rs.getString("houseNumber"));
+			Customer.setStreetName(rs.getString("streetName"));
+			Customer.setzipcode(rs.getString("zipcode"));
+			Customer.setCity(rs.getString("city"));
+			}
+		}catch(
 
+	SQLException e)
+	{
+		e.printStackTrace();
+	}
+		return Customer;
+
+	Customer findBypersonID(int personID) throws DataAccessException {
+		return res;
+	}
+
+	List<Employee> findCustomer() throws DataAccessException {
+		ResultSet rs;
+		try {
+			rs = this.findCustomerPS.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return null;
+		List<Customer> res = buildObjects(rs);
+		return res;
 	}
-
-	Customer findBypersonID(int personID , boolean b) throws DataAccessException {
-		return 
-	}
-
-	List<Employee> findCustomer(boolean fullAssociation) throws DataAccessException;
-
-	public Customer insert(Customer customer) throws DataAccessException;
 
 	public Customer findByPersonID(boolean b) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public Customer insert(Customer customer) throws DataAccessException {
+		try {
+			insertPS.setString(1, Customer.getPersonId());
+			insertPS.setString(2, Customer.getIsClub());
+			insertPS.setString(3, Customer.getp.Id());
+			insertPS.setString(4, Customer.getFname());
+			insertPS.setString(5, Customer.getLname());
+			insertPS.setString(6, Customer.getPhoneNo());
+			insertPS.setString(7, Customer.getEmail());
+			insertPS.setString(8, Customer.getPersonType());
+			insertPS.setString(9, Customer.getHouseNumber());
+			insertPS.setString(10, Customer.getStreetName());
+			insertPS.setString(11, Customer.getC.zipcode());
+			insertPS.setString(12, Customer.getCity());
+			}
+	}catch(
+
+	SQLException e)
+	{
+		e.printStackTrace();
+	}
+
+	return res;
 }
