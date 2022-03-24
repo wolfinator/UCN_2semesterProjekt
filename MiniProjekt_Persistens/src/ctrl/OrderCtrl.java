@@ -42,16 +42,8 @@ public class OrderCtrl {
 	public SaleLineItem addProduct(String productNo, int quantity) throws DataAccessException {
 		Product product = productCtrl.findByProductNo(productNo);
 		
-		/*
-		 * Ved ikke om det er for weird at den returnerer
-		 * et SaleLineItem, men det står der pt i interaktionsdiagrammet
-		 */
 		SaleLineItem sli = new SaleLineItem();
-		sli.setAmount(quantity);
-		sli.setOrder(currentOrder);
-		sli.setProduct(product);
-		
-		currentOrder.addProduct(product, quantity);
+		sli = currentOrder.addProduct(product, quantity);
 		
 		return sli;
 	}

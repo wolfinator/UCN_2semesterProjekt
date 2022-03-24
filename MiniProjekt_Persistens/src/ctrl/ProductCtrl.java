@@ -17,7 +17,10 @@ public class ProductCtrl {
 		return res;
 	}
 	
-	Product findByProdutID(int productID, boolean b) throws DataAccessException{
+	/*
+	 * Ikke brug for implementation lige nu
+	 * 
+	Product findByProductID(int productID, boolean b) throws DataAccessException{
 		Product res = productDB.findByProductID(true);
 		return res; 
 	}
@@ -30,4 +33,5 @@ public class ProductCtrl {
 		Product res = productDB.insert(product);
 		return res;
 	}
+	*/
 }
