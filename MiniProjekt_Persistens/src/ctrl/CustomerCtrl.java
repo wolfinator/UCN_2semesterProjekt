@@ -1,25 +1,34 @@
 package ctrl;
 
+import java.util.List;
+
 import db.CustomerDB;
 import model.Customer;
 
 public class CustomerCtrl {
 	private CustomerDB customerDB;
-	
-	public CustomerCtrl(CustomerDB customerDB) {
-		this.customerDB = customerDB;
+
+	public CustomerCtrl() throws DataAccessException {
+		customerDB = new CustomerDB();
 	}
-	
-	public Customer findByPhoneNo(String phoneNo) {
-		Customer res = CustomerDB.getInstance().findByPhoneNo(phoneNo);
+
+	public List<Customer> findByPhoneNo(String phoneNo) throws DataAccessException {
+		List<Customer> res = customerDB.findByPhoneNo(phoneNo, true);
 		return res;
 	}
 
-	public CustomerDB getCustomerDB() {
-		return customerDB;
+	public Customer findByPersonID(int personID, boolean b) throws DataAccessException {
+		Customer res = customerDB.findByPersonID(true);
+		return res;
 	}
 
-	public void setCustomerDB(CustomerDB customerDB) {
-		this.customerDB = customerDB;
+	public List<Customer> findCustomer(boolean fullAssociation) throws DataAccessException {
+		List<Customer> res = customerDB.FindCustomer();
+		return res;
+	}
+
+	public Customer insert(Customer customer) throws DataAccessException {
+		Customer res = customerDB.insert(customer);
+		return res;
 	}
 }

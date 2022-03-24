@@ -68,9 +68,8 @@ public class EmployeeDB implements EmployeeDbIF {
 		} catch (SQLException e) {
 
 		}
+		return employee;
 
 	}
-
-}
 
 }
