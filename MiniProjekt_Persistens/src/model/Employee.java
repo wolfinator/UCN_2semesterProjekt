@@ -10,8 +10,12 @@ public class Employee extends Person {
 		this.setEmployeeId(employeeId);
 		this.setSalary(salary);
 	}
+	
+	public Employee() {
+		
+	}
 
-	public int getEmployeeRole() {
+	public int getEmployeeId() {
 		return employeeId;
 	}
 

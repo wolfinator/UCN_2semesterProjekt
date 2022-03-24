@@ -18,16 +18,20 @@ public abstract class Person {
 		this.city = city;
 	}
 	
+	public Person() {
+		
+	}
+	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getEmil() {
+	public String getEmail() {
 		return email;
 	}
-	public void setEmil(String emil, String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	public String getPhoneNo() {
