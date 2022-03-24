@@ -17,7 +17,7 @@ public class CustomerDB implements CustomerDbIF {
 	// query: select personId, isClub,
 	// person: Id, fname, lname, phoneNo, email, personType, addressId
 
-	private static final String FIND_CUSTOMER_Q = "select personId, isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  "
+	private static final String FIND_CUSTOMER_Q = "select isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  "
 			+ "from Person p, CityZipCode c, Address a, Customer cu " + "where personType = 1 " + "and personId = p.id "
 			+ "and p.addressId = a.id " + "and a.zipcode = c.zipcode" + "and p.phoneNo = ? ";
 	private PreparedStatement findCustomerPS;
@@ -28,7 +28,7 @@ public class CustomerDB implements CustomerDbIF {
 	private static final String FIND_BY_PERSONID_Q = FIND_CUSTOMER_Q + "where personId = ?";
 	private PreparedStatement findByPersonIdPS;
 
-	private static final String INSERT_Q = "insert into customer (personId, isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_Q = "insert into customer (personId, isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insertPS;
 
 	public CustomerDB(CustomerDbIF customerDB) throws DataAccessException {
@@ -85,29 +85,27 @@ public class CustomerDB implements CustomerDbIF {
 		return res;
 	}
 
+	// isClub, p.id,fname, lname, phoneNo,email,personType,houseNumber, streetName, c.Zipcode, city
 	private Customer buildObject(ResultSet rs) throws DataAccessException {
-		Customer Customer = new Customer();
+		Customer customer = new Customer();
 		try {
-			Customer.setPersonID(rs.getString("personId"));
-			Customer.setIsClub(rs.getString("isClub"));
-			Customer.setId(rs.getString("Id"));
-			Customer.setFname(rs.getString("fname"));
-			Customer.setLname(rs.getString("Lname"));
-			Customer.setPhoneNo(rs.getString("phoneNo"));
-			Customer.setEmail(rs.getString("email"));
-			Customer.setPersonType(rs.getString("personType"));
-			Customer.sethouseNumber(rs.getString("houseNumber"));
-			Customer.setStreetName(rs.getString("streetName"));
-			Customer.setzipcode(rs.getString("zipcode"));
-			Customer.setCity(rs.getString("city"));
+			customer.setIsClub(rs.getString(1));
+			customer.setId(rs.getString(2));
+			customer.setFname(rs.getString(3));
+			customer.setLname(rs.getString(4));
+			customer.setPhoneNo(rs.getString(5));
+			customer.setEmail(rs.getString(6));
+			customer.setPersonType(rs.getString(7));
+			setAddress(rs.getString(8) + rs.getString(10) + rs.getInt(9);
+			
+			
 			}
 		}catch(
 
 	SQLException e)
 	{
 		e.printStackTrace();
-	}
-		return Customer;
+	}return Customer;
 
 	Customer findBypersonID(int personID) throws DataAccessException {
 		return res;
