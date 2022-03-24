@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
+	private int id;
 	private Employee employee;
 	private Customer customer;
 	private LocalDate date;
@@ -12,7 +13,7 @@ public class Order {
 	private boolean deliveryStatus;
 	private LocalDate deliveryDate;
 	
-	public List<SaleLineItem> saleLineItems;
+	private List<SaleLineItem> saleLineItems;
 	
 	public Order() {
 		saleLineItems = new ArrayList<>();
@@ -25,7 +26,21 @@ public class Order {
 		sli.setProduct(product);
 		sli.setOrder(this);
 		
+		saleLineItems.add(sli);
+		
 		return sli;
+	}
+	
+	public List<SaleLineItem> getSaleLineItems() {
+		return saleLineItems;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public Employee getEmployee() {
