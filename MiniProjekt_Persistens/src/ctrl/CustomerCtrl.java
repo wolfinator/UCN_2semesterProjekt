@@ -1,25 +1,17 @@
 package ctrl;
 
-import db.CustomerDB;
+import db.CustomerDb;
 import model.Customer;
 
 public class CustomerCtrl {
-	private CustomerDB customerDB;
+	private CustomerDb customerDb;
 	
-	public CustomerCtrl(CustomerDB customerDB) {
-		this.customerDB = customerDB;
+	public CustomerCtrl() {
+		customerDb = new CustomerDb();
 	}
 	
 	public Customer findByPhoneNo(String phoneNo) {
-		Customer res = CustomerDB.getInstance().findByPhoneNo(phoneNo);
-		return res;
-	}
+		return null;
 
-	public CustomerDB getCustomerDB() {
-		return customerDB;
-	}
-
-	public void setCustomerDB(CustomerDB customerDB) {
-		this.customerDB = customerDB;
 	}
 }
