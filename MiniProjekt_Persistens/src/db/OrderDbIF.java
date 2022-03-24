@@ -1,5 +1,14 @@
 package db;
 
-public interface OrderDbIF {
+import java.util.List;
 
+import ctrl.DataAccessException;
+import model.Order;
+
+public interface OrderDbIF {
+	public Order insert(Order o) throws DataAccessException;
+	
+	public Order findByOrderNo(String orderNo) throws DataAccessException;
+	
+	public List<Order> findAll() throws DataAccessException;
 }
