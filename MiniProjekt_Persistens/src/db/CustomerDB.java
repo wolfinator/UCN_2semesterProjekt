@@ -82,32 +82,4 @@ public class CustomerDB implements CustomerDbIF {
 		return customer;
 	}
 	
-	/*
-	 * Ikke brug for implementation pt
-	 * 
-	public Customer findByPersonID(int personID) throws DataAccessException {
-		Customer res = null;
-		return res;
-	}
-
-	public List<Customer> findCustomer() throws DataAccessException {
-		List<Customer> res = new ArrayList<>();
-
-		return res;
-	}
-
-	public Customer findByPersonID(boolean b) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
-	@Override
-	public Customer insert(Customer customer) throws DataAccessException {
-		Customer res = null;
-		// Tror ikke vi skal fokusere på det her pt.
-		return res;
-	}
-	*/
-	
 }

@@ -20,19 +20,11 @@ public class OrderDb implements OrderDbIF {
 									  "values (?, ?, ?, ?, ?);";
 	private String INSERT_SALELINEITEM_SQL = "INSERT INTO SaleLineItem (saleOrderNo, productId, amount) "+
 									  		 "values (?, ?, ?);";
-	private String FIND_BY_ORDERNO_SQL = "";
-	private String FIND_ALL_SQL = "";
 	
 	private PreparedStatement ps_insert;
-	private PreparedStatement ps_findByOrderNo;
-	private PreparedStatement ps_findAll;
-	
-	private CustomerDbIF customerDb;
-	private EmployeeDbIF employeeDb;
 	
 	public OrderDb() throws DataAccessException{
-		customerDb = new CustomerDB();
-		employeeDb = new EmployeeDB();
+		
 	}
 
 	@Override
@@ -45,6 +37,8 @@ public class OrderDb implements OrderDbIF {
 		
 		// Inserting the order into the Database
 		try {
+			// Formatting the prepared sql query
+			// Second parameter allows for retrieval of the inserted id/orderNo
 			ps_insert = con.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS);
 			ps_insert.setDate(1, Date.valueOf(LocalDate.now()));
 			ps_insert.setBoolean(2, false);
@@ -52,8 +46,10 @@ public class OrderDb implements OrderDbIF {
 			ps_insert.setInt(4, o.getEmployee().getId());
 			ps_insert.setInt(5, o.getCustomer().getId());
 			
+			// Executing the insert
 			ps_insert.executeUpdate();
 			
+			// Getting the id/orderNo and set it in the Object
 			ResultSet generatedKeys = ps_insert.getGeneratedKeys();
 			if(generatedKeys.next()) o.setOrderNo(generatedKeys.getInt(1));
 			
@@ -65,6 +61,8 @@ public class OrderDb implements OrderDbIF {
 		// Inserting the SaleLineItems
 		try {
 			List<SaleLineItem> sli = o.getSaleLineItems();
+			
+			// Looping all the SaleLineItems and executing queries
 			for (SaleLineItem saleLineItem : sli) {
 				ps_insert = con.prepareStatement(INSERT_SALELINEITEM_SQL);
 				
@@ -80,33 +78,6 @@ public class OrderDb implements OrderDbIF {
 			e.printStackTrace();
 		}		
 		
-		return res;
-	}
-	
-	// ikke brug for endnu
-	private List<Order> buildObjects(ResultSet rs) throws SQLException {
-		List<Order> res = new ArrayList<>();
-		
-		while(rs.next()) {
-			Order order = buildObject(rs);
-			res.add(order);
-		}
-		
-		return res;
-	}
-	
-	// ikke brug for endnu
-	private Order buildObject(ResultSet rs) throws SQLException {
-		Order res = new Order();
-		
-		res.setCustomer(null); // TODO full association?
-		res.setEmployee(null);
-		
-		res.setOrderNo(rs.getInt(1));
-		res.setDate(rs.getDate(2).toLocalDate());
-		res.setDeliveryStatus(rs.getBoolean(3));
-		res.setDeliveryDate(rs.getDate(4).toLocalDate());
-				
 		return res;
 	}
 
