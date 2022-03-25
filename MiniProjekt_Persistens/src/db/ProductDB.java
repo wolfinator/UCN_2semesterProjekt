@@ -54,42 +54,45 @@ public class ProductDB implements ProductDbIF{
 	// 10	  11		12 	  13	  14	   15	    16
 	// stock, minStock, size, colour, calibre, materiel type
 	private Product buildObject(ResultSet rs, boolean fullAssociation) throws DataAccessException {
-		Product product = new Product();
+		Product product = null;
 		
 		try {
-			product.setId(rs.getInt("id"));
+			// Check to see what kind of product it is by checking for null values
+						if (isClothing(rs)) {
+							product = new Clothing();
+							Clothing clothing = (Clothing) product;
+							clothing.setSize(rs.getString(12));
+							clothing.setColour(rs.getString(13));
+							product = clothing;
+						} else if (isEquipment(rs)){
+							//Equipment equipment = (Equipment) product;
+							//equipment.setType(rs.getString(16));
+							//product = equipment;
+						} else if (isGunReplica(rs)) {
+							//GunReplica gunReplica = (GunReplica) product;
+							//gunReplica.setMateriel(rs.getString(15));
+							//gunReplica.setCalibre(rs.getString(14));
+							//product = gunReplica;
+						} else {
+							System.out.println("Something went very wrong");
+						}
+			
+			product.setId(rs.getInt(1));
 			//TODO make association with supplierDB or sumthing
 			//currProduct.setSupplierId(rs.getString("supplier")); 
-			product.setName(rs.getString("name")); 
-			product.setProductNo(rs.getString("productNo")); 
-			product.setDescription(rs.getString("description")); 
-			product.setPurchasePrice(rs.getDouble(0)); 
-			product.setSalesPrice(rs.getDouble(0)); 
-			product.setRentPrice(rs.getDouble(0)); 
-			product.setCountryOfOrigin(rs.getString("countryOfOrigin"));
-			product.setStock(rs.getInt(0)); 
-			product.setMinStock(rs.getInt(0));
+			product.setName(rs.getString(3)); 
+			product.setProductNo(rs.getString(4)); 
+			product.setDescription(rs.getString(5)); 
+			product.setPurchasePrice(rs.getDouble(6)); 
+			product.setSalesPrice(rs.getDouble(7)); 
+			product.setRentPrice(rs.getDouble(8)); 
+			product.setCountryOfOrigin(rs.getString(9));
+			product.setStock(rs.getInt(10)); 
+			product.setMinStock(rs.getInt(11));
 			if(fullAssociation) {
 				
 			}
-			// Check to see what kind of product it is by checking for null values
-			if (isClothing(rs)) {
-				Clothing clothing = (Clothing) product;
-				clothing.setSize(rs.getString(12));
-				clothing.setColour(rs.getString(13));
-				product = clothing;
-			} else if (isEquipment(rs)){
-				Equipment equipment = (Equipment) product;
-				equipment.setType(rs.getString(16));
-				product = equipment;
-			} else if (isGunReplica(rs)) {
-				GunReplica gunReplica = (GunReplica) product;
-				gunReplica.setMateriel(rs.getString(15));
-				gunReplica.setCalibre(rs.getString(14));
-				product = gunReplica;
-			} else {
-				System.out.println("Something went very wrong");
-			}
+			
 			
 		}catch (SQLException e) {
 			e.printStackTrace();

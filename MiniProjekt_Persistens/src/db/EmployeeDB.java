@@ -12,9 +12,9 @@ import model.Employee;
 
 public class EmployeeDB implements EmployeeDbIF {
 	private String FIND_EMPLOYEE_BY_ID_SQL = "select p.id, p.fname, p.lname, p.phoneNo, p.email, p.personType, a.streetName,"
-			+ " a.houseNumber, a.zipcode, c.city,  salary, "
-			+ "from person, Employee where personId = ? and personType = 2"
-			+ " and personId = p.id, and p.addressId = a.id, and a.zipcode = c.zipcode";
+			+ " a.houseNumber, a.zipcode, c.city, salary "
+			+ "from Person p, Employee e, CityZipcode c, _Address a where personId = ? and personType = 2"
+			+ " and personId = p.id and p.addressId = a.id and a.zipcode = c.zipcode";
 	private PreparedStatement ps_findById;
 
 	public EmployeeDB() throws DataAccessException {

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class OrderDb implements OrderDbIF {
 		
 		// Inserting the order into the Database
 		try {			
-			ps_insert = con.prepareStatement(INSERT_ORDER_SQL);
+			ps_insert = con.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS);
 			ps_insert.setString(1, o.getOrderNo());
 			ps_insert.setDate(2, Date.valueOf(LocalDate.now()));
 			ps_insert.setBoolean(3, false);
@@ -49,7 +50,10 @@ public class OrderDb implements OrderDbIF {
 			ps_insert.setInt(5, o.getEmployee().getId());
 			ps_insert.setInt(6, o.getCustomer().getId());
 			
-			ps_insert.execute();
+			ps_insert.executeUpdate();
+			
+			ResultSet generatedKeys = ps_insert.getGeneratedKeys();
+			if(generatedKeys.next()) o.setId(generatedKeys.getInt(1));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -65,6 +69,8 @@ public class OrderDb implements OrderDbIF {
 				ps_insert.setInt(1, o.getId());
 				ps_insert.setInt(2, saleLineItem.getProduct().getId());
 				ps_insert.setInt(3, saleLineItem.getAmount());
+				
+				ps_insert.execute();
 			}
 			
 		} catch (SQLException e) {

@@ -16,8 +16,8 @@ public class CustomerDB implements CustomerDbIF {
 	// person: Id, fname, lname, phoneNo, email, personType, addressId
 
 	private static final String FIND_BY_PHONENO_SQL = "select isClub, p.Id, fname, lname, phoneNo, email, personType, houseNumber, streetName, c.zipcode, city  "
-			+ "from Person p, CityZipCode c, Address a, Customer cu " + "where personType = 1 " + "and personId = p.id "
-			+ "and p.addressId = a.id " + "and a.zipcode = c.zipcode" + "and p.phoneNo = ? ";
+			+ "from Person p, CityZipCode c, _Address a, Customer cu " + "where personType = 1 " + "and personId = p.id "
+			+ "and p.addressId = a.id " + "and a.zipcode = c.zipcode " + "and p.phoneNo = ? ";
 	private PreparedStatement ps_findByPhoneNo;
 
 	public CustomerDB() throws DataAccessException {
@@ -69,7 +69,7 @@ public class CustomerDB implements CustomerDbIF {
 		try {
 			customer.setIsClub(rs.getBoolean(1));
 			customer.setId(rs.getInt(2));
-			customer.setName(rs.getString(3) + (rs.getString(4)));
+			customer.setName(rs.getString(3) + ' ' + (rs.getString(4)));
 			customer.setPhoneNo(rs.getString(5));
 			customer.setEmail(rs.getString(6));
 			customer.setAddress(rs.getString(9) + ' ' + rs.getString(8));
