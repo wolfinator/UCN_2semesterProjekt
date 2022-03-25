@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-	private int id;
-	private String orderNo;
+
+	private int orderNo;
 	private LocalDate date;
 	private boolean deliveryStatus;
 	private LocalDate deliveryDate;
@@ -35,14 +35,6 @@ public class Order {
 		return saleLineItems;
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -61,10 +53,10 @@ public class Order {
 	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public String getOrderNo() {
+	public int getOrderNo() {
 		return orderNo;
 	}
-	public void setOrderNo(String orderNo) {
+	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
 	public boolean isDeliveryStatus() {

@@ -16,9 +16,9 @@ import model.SaleLineItem;
 
 public class OrderDb implements OrderDbIF {
 	
-	private String INSERT_ORDER_SQL = "INSERT INTO SaleOrder (orderNo, _date, deliveryStatus, deliveryDate, employeeId, customerId) "+
-									  "values (?, ?, ?, ?, ?, ?);";
-	private String INSERT_SALELINEITEM_SQL = "INSERT INTO SaleLineItem (saleOrderId, productId, amount) "+
+	private String INSERT_ORDER_SQL = "INSERT INTO SaleOrder (_date, deliveryStatus, deliveryDate, employeeId, customerId) "+
+									  "values (?, ?, ?, ?, ?);";
+	private String INSERT_SALELINEITEM_SQL = "INSERT INTO SaleLineItem (saleOrderNo, productId, amount) "+
 									  		 "values (?, ?, ?);";
 	private String FIND_BY_ORDERNO_SQL = "";
 	private String FIND_ALL_SQL = "";
@@ -37,23 +37,25 @@ public class OrderDb implements OrderDbIF {
 
 	@Override
 	public boolean insert(Order o) throws DataAccessException {
+		boolean res = true;
+		
+		// Getting the connection
 		DBConnection dbc = DBConnection.getInstance();
 		Connection con = dbc.getConnection();
 		
 		// Inserting the order into the Database
-		try {			
+		try {
 			ps_insert = con.prepareStatement(INSERT_ORDER_SQL, Statement.RETURN_GENERATED_KEYS);
-			ps_insert.setString(1, o.getOrderNo());
-			ps_insert.setDate(2, Date.valueOf(LocalDate.now()));
-			ps_insert.setBoolean(3, false);
-			ps_insert.setDate(4, null);
-			ps_insert.setInt(5, o.getEmployee().getId());
-			ps_insert.setInt(6, o.getCustomer().getId());
+			ps_insert.setDate(1, Date.valueOf(LocalDate.now()));
+			ps_insert.setBoolean(2, false);
+			ps_insert.setDate(3, null);
+			ps_insert.setInt(4, o.getEmployee().getId());
+			ps_insert.setInt(5, o.getCustomer().getId());
 			
 			ps_insert.executeUpdate();
 			
 			ResultSet generatedKeys = ps_insert.getGeneratedKeys();
-			if(generatedKeys.next()) o.setId(generatedKeys.getInt(1));
+			if(generatedKeys.next()) o.setOrderNo(generatedKeys.getInt(1));
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +68,7 @@ public class OrderDb implements OrderDbIF {
 			for (SaleLineItem saleLineItem : sli) {
 				ps_insert = con.prepareStatement(INSERT_SALELINEITEM_SQL);
 				
-				ps_insert.setInt(1, o.getId());
+				ps_insert.setInt(1, o.getOrderNo());
 				ps_insert.setInt(2, saleLineItem.getProduct().getId());
 				ps_insert.setInt(3, saleLineItem.getAmount());
 				
@@ -78,7 +80,7 @@ public class OrderDb implements OrderDbIF {
 			e.printStackTrace();
 		}		
 		
-		return true;
+		return res;
 	}
 	
 	// ikke brug for endnu
@@ -100,11 +102,10 @@ public class OrderDb implements OrderDbIF {
 		res.setCustomer(null); // TODO full association?
 		res.setEmployee(null);
 		
-		res.setId(rs.getInt(1));
-		res.setOrderNo(rs.getString(2));
-		res.setDate(rs.getDate(3).toLocalDate());
-		res.setDeliveryStatus(rs.getBoolean(4));
-		res.setDeliveryDate(rs.getDate(5).toLocalDate());
+		res.setOrderNo(rs.getInt(1));
+		res.setDate(rs.getDate(2).toLocalDate());
+		res.setDeliveryStatus(rs.getBoolean(3));
+		res.setDeliveryDate(rs.getDate(4).toLocalDate());
 				
 		return res;
 	}

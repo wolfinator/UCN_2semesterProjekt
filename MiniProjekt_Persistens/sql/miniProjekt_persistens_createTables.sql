@@ -79,24 +79,23 @@ create table Product(
 	constraint fk_supplierId foreign key (supplierId) references Supplier(id)
 );
 create table SaleOrder(
-	id int Identity(1,1),
-	orderNo varchar(10),
+	orderNo int Identity(1,1),
 	_date datetime,
 	deliveryStatus bit not null,
 	deliveryDate datetime,
 	employeeId int,
 	customerId int,
-	constraint pk_SaleOrder primary key (id),
+	constraint pk_SaleOrder primary key (orderNo),
 	constraint fk_employeeId foreign key (employeeId) references Employee(personId),
 	constraint fk_customerId foreign key (customerId) references Customer(personId)
 );
 create table SaleLineItem(
 	id int Identity(1,1),
-	saleOrderId int not null,
+	saleOrderNo int not null,
 	productId int not null,
 	amount int not null,
 	constraint pk_SaleLineItem primary key (id),
-	constraint fk_saleOrderId foreign key (saleOrderId) references SaleOrder(id),
+	constraint fk_saleOrderNo foreign key (saleOrderNo) references SaleOrder(orderNo),
 	constraint fk_productId   foreign key (productId) references Product(id),
 	constraint amount_notNegative check(amount > 0)
 );
