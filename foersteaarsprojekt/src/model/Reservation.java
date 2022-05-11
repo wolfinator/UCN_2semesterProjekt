@@ -17,14 +17,6 @@ public class Reservation {
 		orders = new ArrayList<>();
 			
 	}
-
-	public void setGuestCount(int guestCount) {
-		this.guestCount = guestCount;
-	}
-
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
 	
 	public void addOrder(Order o) {
 		if(o != null) {
@@ -33,8 +25,35 @@ public class Reservation {
 	
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+
+	public void setGuestCount(int guestCount) {
+		this.guestCount = guestCount;
+	}
+	
+	public int getGuestCount() {
+		return this.guestCount;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+	
+	public LocalDateTime getDate() {
+		return this.date;
+	}
+	
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}	
 	
+	public Customer getCustomer() {
+		return this.customer;
+	}
 }
