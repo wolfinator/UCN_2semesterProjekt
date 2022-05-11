@@ -1,5 +1,13 @@
 package ctrl;
 
-public class CustomerCtrl {
+import db.CustomerDB;
+import db.CustomerDBIF;
 
+public class CustomerCtrl {
+	private CustomerDBIF customerDB;
+	
+	public CustomerCtrl() {
+		customerDB = new CustomerDB();
+	}
+	
 }
