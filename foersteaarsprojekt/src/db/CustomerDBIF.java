@@ -1,5 +1,8 @@
 package db;
 
-public interface CustomerDBIF {
+import ctrl.DataAccessException;
+import model.Customer;
 
+public interface CustomerDBIF {
+	Customer findById(int id) throws DataAccessException;
 }
