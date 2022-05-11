@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
@@ -9,15 +10,18 @@ public class Order {
 	private List<OrderLineItem> orderLineItems; 
 	
 	public Order() {
-		orderLineItems = new List<>(); //TODO ÅBENBART FORKERT??? 
+		orderLineItems = new ArrayList<>(); //TODO ÅBENBART FORKERT??? 
 	}
 	
-	public SaleLineItem addProduct(Product product, int quantity) {
-		SaleLineItem sli = new SaleLineItem();
+	public OrderLineItem addProduct(Product product, int quantity) {
+		OrderLineItem oli = new OrderLineItem();
 		
-		sli.setProduct(); 
-		sli.setQuanity();
-		sli.setOrder(this); 
+		oli.setProduct(product);
+		oli.setQuantity(quantity);
+		
+		orderLineItems.add(oli);
+		
+		return oli;
 	}
 
 	public int getId() {
