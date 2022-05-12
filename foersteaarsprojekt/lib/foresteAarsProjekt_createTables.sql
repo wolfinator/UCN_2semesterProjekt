@@ -13,13 +13,6 @@ drop table if exists Customer;
 drop table if exists _Address;
 drop table if exists CityZipcode;
 
-
-
-
-
-
-
-
 create table CityZipcode(
 	zipcode varchar(12),
 	city nvarchar(40),
