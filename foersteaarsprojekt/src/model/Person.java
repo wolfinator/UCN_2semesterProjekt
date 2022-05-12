@@ -1,11 +1,11 @@
 package model;
 
-public abstract class Person {
-	private int id;
-	private String name;
-	private String phoneNo;
-	private String email;
-	private String address;
+public abstract class Person { 
+	protected int id;
+	protected String name;
+	protected String phoneNo;
+	protected String email;
+	protected String address;
 
 	public Person(int id, String name, String phoneNo, String email, String address) {
 
@@ -14,6 +14,10 @@ public abstract class Person {
 		this.phoneNo = phoneNo;
 		this.email = email;
 		this.address = address;
+	}
+	
+	public Person() {
+		
 	}
 
 	public int getId() {

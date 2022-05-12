@@ -1,18 +1,17 @@
 use Booking;
 go
 drop table if exists TakeAway;
+drop table if exists ReservationTable;
+drop table if exists SalesLine;
+drop table if exists Product;
+drop table if exists ProductType;
+drop table if exists _Order;
 drop table if exists Reservation;
+drop table if exists _Table;
 drop table if exists Employee;
 drop table if exists Customer;
 drop table if exists _Address;
 drop table if exists CityZipcode;
-drop table if exists _Table;
-drop table if exists ReservationTable;
-drop table if exists _Order;
-drop table if exists ProductType;
-drop table if exists Product;
-drop table if exists SalesLine;
-
 
 create table CityZipcode(
 	zipcode varchar(12),
@@ -122,3 +121,7 @@ create table TakeAway(
 	constraint fk_TakeAway_customerId Foreign Key(customerId) references Customer(id), 
 	constraint fk_TakeAway_employeeId Foreign Key(employeeId) references Employee(id)
 );
+go
+
+use Master;
+go
