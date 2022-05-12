@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import ctrl.DataAccessException;
+import model.Order;
 
 public class OrderDB implements OrderDBIF{
 	private Connection con; 
@@ -25,5 +26,9 @@ public class OrderDB implements OrderDBIF{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	public void saveOrder(Order o) {
+	
+		
 	}
 }
