@@ -6,6 +6,7 @@ import java.util.List;
 public class Order {
 	private int id; 
 	private int orderNo; 
+	private int totalPrice; 
 	private boolean status; 
 	private List<OrderLineItem> orderLineItems; 
 	
@@ -36,11 +37,24 @@ public class Order {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public boolean setStatus(boolean status) {
+		return this.status = status;
 	}
 	
 	public List<OrderLineItem> getOrderLineItem(){
 		return orderLineItems; 
+	}
+
+	public int getOrderNo() {
+		// TODO Auto-generated method stub
+		return orderNo;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 }
