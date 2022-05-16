@@ -43,7 +43,7 @@ public class ProductDB implements ProductDBIF {
 	}
 	
 	private Product buildObject(ResultSet rs) {
-		return null;
+		return null;// Ikke lavet endnu
 		
 	}
 	
