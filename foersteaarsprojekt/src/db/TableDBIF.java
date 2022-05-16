@@ -1,5 +1,10 @@
 package db;
 
-public interface TableDBIF {
+import java.util.List;
 
+import model.Table;
+
+public interface TableDBIF {
+	public List<Table> getTables();
+	
 }
