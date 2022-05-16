@@ -13,7 +13,7 @@ public class TableCtrl {
 		tableDB = new TableDB();
 	}
 	
-	public List<Table> getTables() {
+	public List<Table> getTables() throws DataAccessException {
 		List<Table> res;
 		res = tableDB.getTables();
 		return res;
