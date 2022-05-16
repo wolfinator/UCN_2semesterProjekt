@@ -12,7 +12,7 @@ import model.Product;
 
 public class ProductDB implements ProductDBIF {
 
-	private static final String FIND_BY_PRODUCTID_SQL = "";
+	private static final String FIND_BY_PRODUCTID_SQL = "select id, name, price, typeId from Product;";
 	private PreparedStatement findProductPS;
 
 	public ProductDB()throws DataAccessException{
