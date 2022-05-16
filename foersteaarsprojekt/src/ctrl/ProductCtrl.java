@@ -12,8 +12,8 @@ private ProductDB productDB;
 public ProductCtrl() throws DataAccessException {
 	productDB = new ProductDB();
 }
-public Product findProductById(int productId) {
-	Product res = ProductDB.findProductById(productId);
+public Product findProductById(int productId) throws DataAccessException {
+	Product res = productDB.findProductById(productId);
 	return res;
 }
 
