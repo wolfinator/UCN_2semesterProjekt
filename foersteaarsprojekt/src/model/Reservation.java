@@ -1,6 +1,8 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ public class Reservation {
 	private Customer customer;
 	private int id;
 	private int guestCount;
+	private List<Table> tables;
 	private LocalDateTime date;
 	private String note;
 	
@@ -15,7 +18,17 @@ public class Reservation {
 	
 	public Reservation() {
 		orders = new ArrayList<>();
+		tables = new ArrayList<>();
+	}
+	
+	public void addTable(Table t) {
+		if(t != null) {
 			
+		}
+	}
+	
+	public List<Table> getTables(){
+		return tables;
 	}
 	
 	public void addOrder(Order o) {
@@ -23,6 +36,10 @@ public class Reservation {
 			orders.add(o);
 		}
 	
+	}
+	
+	public List<Order> getOrders(){
+		return this.orders;
 	}
 	
 	public void setId(int id) {
@@ -49,11 +66,24 @@ public class Reservation {
 		return this.date;
 	}
 	
+	public void setStartingTime(LocalTime time) {
+		LocalDate date = this.date.toLocalDate();
+		this.date = LocalDateTime.of(date, time);
+	}
+	
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}	
 	
 	public Customer getCustomer() {
 		return this.customer;
+	}
+	
+	public void setNote(String note) {
+		this.note = note;
+	}
+	
+	public String getNote() {
+		return this.note;
 	}
 }

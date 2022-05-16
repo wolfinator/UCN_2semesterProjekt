@@ -8,7 +8,7 @@ public class CustomerCtrl {
 	private CustomerDBIF customerDB;
 	private Customer currCustomer;
 	
-	public CustomerCtrl() {
+	public CustomerCtrl() throws DataAccessException {
 		customerDB = new CustomerDB();
 	}
 

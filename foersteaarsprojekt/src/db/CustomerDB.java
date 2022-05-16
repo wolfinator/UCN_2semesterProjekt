@@ -9,9 +9,11 @@ import ctrl.DataAccessException;
 import model.Customer;
 
 public class CustomerDB implements CustomerDBIF {
-	private static final String FIND_BY_ID_SQL = "select fname, lname, phoneNo, email,"
+	private DBConnection dbc;
+	
+	private static final String FIND_BY_ID_SQL = "select firstname, lastname, phoneNo, email,"
 			+ " addressId, id from Customer "+ "where id = ?;";
-	private static final String SAVE_SQL = "insert into Customer (fname, lname, phoneNo, email) values (?,?,?,?)";
+	private static final String SAVE_SQL = "insert into Customer (firstname, lastname, phoneNo, email) values (?,?,?,?)";
 	
 	private PreparedStatement ps_findById;
 	private PreparedStatement ps_saveId;
@@ -21,6 +23,7 @@ public class CustomerDB implements CustomerDBIF {
 	}
 
 	private void init() throws DataAccessException {
+		dbc = DBConnection.getInstance();
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
 			ps_findById = con.prepareStatement(FIND_BY_ID_SQL);
@@ -53,6 +56,7 @@ public class CustomerDB implements CustomerDBIF {
 	@Override
 	public int saveCustomer(Customer customer) throws DataAccessException {
 		int customerId = -1;
+		dbc.startTransaction();
 		try {
 			ps_saveId.setString(1, customer.getFirstName());
 			ps_saveId.setString(2, customer.getLastName());
@@ -60,13 +64,21 @@ public class CustomerDB implements CustomerDBIF {
 			ps_saveId.setString(4, customer.getEmail());
 			ps_saveId.executeUpdate();
 			
+			dbc.commitTransaction();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			dbc.rollbackTransaction();
+			e.printStackTrace();
+		}	
+		
+		try {
 			ResultSet generatedKeys = ps_saveId.getGeneratedKeys();
 			if(generatedKeys.next()) customerId = generatedKeys.getInt(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
 		
 		// TODO insert customer in db and return inserted id
 		return customerId;

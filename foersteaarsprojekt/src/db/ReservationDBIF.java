@@ -10,5 +10,5 @@ import ctrl.DataAccessException;
 public interface ReservationDBIF {
 	List<Reservation> findReservationsByDate(LocalDate date) throws DataAccessException;
 	
-	List<LocalDate> findAvailableTimes(List<Reservation> rList, int quantity, LocalDate date);
+	boolean saveReservation(Reservation reservation) throws DataAccessException;
 }
