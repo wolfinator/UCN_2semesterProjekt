@@ -11,4 +11,10 @@ public class CustomerDB implements CustomerDBIF {
 		return null;
 	}
 
+	@Override
+	public int saveCustomer(Customer customer) throws DataAccessException {
+		// TODO insert customer in db and return inserted id
+		return 0;
+	}
+
 }
