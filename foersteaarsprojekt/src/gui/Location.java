@@ -41,7 +41,7 @@ public class Location extends JFrame {
 	 */
 	public Location() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 600, 401);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,8 +54,8 @@ public class Location extends JFrame {
 		panel1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(Location.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon(Location.class.getResource("/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
 		lblNewLabel_1.setBounds(0, 0, 300, 372);
 		panel1.add(lblNewLabel_1);
 		
