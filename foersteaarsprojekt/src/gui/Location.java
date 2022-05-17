@@ -94,4 +94,13 @@ public class Location extends JFrame {
 		Borderpanel.setBounds(0, 0, 600, 322);
 		contentPane.add(Borderpanel);
 	}
+
+	public static void run() {
+		try {
+			Location frame = new Location();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+	}
 }

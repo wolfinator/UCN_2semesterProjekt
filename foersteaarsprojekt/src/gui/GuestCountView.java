@@ -77,46 +77,107 @@ public class GuestCountView extends JFrame {
 		panelAdress.add(lblNewLabel_2);
 		
 		JButton btnNewButton_1 = new JButton("1");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_1.setBounds(50, 180, 70, 50);
 		panelAdress.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("2");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_2.setBounds(160, 180, 70, 50);
 		panelAdress.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("3");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_3.setBounds(270, 180, 70, 50);
 		panelAdress.add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("4");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_4.setBounds(380, 180, 70, 50);
 		panelAdress.add(btnNewButton_4);
 		
 		JButton btnNewButton_5 = new JButton("5");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_5.setBounds(490, 180, 70, 50);
 		panelAdress.add(btnNewButton_5);
 		
 		JButton btnNewButton_6 = new JButton("6");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_6.setBackground(Color.WHITE);
 		btnNewButton_6.setBounds(50, 260, 70, 50);
 		panelAdress.add(btnNewButton_6);
 		
 		JButton btnNewButton_7 = new JButton("7");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_7.setBackground(Color.WHITE);
 		btnNewButton_7.setBounds(160, 260, 70, 50);
 		panelAdress.add(btnNewButton_7);
 		
 		JButton btnNewButton_8 = new JButton("8");
+		btnNewButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_8.setBackground(Color.WHITE);
 		btnNewButton_8.setBounds(270, 260, 70, 50);
 		panelAdress.add(btnNewButton_8);
 		
 		JButton btnNewButton_9 = new JButton("9");
+		btnNewButton_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+			
+		});
 		btnNewButton_9.setBackground(Color.WHITE);
 		btnNewButton_9.setBounds(380, 260, 70, 50);
 		panelAdress.add(btnNewButton_9);
 		
 		JButton btnNewButton_10 = new JButton("10");
+		btnNewButton_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				CalendarTime.run();
+			}
+		});
 		btnNewButton_10.setBackground(Color.WHITE);
 		btnNewButton_10.setBounds(490, 260, 70, 50);
 		panelAdress.add(btnNewButton_10);
@@ -124,7 +185,7 @@ public class GuestCountView extends JFrame {
 		JLabel lblNewLabel_2_1 = new JLabel("  Er i over 10 personer? ");
 		lblNewLabel_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2_1.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(0, 322, 600, 30);
+		lblNewLabel_2_1.setBounds(113, 322, 487, 30);
 		panelAdress.add(lblNewLabel_2_1);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Ring til 98122888");
@@ -132,6 +193,16 @@ public class GuestCountView extends JFrame {
 		lblNewLabel_2_1_1.setFont(new Font("Lucida Grande", Font.PLAIN, 13));
 		lblNewLabel_2_1_1.setBounds(0, 342, 600, 30);
 		panelAdress.add(lblNewLabel_2_1_1);
+		
+		JButton btnTilbage = new JButton("Tilbage");
+		btnTilbage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Location.run();
+			}
+		});
+		btnTilbage.setBounds(20, 322, 91, 40);
+		panelAdress.add(btnTilbage);
 	}
 
 	public void run() {

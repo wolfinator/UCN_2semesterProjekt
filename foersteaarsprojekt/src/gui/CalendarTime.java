@@ -9,8 +9,10 @@ import javax.swing.border.EmptyBorder;
 import com.github.lgooddatepicker.components.CalendarPanel;
 import com.github.lgooddatepicker.components.TimePicker;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Calendar extends JFrame {
+public class CalendarTime extends JFrame {
 
 	private JPanel contentPane;
 
@@ -21,7 +23,7 @@ public class Calendar extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Calendar frame = new Calendar();
+					CalendarTime frame = new CalendarTime();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,8 +35,8 @@ public class Calendar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
-	public Calendar() {
+
+	public CalendarTime() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 649, 336);
 		contentPane = new JPanel();
@@ -42,16 +44,43 @@ public class Calendar extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JButton btnTilbage = new JButton("Tilbage");
+		btnTilbage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				GuestCountView GuestCount = new GuestCountView();
+				GuestCount.run();
+			}
+		});
+		btnTilbage.setBounds(461, 246, 91, 40);
+		contentPane.add(btnTilbage);
+
 		CalendarPanel calendarPanel = new CalendarPanel();
-		calendarPanel.setBounds(6, 48, 477, 302);
+		calendarPanel.setBounds(6, 48, 455, 302);
 		contentPane.add(calendarPanel);
-		
+
 		JButton btnNewButton = new JButton("Videre");
-		btnNewButton.setBounds(508, 246, 117, 40);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				Confirmation Confirmation = new Confirmation();
+				Confirmation.run();
+			}
+		});
+		btnNewButton.setBounds(551, 246, 92, 40);
 		contentPane.add(btnNewButton);
-		
+
 		TimePicker timePicker = new TimePicker();
-		timePicker.setBounds(482, 84, 161, 29);
+		timePicker.setBounds(471, 84, 172, 29);
 		contentPane.add(timePicker);
+	}
+
+	public static void run() {
+		try {
+			CalendarTime frame = new CalendarTime();
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
