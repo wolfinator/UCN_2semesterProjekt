@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
@@ -136,6 +137,11 @@ public class ConfirmationView extends JFrame {
 		panelAdress.add(textField_Email);
 		
 		JButton btnNewButton = new JButton("Bekræft");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "Reservation bekræftet");		
+			}
+		});
 		btnNewButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		btnNewButton.setBounds(408, 311, 85, 40);
 		panelAdress.add(btnNewButton);

@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CalendarTime extends JFrame {
+public class CalendarTimeView extends JFrame {
  
 	private JPanel contentPane;
 
@@ -23,7 +23,7 @@ public class CalendarTime extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CalendarTime frame = new CalendarTime();
+					CalendarTimeView frame = new CalendarTimeView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +36,7 @@ public class CalendarTime extends JFrame {
 	 * Create the frame.
 	 */
 
-	public CalendarTime() {
+	public CalendarTimeView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 649, 336);
 		contentPane = new JPanel();
@@ -63,7 +63,7 @@ public class CalendarTime extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Confirmation Confirmation = new Confirmation();
+				ConfirmationView Confirmation = new ConfirmationView();
 				Confirmation.run();
 			}
 		});
@@ -77,7 +77,7 @@ public class CalendarTime extends JFrame {
 
 	public static void run() {
 		try {
-			CalendarTime frame = new CalendarTime();
+			CalendarTimeView frame = new CalendarTimeView();
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
