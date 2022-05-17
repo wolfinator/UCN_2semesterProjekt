@@ -1,8 +1,10 @@
 package ctrl;
 
 import db.ReservationDB;
+import model.Customer;
 import model.Order;
 import model.Reservation;
+import model.Table;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,10 +25,12 @@ public class ReservationCtrl {
 		this.reservationDB = new ReservationDB();
 	}
 	
-	public Reservation createReservation() {
+	public Reservation createReservation(Customer customer, Table table, int guestCount) {
 		Reservation res = new Reservation();
+		res.setCustomer(customer);
+		res.addTable(table);
+		res.setGuestCount(guestCount);
 		
-		currentReservation = res;
 		
 		return res;
 	}

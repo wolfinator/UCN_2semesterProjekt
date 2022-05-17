@@ -3,28 +3,33 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+public class Order2 {
 	private int id; 
 	private int orderNo; 
 	private int totalPrice; 
 	private boolean status; 
 	private List<OrderLineItem> orderLineItems; 
 	
-	public Order() {
-		//orderLineItems = new ArrayList<>(); //TODO ÅBENBART FORKERT??? 
+	public Order2() {
+		orderLineItems = new ArrayList<OrderLineItem>(); //TODO ÅBENBART FORKERT??? 
 	}
 	
-	public OrderLineItem addProduct(Product product, int quantity) {
+	public void addProduct(Product product, int quantity) {
 		OrderLineItem oli = new OrderLineItem();
 		
 		oli.setProduct(product);
 		oli.setQuantity(quantity);
 		
 		orderLineItems.add(oli);
-		
-		return oli; 
 	}
 
+	public List<OrderLineItem>	getOrders(){
+		
+
+		
+		return orderLineItems;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -58,3 +63,5 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 }
+
+
