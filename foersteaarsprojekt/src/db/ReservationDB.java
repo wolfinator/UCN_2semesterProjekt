@@ -5,9 +5,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +24,9 @@ public class ReservationDB implements ReservationDBIF {
 	private DBConnection dbc;
 	private Connection con;
 
-	private final String FIND_BY_DATE_SQL = "select id, guestCount, dateTimeslot, note, customerId from Reservation "
-			+ "where dateTimeslot = ?;";
+	private final String FIND_BY_DATE_SQL = "select * from Reservation "+
+			"where dateTimeslot >= cast(? as datetime)"+
+			"and dateTimeslot < cast(? as datetime);";
 	private final String FIND_ALL_SQL = "select 1"; // TODO make it
 	private final String SAVE_SQL = "insert into Reservation(guestCount, dateTimeslot, note, customerId) "
 			+ "values(?, ?, ?, ?);";
@@ -50,7 +53,7 @@ public class ReservationDB implements ReservationDBIF {
 			con = dbc.getConnection();
 			ps_findByDate = con.prepareStatement(FIND_BY_DATE_SQL);
 			ps_findAll = con.prepareStatement(FIND_ALL_SQL);
-			ps_save = con.prepareStatement(SAVE_SQL);
+			ps_save = con.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS);
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,9 +67,11 @@ public class ReservationDB implements ReservationDBIF {
 	@Override
 	public List<Reservation> findReservationsByDate(LocalDate date) throws DataAccessException {
 		List<Reservation> res;
+		LocalDate nextDay = date.plus(1, ChronoUnit.DAYS);
 		
 		try {
 			ps_findByDate.setDate(1, Date.valueOf(date));
+			ps_findByDate.setDate(2, Date.valueOf(nextDay));
 			ResultSet rs = ps_findByDate.executeQuery();
 			
 			res = buildObjects(rs);
@@ -105,6 +110,10 @@ public class ReservationDB implements ReservationDBIF {
 			res.setDate(ldt);
 			Customer customer = customerDB.findById(rs.getInt("customerId"));
 			res.setCustomer(customer);
+			List<Table> tables = tableDB.getTables(res.getId());
+			for(Table t : tables) {
+				res.addTable(t);
+			}
 			
 		} catch (SQLException e) {
 			throw new DataAccessException("Error in building a reservation object from resultset(buildObject())", e);
@@ -126,7 +135,7 @@ public class ReservationDB implements ReservationDBIF {
 		}
 		
 		// Gemme Reservation
-		dbc.startTransaction();
+
 		try {
 			ps_save.setInt(1, reservation.getGuestCount());
 			ps_save.setObject(2, java.sql.Timestamp.valueOf(reservation.getDate()));
@@ -134,7 +143,7 @@ public class ReservationDB implements ReservationDBIF {
 			ps_save.setInt(4, reservation.getCustomer().getId());
 			res = ps_save.executeUpdate() > 0; //TODO idk about this solution
 			
-			dbc.commitTransaction();
+			
 			
 			ResultSet generatedKeys = ps_save.getGeneratedKeys();
 			if(generatedKeys.next()) {
@@ -144,7 +153,6 @@ public class ReservationDB implements ReservationDBIF {
 			}
 			
 		} catch (SQLException e) {
-			dbc.rollbackTransaction();
 			throw new DataAccessException("Error saving Reservation", e);
 		}
 		

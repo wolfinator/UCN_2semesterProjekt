@@ -23,7 +23,7 @@ public class Reservation {
 	
 	public void addTable(Table t) {
 		if(t != null) {
-			
+			tables.add(t);
 		}
 	}
 	

@@ -19,10 +19,13 @@ public class TableDB implements TableDBIF{
 	private String SAVE_TO_RESERVATION_SQL = "insert into ReservationTable (reservationId, tableId) values "
 			+ "(?, ?);";
 	private String FIND_ALL_SQL = "select id, tableNo, seats from _Table;";
+	private String FIND_FOR_RESERVATION_SQL = "select id, tableNo, seats from _Table, ReservationTable "
+			+ "where reservationId = ? and id = tableId;";
 	
 	private PreparedStatement ps_saveToReservation;
 	private PreparedStatement ps_findAll;
-
+	private PreparedStatement ps_findForReservation;
+	
 	public TableDB() {
 		init();
 	}
@@ -34,6 +37,7 @@ public class TableDB implements TableDBIF{
 			
 			ps_saveToReservation = con.prepareStatement(SAVE_TO_RESERVATION_SQL);
 			ps_findAll = con.prepareStatement(FIND_ALL_SQL);
+			ps_findForReservation = con.prepareStatement(FIND_FOR_RESERVATION_SQL);
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,6 +58,22 @@ public class TableDB implements TableDBIF{
 			res = buildObjects(rs);
 		} catch (SQLException e) {
 			throw new DataAccessException("Error in retrieving tables from db", e);
+		}
+		
+		return res;
+	}
+	
+	@Override
+	public List<Table> getTables(int reservationId) throws DataAccessException{
+		List<Table> res = new ArrayList<>();
+		
+		try {
+			ps_findForReservation.setInt(1, reservationId);
+			
+			ResultSet rs = ps_findForReservation.executeQuery();
+			res = buildObjects(rs);
+		} catch (SQLException e) {
+			throw new DataAccessException("Error in retrieving tables for reservation", e);
 		}
 		
 		return res;
