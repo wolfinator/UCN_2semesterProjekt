@@ -19,12 +19,12 @@ public class DBConnection {
 	private static DBConnection dbConnection;
 
 	private static final String driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	private static final String dbName = "DMA-CSD-S212_10436664";
-	private static final String serverAddress = "hildur.ucn.dk";
+	private static final String dbName = "Booking"; // DMA-CSD-S212_10436664
+	private static final String serverAddress = "localhost"; // hildur.ucn.dk
 	// private static final String serverAddress = "kraka.ucn.dk";
 	private static final int serverPort = 1433;
-	private static final String userName = "DMA-CSD-S212_10436664";
-	private static final String password = "Password1!";
+	private static final String userName = "sa"; // DMA-CSD-S212_10436664
+	private static final String password = "password"; // Password1!
 
 	private DBConnection() throws DataAccessException {
 		// Cheat sheet for the printf() method, the format is also used in the

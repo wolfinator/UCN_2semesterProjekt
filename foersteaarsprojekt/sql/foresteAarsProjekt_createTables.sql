@@ -95,7 +95,6 @@ create table ProductType(
 );
 create table Product(
 	id int Identity(1,1),
-	productNo varchar(3),
 	name nvarchar(40),
 	price decimal,
 	typeId int,

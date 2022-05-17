@@ -8,16 +8,16 @@ public class CustomerCtrl {
 	private CustomerDBIF customerDB;
 	private Customer currCustomer;
 	
-	public CustomerCtrl() {
+	public CustomerCtrl() throws DataAccessException {
 		customerDB = new CustomerDB();
 	}
 
 
-//	public Customer CreateCustomer (String cusName, String cusPhoneNo, String cusEmail) {
-//		Customer customer = new Customer(cusName, cusPhoneNo, cusEmail);
-//
-//		return customer;
-//	}
+	public Customer createCustomer (String cusName, String cusPhoneNo, String cusEmail) {
+		Customer customer = new Customer(cusName, cusPhoneNo, cusEmail);
+
+		return customer;
+	}
 	
 	
 
