@@ -4,6 +4,9 @@ import java.util.List;
 
 public class Customer extends Person {
 
+	public Customer() {
+		super();
+	}
 	public Customer(String cusName, String cusPhoneNo, String cusEmail) {
 		super();
 		this.name = cusName;
