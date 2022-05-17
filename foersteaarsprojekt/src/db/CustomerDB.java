@@ -49,9 +49,17 @@ public class CustomerDB implements CustomerDBIF {
 		return res;
 	}
 
-	private Customer buildObject(ResultSet rs) {
-		// TODO Auto-generated method stub
-		return null;
+	private Customer buildObject(ResultSet rs) throws DataAccessException {
+	Customer customer = new Customer();
+	try {
+		customer.setName(rs.getString(1) + " " + (rs.getString(2)));
+		customer.setPhoneNo(rs.getString(3));
+		customer.setEmail(rs.getString(4));
+		
+	}catch(SQLException e) {
+		e.printStackTrace();
+	}
+		return customer;
 	}
 
 	@Override
@@ -74,7 +82,6 @@ public class CustomerDB implements CustomerDBIF {
 			e.printStackTrace();
 		}	
 		
-		// TODO insert customer in db and return inserted id
 		return customerId;
 	}
 
