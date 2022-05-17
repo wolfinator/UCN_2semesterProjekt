@@ -21,7 +21,7 @@ import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Confirmation extends JFrame {
+public class ConfirmationView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField_Mobil;
@@ -39,7 +39,7 @@ public class Confirmation extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Confirmation frame = new Confirmation();
+					ConfirmationView frame = new ConfirmationView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,7 +51,7 @@ public class Confirmation extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Confirmation() {
+	public ConfirmationView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -68,10 +68,10 @@ public class Confirmation extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 271, 100);
 		panel1.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(Confirmation.class.getResource("/gui/Pictures/ramen.png")));
+		lblNewLabel.setIcon(new ImageIcon(ConfirmationView.class.getResource("/gui/Pictures/ramen.png")));
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(Confirmation.class.getResource("/gui/Pictures/ramen.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(ConfirmationView.class.getResource("/gui/Pictures/ramen.png")));
 		lblNewLabel_1.setBounds(302, 22, 298, 267);
 		panel1.add(lblNewLabel_1);
 		
@@ -159,7 +159,7 @@ public class Confirmation extends JFrame {
 		btnTilbage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnTilbage.setBounds(15, 312, 91, 40);
@@ -186,7 +186,7 @@ public class Confirmation extends JFrame {
 
 	public void run() {
 		try {
-			Confirmation frame = new Confirmation();
+			ConfirmationView frame = new ConfirmationView();
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Location extends JFrame {
+public class LocationView extends JFrame {
 
 	private JPanel contentPane;
 
@@ -27,7 +27,7 @@ public class Location extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Location frame = new Location();
+					LocationView frame = new LocationView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class Location extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Location() {
+	public LocationView() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 401);
 		contentPane = new JPanel();
@@ -54,7 +54,7 @@ public class Location extends JFrame {
 		panel1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(Location.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(LocationView.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(0, 0, 300, 372);
 		panel1.add(lblNewLabel_1);
@@ -97,7 +97,7 @@ public class Location extends JFrame {
 
 	public static void run() {
 		try {
-			Location frame = new Location();
+			LocationView frame = new LocationView();
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

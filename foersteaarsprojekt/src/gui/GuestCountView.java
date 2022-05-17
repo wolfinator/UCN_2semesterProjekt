@@ -80,7 +80,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_1.setBounds(50, 180, 70, 50);
@@ -90,7 +90,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_2.setBounds(160, 180, 70, 50);
@@ -100,7 +100,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_3.setBounds(270, 180, 70, 50);
@@ -110,7 +110,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_4.setBounds(380, 180, 70, 50);
@@ -120,7 +120,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_5.setBounds(490, 180, 70, 50);
@@ -130,7 +130,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_6.setBackground(Color.WHITE);
@@ -141,7 +141,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_7.setBackground(Color.WHITE);
@@ -152,7 +152,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_8.setBackground(Color.WHITE);
@@ -163,7 +163,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 			
 		});
@@ -175,7 +175,7 @@ public class GuestCountView extends JFrame {
 		btnNewButton_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTime.run();
+				CalendarTimeView.run();
 			}
 		});
 		btnNewButton_10.setBackground(Color.WHITE);
@@ -198,7 +198,7 @@ public class GuestCountView extends JFrame {
 		btnTilbage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				Location.run();
+				LocationView.run();
 			}
 		});
 		btnTilbage.setBounds(20, 322, 91, 40);
