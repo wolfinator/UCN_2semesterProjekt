@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,16 +9,19 @@ import javax.swing.border.EmptyBorder;
 import ctrl.ReservationCtrl;
 
 import java.awt.Color;
-import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class LocationView extends JFrame {
+
+	/**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = -1129087465639106253L;
 
 	private JPanel contentPane;
 	
@@ -42,7 +44,6 @@ public class LocationView extends JFrame {
 					confirmationView = new ConfirmationView();
 					
 					reservationCtrl = new ReservationCtrl();
-					reservationCtrl.createReservation();
 					
 					locationView.setVisible(true);
 				} catch (Exception e) {
@@ -63,17 +64,17 @@ public class LocationView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel1 = new JPanel();
-		panel1.setBackground(Color.DARK_GRAY);
-		panel1.setBounds(0, 0, 300, 372);
-		contentPane.add(panel1);
-		panel1.setLayout(null);
+		JPanel panelLogo = new JPanel();
+		panelLogo.setBackground(Color.DARK_GRAY);
+		panelLogo.setBounds(0, 0, 300, 372);
+		contentPane.add(panelLogo);
+		panelLogo.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(LocationView.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(0, 0, 300, 372);
-		panel1.add(lblNewLabel_1);
+		JLabel lblLogo = new JLabel("");
+		lblLogo.setIcon(new ImageIcon(LocationView.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
+		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLogo.setBounds(0, 0, 300, 372);
+		panelLogo.add(lblLogo);
 		
 		JPanel panelAdress = new JPanel();
 		panelAdress.setBackground(Color.WHITE);
@@ -81,41 +82,38 @@ public class LocationView extends JFrame {
 		contentPane.add(panelAdress);
 		panelAdress.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Bestil bord p\u00E5");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 17));
-		lblNewLabel.setBounds(66, 40, 165, 55);
-		panelAdress.add(lblNewLabel);
+		JLabel lblText = new JLabel("Bestil bord p\u00E5");
+		lblText.setHorizontalAlignment(SwingConstants.CENTER);
+		lblText.setFont(new Font("Lucida Grande", Font.BOLD, 17));
+		lblText.setBounds(66, 40, 165, 55);
+		panelAdress.add(lblText);
 		
-		JButton btnNewButton = new JButton("Aalborg");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				confirmationView.textField_Sted.setText("Aalborg");
-				guestCountView.setVisible(true);
-			}
-		});
-		btnNewButton.setBounds(66, 118, 165, 45);
-		panelAdress.add(btnNewButton);
+		JButton btnLocationAalborg = new JButton("Aalborg");
+		btnLocationAalborg.addActionListener(this::locationSelected);
+		btnLocationAalborg.setBounds(66, 118, 165, 45);
+		panelAdress.add(btnLocationAalborg);
 		
-		JButton btnNewButton_1 = new JButton("Randers");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				confirmationView.textField_Sted.setText("Randers");
-				guestCountView.setVisible(true);
-			}
-		});
-		btnNewButton_1.setBounds(66, 175, 165, 45);
-		panelAdress.add(btnNewButton_1);
+		JButton btnLocationRanders = new JButton("Randers");
+		btnLocationRanders.addActionListener(this::locationSelected);
+		btnLocationRanders.setBounds(66, 175, 165, 45);
+		panelAdress.add(btnLocationRanders);
 		
-		JButton btnNewButton_2 = new JButton("Vejle");
-		btnNewButton_2.setBounds(66, 232, 165, 45);
-		panelAdress.add(btnNewButton_2);
+		JButton btnLocationVejle = new JButton("Vejle");
+		btnLocationVejle.addActionListener(this::locationSelected);
+		btnLocationVejle.setBounds(66, 232, 165, 45);
+		panelAdress.add(btnLocationVejle);
 		
 		JPanel Borderpanel = new JPanel();
 		Borderpanel.setBounds(0, 0, 600, 322);
 		contentPane.add(Borderpanel);
+	}
+
+	private void locationSelected(ActionEvent e) {
+		setVisible(false);
+		reservationCtrl.createReservation();
+		JButton buttonThatWasClicked = ((JButton) e.getSource());
+		confirmationView.textField_Sted.setText(buttonThatWasClicked.getText());
+		guestCountView.setVisible(true);
 	}
 	
 }

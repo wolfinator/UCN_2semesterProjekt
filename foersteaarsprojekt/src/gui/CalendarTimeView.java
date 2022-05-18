@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
@@ -32,10 +33,13 @@ import java.awt.event.ItemEvent;
 public class CalendarTimeView extends JFrame {
 
 	private JPanel contentPane;
-	
-	private JComboBox comboBox;
-	
+
+	public JComboBox comboBox;
+
 	public LocalTime timeSelected;
+
+	public JButton btnNext;
+	private CalendarPanel calendarPanel;
 
 	/**
 	 * Launch the application.
@@ -66,69 +70,72 @@ public class CalendarTimeView extends JFrame {
 		contentPane.setLayout(null);
 
 		JButton btnTilbage = new JButton("Tilbage");
-		btnTilbage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				LocationView.guestCountView.setVisible(true);
-			}
-		});
+		btnTilbage.addActionListener(this::goBack);
 		btnTilbage.setBounds(395, 246, 91, 40);
 		contentPane.add(btnTilbage);
 
-		CalendarPanel calendarPanel = new CalendarPanel();
+		calendarPanel = new CalendarPanel();
 		calendarPanel.addCalendarListener(new CalendarListener() {
 			public void selectedDateChanged(CalendarSelectionEvent arg0) {
-				LocationView.reservationCtrl
-				.setGuestCountAndDate(LocationView.guestCountView.guestCount, arg0.getNewDate());
-				try {
-					displayTimes(LocationView.reservationCtrl.findAvailableTimes());
-				} catch (DataAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				dateSelected(arg0);
 			}
-			
+
 			public void yearMonthChanged(YearMonthChangeEvent arg0) {
 			}
 		});
 		calendarPanel.setBounds(90, 47, 298, 302);
 		contentPane.add(calendarPanel);
 
-		JButton btnNewButton = new JButton("Videre");
-		btnNewButton.setEnabled(false);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				try {
-					LocationView.reservationCtrl.setStartingTime(timeSelected);
-					LocationView.confirmationView.textField_DT.setText(
-							calendarPanel.getSelectedDate().toString() + " " + timeSelected.toString()
-							);
-				} catch (DataAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				LocationView.confirmationView.setVisible(true);
-			}
-		});
-		btnNewButton.setBounds(490, 246, 92, 40);
-		contentPane.add(btnNewButton);
-		
+		btnNext = new JButton("Videre");
+		btnNext.setEnabled(false);
+		btnNext.addActionListener(this::goNext);
+		btnNext.setBounds(490, 246, 92, 40);
+		contentPane.add(btnNext);
+
 		comboBox = new JComboBox();
-		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					  if(!btnNewButton.isEnabled()) btnNewButton.setEnabled(true);
-			          Object item = e.getItem();
-			          timeSelected = (LocalTime) item;
-			       }
-			}
-		});
+		comboBox.addItemListener(this::itemSelected);
 		comboBox.setBounds(395, 71, 187, 22);
 		contentPane.add(comboBox);
 	}
+
+	private void itemSelected(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+			Object item = e.getItem();
+			timeSelected = (LocalTime) item;
+		}
+	}
+
 	private void displayTimes(List<LocalTime> availableTimeSlots) {
 		comboBox.removeAllItems();
 		comboBox.setModel(new DefaultComboBoxModel(availableTimeSlots.toArray()));
+		timeSelected = (LocalTime) comboBox.getSelectedItem();
+		btnNext.setEnabled(true);
+	}
+	
+	private void dateSelected(CalendarSelectionEvent e) {
+		LocationView.reservationCtrl.setGuestCountAndDate(LocationView.guestCountView.guestCount,
+				e.getNewDate());
+		try {
+			displayTimes(LocationView.reservationCtrl.findAvailableTimes());
+		} catch (DataAccessException e1) {
+			JOptionPane.showMessageDialog(null, "Fejl ved at sætte dato og antal gæster på reservation\n" + e1.getMessage());
+		}
+	}
+
+	private void goBack(ActionEvent e) {
+		setVisible(false);
+		LocationView.guestCountView.setVisible(true);
+	}
+	
+	private void goNext(ActionEvent e) {
+		setVisible(false);
+		try {
+			LocationView.reservationCtrl.setStartingTime(timeSelected);
+			LocationView.confirmationView.textField_DT
+					.setText(calendarPanel.getSelectedDate().toString() + " " + timeSelected.toString());
+		} catch (DataAccessException e1) {
+			JOptionPane.showMessageDialog(null, "Fejl ved at sætte tid på reservation\n" + e1.getMessage());
+		}
+		LocationView.confirmationView.setVisible(true);
 	}
 }

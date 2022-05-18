@@ -145,7 +145,6 @@ public class ConfirmationView extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				bekræftReservation();
-				JOptionPane.showMessageDialog(null, "Reservation bekræftet");
 			}
 
 			
@@ -205,11 +204,15 @@ public class ConfirmationView extends JFrame {
 			LocationView.reservationCtrl.endReservation(
 					textField_Navn.getText(), 
 					textField_Mobil.getText(), 
-					textField_Email.getText())
-			;
+					textField_Email.getText());
+			
+			JOptionPane.showMessageDialog(null, "Reservation bekræftet");
+			LocationView.calendarTimeView.comboBox.removeAllItems();
+			LocationView.calendarTimeView.btnNext.setEnabled(false);
+			this.setVisible(false);
+			LocationView.locationView.setVisible(true);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Fejl ved at gemme reservationen\n" + e.getMessage());
 		}
 		
 	}

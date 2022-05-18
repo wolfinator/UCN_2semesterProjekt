@@ -93,7 +93,6 @@ public class ReservationCtrl {
 		LocalDate date = currentReservation.getDate().toLocalDate();
 		
 		currentReservation.setDate(LocalDateTime.of(date, time));
-		delegateTablesToReservation();
 	}	
 
 	public Order addOrder(int productId, int quantity) {
@@ -113,6 +112,8 @@ public class ReservationCtrl {
 	public Reservation endReservation(String custName, String custPhoneNo, String custEmail) throws DataAccessException {				
 		currentReservation.setCustomer(
 				customerCtrl.createCustomer(custName, custPhoneNo, custEmail));
+		
+		delegateTablesToReservation();
 		
 		reservationDB.saveReservation(currentReservation);
 		
