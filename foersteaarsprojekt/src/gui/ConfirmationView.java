@@ -172,18 +172,21 @@ public class ConfirmationView extends JFrame {
 		panelAdress.add(btnTilbage);
 		
 		textField_AG = new JTextField();
+		textField_AG.setEditable(false);
 		textField_AG.setColumns(10);
 		textField_AG.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textField_AG.setBounds(218, 145, 63, 25);
 		panelAdress.add(textField_AG);
 		
 		textField_Sted = new JTextField();
+		textField_Sted.setEditable(false);
 		textField_Sted.setColumns(10);
 		textField_Sted.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textField_Sted.setBounds(171, 117, 110, 25);
 		panelAdress.add(textField_Sted);
 		
 		textField_DT = new JTextField();
+		textField_DT.setEditable(false);
 		textField_DT.setColumns(10);
 		textField_DT.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textField_DT.setBounds(433, 117, 122, 25);
