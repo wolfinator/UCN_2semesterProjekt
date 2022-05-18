@@ -62,7 +62,7 @@ create table Reservation(
 );
 create table _Table(
 	id int Identity(1,1),
-	tableNo int,
+	tableNo int unique,
 	seats int,
 	constraint pk_Table_id Primary Key (id)
 );
