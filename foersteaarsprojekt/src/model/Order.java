@@ -11,7 +11,7 @@ public class Order {
 	private List<OrderLineItem> orderLineItems; 
 	
 	public Order() {
-		//orderLineItems = new ArrayList<>(); //TODO ÅBENBART FORKERT??? 
+		orderLineItems = new ArrayList<>(); //TODO ÅBENBART FORKERT??? 
 	}
 	
 	public OrderLineItem addProduct(Product product, int quantity) {

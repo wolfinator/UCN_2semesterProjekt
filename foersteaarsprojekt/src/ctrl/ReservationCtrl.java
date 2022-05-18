@@ -34,12 +34,8 @@ public class ReservationCtrl {
 		this.reservationDB = new ReservationDB();
 	}
 	
-	public Reservation createReservation(Customer customer, Table table, int guestCount) {
+	public Reservation createReservation() {
 		Reservation res = new Reservation();
-		res.setCustomer(customer);
-		res.addTable(table);
-		res.setGuestCount(guestCount);
-		
 		
 		return res;
 	}
