@@ -54,7 +54,7 @@ public class LocationView extends JFrame {
 		panel1.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(LocationView.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(LocationView.class.getResource("/gui/Pictures/Sk�rmbillede 2022-05-12 kl. 13.13.24.png")));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(0, 0, 300, 372);
 		panel1.add(lblNewLabel_1);
@@ -65,7 +65,7 @@ public class LocationView extends JFrame {
 		contentPane.add(panelAdress);
 		panelAdress.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Bestil bord på");
+		JLabel lblNewLabel = new JLabel("Bestil bord p\u00E5");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 17));
 		lblNewLabel.setBounds(66, 40, 165, 55);

@@ -52,11 +52,11 @@ public class CalendarTimeView extends JFrame {
 				GuestCount.run();
 			}
 		});
-		btnTilbage.setBounds(461, 246, 91, 40);
+		btnTilbage.setBounds(395, 246, 91, 40);
 		contentPane.add(btnTilbage);
 
 		CalendarPanel calendarPanel = new CalendarPanel();
-		calendarPanel.setBounds(6, 48, 455, 302);
+		calendarPanel.setBounds(90, 47, 298, 302);
 		contentPane.add(calendarPanel);
 
 		JButton btnNewButton = new JButton("Videre");
@@ -67,11 +67,11 @@ public class CalendarTimeView extends JFrame {
 				Confirmation.run();
 			}
 		});
-		btnNewButton.setBounds(551, 246, 92, 40);
+		btnNewButton.setBounds(490, 246, 92, 40);
 		contentPane.add(btnNewButton);
 
 		TimePicker timePicker = new TimePicker();
-		timePicker.setBounds(471, 84, 172, 29);
+		timePicker.setBounds(400, 84, 172, 29);
 		contentPane.add(timePicker);
 	}
 
