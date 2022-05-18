@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ctrl.ReservationCtrl;
+
 import java.awt.Color;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -19,6 +22,12 @@ import java.awt.event.ActionEvent;
 public class LocationView extends JFrame {
 
 	private JPanel contentPane;
+	
+	public static LocationView locationView;
+	public static GuestCountView guestCountView;
+	public static CalendarTimeView calendarTimeView;
+	public static ConfirmationView confirmationView;
+	public static ReservationCtrl reservationCtrl;
 
 	/**
 	 * Launch the application.
@@ -27,8 +36,15 @@ public class LocationView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LocationView frame = new LocationView();
-					frame.setVisible(true);
+					locationView = new LocationView();
+					guestCountView = new GuestCountView();
+					calendarTimeView = new CalendarTimeView();
+					confirmationView = new ConfirmationView();
+					
+					reservationCtrl = new ReservationCtrl();
+					reservationCtrl.createReservation();
+					
+					locationView.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -75,14 +91,21 @@ public class LocationView extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				GuestCountView GuestCount = new GuestCountView();
-				GuestCount.run();
+				confirmationView.textField_Sted.setText("Aalborg");
+				guestCountView.setVisible(true);
 			}
 		});
 		btnNewButton.setBounds(66, 118, 165, 45);
 		panelAdress.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Randers");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				confirmationView.textField_Sted.setText("Randers");
+				guestCountView.setVisible(true);
+			}
+		});
 		btnNewButton_1.setBounds(66, 175, 165, 45);
 		panelAdress.add(btnNewButton_1);
 		
@@ -94,13 +117,5 @@ public class LocationView extends JFrame {
 		Borderpanel.setBounds(0, 0, 600, 322);
 		contentPane.add(Borderpanel);
 	}
-
-	public static void run() {
-		try {
-			LocationView frame = new LocationView();
-			frame.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-	}
+	
 }

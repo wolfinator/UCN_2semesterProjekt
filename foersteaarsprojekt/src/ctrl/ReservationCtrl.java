@@ -158,7 +158,6 @@ public class ReservationCtrl {
 				res = table;
 			}
 		}
-		
 		return res;
 	}
 
@@ -203,6 +202,7 @@ public class ReservationCtrl {
 		while(guestCountToFill > 0) {
 			Table biggestTable = getBiggestTable(availableTables, guestCountToFill);
 			currentReservation.addTable(biggestTable);
+			availableTables.remove(biggestTable);
 			guestCountToFill -= biggestTable.getSeats();
 		}
 	}

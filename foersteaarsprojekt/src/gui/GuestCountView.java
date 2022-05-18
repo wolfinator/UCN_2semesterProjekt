@@ -20,27 +20,32 @@ import java.awt.event.ActionEvent;
 public class GuestCountView extends JFrame {
 
 	private JPanel contentPane;
+	
+	public int guestCount;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GuestCountView frame = new GuestCountView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GuestCountView frame = new GuestCountView();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
+	 * @param string 
+	 * @param locationView 
 	 */
 	public GuestCountView() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -81,7 +86,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("1");
+				guestCount = 1;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(50, 170, 70, 50);
@@ -92,7 +99,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("2");
+				guestCount = 2;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_2.setBounds(160, 170, 70, 50);
@@ -103,7 +112,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("3");
+				guestCount = 3;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_3.setBounds(270, 170, 70, 50);
@@ -114,7 +125,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("4");
+				guestCount = 4;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_4.setBounds(380, 170, 70, 50);
@@ -125,7 +138,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("5");
+				guestCount = 5;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_5.setBounds(490, 170, 70, 50);
@@ -135,7 +150,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("6");
+				guestCount = 6;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_6.setBackground(Color.LIGHT_GRAY);
@@ -146,7 +163,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("7");
+				guestCount = 7;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_7.setBackground(Color.LIGHT_GRAY);
@@ -157,7 +176,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("8");
+				guestCount = 8;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_8.setBackground(Color.LIGHT_GRAY);
@@ -168,7 +189,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("9");
+				guestCount = 9;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 			
 		});
@@ -180,7 +203,9 @@ public class GuestCountView extends JFrame {
 		btnNewButton_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				CalendarTimeView.run();
+				LocationView.confirmationView.textField_AG.setText("10");
+				guestCount = 10;
+				LocationView.calendarTimeView.setVisible(true);
 			}
 		});
 		btnNewButton_10.setBackground(Color.LIGHT_GRAY);
@@ -203,21 +228,11 @@ public class GuestCountView extends JFrame {
 		btnTilbage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				LocationView.run();
+				LocationView.locationView.setVisible(true);
 			}
 		});
 		btnTilbage.setBounds(20, 315, 91, 40);
 		panelAdress.add(btnTilbage);
 	}
 
-	public void run() {
-		try {
-			GuestCountView frame = new GuestCountView();
-			frame.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		
-	}
-
-	}
 }	
