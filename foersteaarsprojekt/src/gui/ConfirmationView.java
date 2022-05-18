@@ -73,10 +73,10 @@ public class ConfirmationView extends JFrame {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(0, 0, 271, 100);
 		panel1.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(ConfirmationView.class.getResource("/gui/Pictures/ramen.png")));
+		lblNewLabel.setIcon(new ImageIcon(ConfirmationView.class.getResource("/ramen.png")));
 
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(ConfirmationView.class.getResource("/gui/Pictures/ramen.png")));
+		lblNewLabel_1.setIcon(new ImageIcon(ConfirmationView.class.getResource("/ramen.png")));
 		lblNewLabel_1.setBounds(302, 22, 298, 267);
 		panel1.add(lblNewLabel_1);
 

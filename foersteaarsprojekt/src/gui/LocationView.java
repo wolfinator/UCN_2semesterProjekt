@@ -71,7 +71,7 @@ public class LocationView extends JFrame {
 		panelLogo.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
-		lblLogo.setIcon(new ImageIcon(LocationView.class.getResource("/gui/Pictures/Skærmbillede 2022-05-12 kl. 13.13.24.png")));
+		lblLogo.setIcon(new ImageIcon(LocationView.class.getResource("/PhoSaigonLogo.png")));
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogo.setBounds(0, 0, 300, 372);
 		panelLogo.add(lblLogo);

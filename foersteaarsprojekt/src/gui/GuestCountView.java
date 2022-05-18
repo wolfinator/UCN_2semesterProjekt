@@ -23,22 +23,6 @@ public class GuestCountView extends JFrame {
 
 	public int guestCount;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					GuestCountView frame = new GuestCountView();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
 	/**
 	 * Create the frame.
 	 * 
@@ -63,10 +47,10 @@ public class GuestCountView extends JFrame {
 		JLabel lblLeftPicture = new JLabel("");
 		lblLeftPicture.setBounds(0, 0, 271, 100);
 		panelPicture.add(lblLeftPicture);
-		lblLeftPicture.setIcon(new ImageIcon(GuestCountView.class.getResource("/gui/Pictures/ramen.png")));
+		lblLeftPicture.setIcon(new ImageIcon(GuestCountView.class.getResource("/ramen.png")));
 
 		JLabel lblRightPicture = new JLabel("");
-		lblRightPicture.setIcon(new ImageIcon(GuestCountView.class.getResource("/gui/Pictures/ramen.png")));
+		lblRightPicture.setIcon(new ImageIcon(GuestCountView.class.getResource("/ramen.png")));
 		lblRightPicture.setBounds(302, 22, 298, 267);
 		panelPicture.add(lblRightPicture);
 
