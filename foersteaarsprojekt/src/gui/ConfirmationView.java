@@ -140,7 +140,7 @@ public class ConfirmationView extends JFrame {
 		btnNewButton.setActionCommand("Bekr\u00E6ft");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Reservation bekrÃ¦ftet");		
+				JOptionPane.showMessageDialog(null, "Reservation bekræftet");		
 			}
 		});
 		btnNewButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
