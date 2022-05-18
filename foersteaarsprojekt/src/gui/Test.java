@@ -16,7 +16,7 @@ public class Test {
 		try {
 		ReservationCtrl rCtrl = new ReservationCtrl();
 		
-
+		/*
 		rCtrl.createReservation();
 		rCtrl.setGuestCountAndDate(5, LocalDate.now());
 		rCtrl.setStartingTime(LocalTime.of(15, 0));
@@ -24,18 +24,13 @@ public class Test {
 		for(LocalTime t : timeSlot) {
 			System.out.println(t);
 		}
+		*/
 		
-		/*
 		rCtrl.createReservation();
 		rCtrl.setGuestCountAndDate(5, LocalDate.now());
-		rCtrl.setStartingTime(LocalTime.of(15, 30));
-		Table table = new Table();
-		table.setSeats(2);
-		table.setTableNo(2);
-		table.setId(2);
-		rCtrl.addTable(table);
-		rCtrl.endReservation("Mike Wazowski", "50505050", "wazowski@mail.dk");
-		*/
+		rCtrl.setStartingTime(LocalTime.of(17, 0));
+		rCtrl.endReservation("Hr Mand", "70102030", "dinMandmand@mail.dk");
+		
 		}
 		
 		catch(DataAccessException e) {

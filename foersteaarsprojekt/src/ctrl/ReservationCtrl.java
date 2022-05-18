@@ -1,7 +1,6 @@
 package ctrl;
 
 import db.ReservationDB;
-import model.Customer;
 import model.Order;
 import model.Reservation;
 import model.Table;
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ReservationCtrl {
@@ -37,6 +35,8 @@ public class ReservationCtrl {
 	public Reservation createReservation() {
 		Reservation res = new Reservation();
 		
+		currentReservation = res;
+		
 		return res;
 	}
 	
@@ -44,8 +44,9 @@ public class ReservationCtrl {
 		List<LocalTime> res = new ArrayList<>();
 		
 		currentReservation.setGuestCount(quantity);
-		// Ved ikke om LocalDateTime.of() virker med null som LocalTime parameter
-		// så nu er det LocalTime.MIN
+		/*
+		 * LocalTime.MIN sat som default værdi i LocalTime delen af LocalDateTime
+		 */
 		currentReservation.setDate(LocalDateTime.of(date, LocalTime.MIN));
 		
 		return res;
@@ -86,84 +87,14 @@ public class ReservationCtrl {
 		return res;
 	}
 	
-	private void calculateAvailableSeats(List<Integer> seatsInTimeSlot, List<LocalTime> timeSlots, List<Table> allTables, List<Reservation> reservationsForTheDay, int maxNumberOfSeats) {
-		for(LocalTime timeSlot : timeSlots) {
-			int seatsInUse = 0;
-			for(Reservation reservation : reservationsForTheDay) {
-				LocalTime timeSlotNextInterval = timeSlot.plus(TIMESLOT_INTERVAL_MINUTES, ChronoUnit.MINUTES);
-				LocalTime reservationStartTime = reservation.getDate().toLocalTime();
-				LocalTime reservationEndTime = reservation.getDate().toLocalTime()
-						.plus(TIMESLOT_DURATION_MINUTES, ChronoUnit.MINUTES);
-				
-				if(timeSlot.isBefore(reservationEndTime)
-						&& timeSlotNextInterval.isAfter(reservationStartTime)) {
-					
-					for (Table table : reservation.getTables()) {
-						seatsInUse += table.getSeats();
-					}
-				}
-			}
-			seatsInTimeSlot.add(maxNumberOfSeats - seatsInUse);
-		}
-		
-	}
-
-	private void initializeTimeSlots(List<LocalTime> timeSlots) {
-		LocalTime counter = openingTimeWeekday;
-		while(counter.isBefore(closingTimeWeekday.minus(TIMESLOT_DURATION_MINUTES-1, ChronoUnit.MINUTES))) {
-			timeSlots.add(counter);
-			counter = counter.plus(TIMESLOT_INTERVAL_MINUTES, ChronoUnit.MINUTES);
-		}
-		
-	}
+	
 
 	public void setStartingTime(LocalTime time) throws DataAccessException {
 		LocalDate date = currentReservation.getDate().toLocalDate();
 		
 		currentReservation.setDate(LocalDateTime.of(date, time));
 		delegateTablesToReservation();
-	}
-	
-	private void delegateTablesToReservation() throws DataAccessException {
-		List<Table> availableTables = availableTables(tableCtrl.getTables(), currentReservation.getDate().toLocalTime());
-		// TODO make it choose bigger tables first from the list
-		
-		int guestCountToFill = currentReservation.getGuestCount();
-		while(guestCountToFill > 0) {
-			
-		}
-	}
-
-	private List<Table> availableTables(List<Table> tables, LocalTime timeToCheck) throws DataAccessException {
-		List<Table> res = new ArrayList<>();
-		List<Reservation> reservationsForTheDay = reservationDB.findReservationsByDate(
-				currentReservation.getDate()
-				.toLocalDate());
-		for(Reservation r : reservationsForTheDay) {
-			if(isOverlapping(r, timeToCheck)) {
-				for(Table t : r.getTables()) {
-					tables.remove(t);
-				}
-			}
-			
-		}
-		res = tables;
-		return res;
-	}
-	
-	private boolean isOverlapping(Reservation reservation, LocalTime timeToCheck) {
-		boolean res = false;
-		LocalTime reservationStartTime = reservation.getDate().toLocalTime();
-		LocalTime reservationEndTime = reservation.getDate().toLocalTime()
-				.plus(TIMESLOT_DURATION_MINUTES, ChronoUnit.MINUTES);
-		
-		if(timeToCheck.isBefore(reservationEndTime)
-				&& timeToCheck.plus(TIMESLOT_INTERVAL_MINUTES, ChronoUnit.MINUTES)
-				.isAfter(reservationStartTime)) {
-			res = true;
-		}
-		return res;
-	}
+	}	
 
 	public Order addOrder(int productId, int quantity) {
 		Order res = new Order();
@@ -186,5 +117,93 @@ public class ReservationCtrl {
 		reservationDB.saveReservation(currentReservation);
 		
 		return currentReservation;
+	}
+	
+	private void calculateAvailableSeats(List<Integer> seatsInTimeSlot, List<LocalTime> timeSlots, List<Table> allTables, List<Reservation> reservationsForTheDay, int maxNumberOfSeats) {
+		for(LocalTime timeSlot : timeSlots) {
+			int seatsInUse = 0;
+			for(Reservation reservation : reservationsForTheDay) {
+				LocalTime timeSlotNextInterval = timeSlot.plus(TIMESLOT_INTERVAL_MINUTES, ChronoUnit.MINUTES);
+				LocalTime reservationStartTime = reservation.getDate().toLocalTime();
+				LocalTime reservationEndTime = reservation.getDate().toLocalTime()
+						.plus(TIMESLOT_DURATION_MINUTES, ChronoUnit.MINUTES);
+				
+				if(timeSlot.isBefore(reservationEndTime)
+						&& timeSlotNextInterval.isAfter(reservationStartTime.minus(TIMESLOT_DURATION_MINUTES-1, ChronoUnit.MINUTES))) {
+					
+					for (Table table : reservation.getTables()) {
+						seatsInUse += table.getSeats();
+					}
+				}
+			}
+			seatsInTimeSlot.add(maxNumberOfSeats - seatsInUse);
+		}
+		
+	}
+
+	private void initializeTimeSlots(List<LocalTime> timeSlots) {
+		LocalTime counter = openingTimeWeekday;
+		while(counter.isBefore(closingTimeWeekday.minus(TIMESLOT_DURATION_MINUTES-1, ChronoUnit.MINUTES))) {
+			timeSlots.add(counter);
+			counter = counter.plus(TIMESLOT_INTERVAL_MINUTES, ChronoUnit.MINUTES);
+		}
+		
+	}
+	
+	private Table getBiggestTable(List<Table> availableTables, int guestCountToFill) {
+		Table res = availableTables.get(0);
+		
+		for (Table table : availableTables) {
+			if(table.getSeats() > res.getSeats() && table.getSeats() <= guestCountToFill) {
+				res = table;
+			}
+		}
+		
+		return res;
+	}
+
+	private List<Table> availableTables(List<Table> tables, LocalTime timeToCheck) throws DataAccessException {
+		List<Table> res = new ArrayList<>();
+		List<Reservation> reservationsForTheDay = reservationDB.findReservationsByDate(
+				currentReservation.getDate()
+				.toLocalDate());
+		
+		// Remove tables from reservations overlapping timeToCheck
+		for(Reservation r : reservationsForTheDay) {
+			if(isOverlapping(r, timeToCheck)) {
+				for(Table t : r.getTables()) {
+					tables.remove(t);		
+				}
+			}
+			
+		}
+		res = tables;
+		return res;
+	}
+	
+	private boolean isOverlapping(Reservation reservation, LocalTime timeToCheck) {
+		boolean res = false;
+		LocalTime reservationStartTime = reservation.getDate().toLocalTime();
+		LocalTime reservationEndTime = reservation.getDate().toLocalTime()
+				.plus(TIMESLOT_DURATION_MINUTES, ChronoUnit.MINUTES);
+		
+		if(timeToCheck.isBefore(reservationEndTime)
+				&& 
+		   timeToCheck.plus(TIMESLOT_INTERVAL_MINUTES, ChronoUnit.MINUTES)
+				.isAfter(reservationStartTime.minus(TIMESLOT_DURATION_MINUTES-1, ChronoUnit.MINUTES))) {
+			res = true;
+		}
+		return res;
+	}
+	
+	private void delegateTablesToReservation() throws DataAccessException {
+		List<Table> availableTables = availableTables(tableCtrl.getTables(), currentReservation.getDate().toLocalTime());
+		
+		int guestCountToFill = currentReservation.getGuestCount();
+		while(guestCountToFill > 0) {
+			Table biggestTable = getBiggestTable(availableTables, guestCountToFill);
+			currentReservation.addTable(biggestTable);
+			guestCountToFill -= biggestTable.getSeats();
+		}
 	}
 }
