@@ -22,7 +22,7 @@ public class OrderCtrl {
 		
 		OrderLineItem oli = new OrderLineItem();
 		oli = currOrder.addProduct(product, quantity);
-		return oli;
+		return oli; //Burde man returnere ordren istedet for orderlinen?
 	}
 	
 }
