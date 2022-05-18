@@ -29,9 +29,9 @@ public class ConfirmationView extends JFrame {
 	private JTextField textField_Navn;
 	private JTextField textField_Email;
 	private JTextField txtDfsfd;
+	private JTextField textField_AG;
 	private JTextField textField_Sted;
-	private JTextField textField_geaster;
-	private JTextField textField_DatoTid;
+	private JTextField textField_DT;
 
 	/**
 	 * Launch the application.
@@ -88,10 +88,10 @@ public class ConfirmationView extends JFrame {
 		lblNewLabel_Sted.setBounds(125, 110, 46, 30);
 		panelAdress.add(lblNewLabel_Sted);
 		
-		JLabel lblNewLabel_AG = new JLabel("Antal gæster:");
+		JLabel lblNewLabel_AG = new JLabel("Antal g\u00E6ster:");
 		lblNewLabel_AG.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_AG.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_AG.setBounds(125, 140, 102, 30);
+		lblNewLabel_AG.setBounds(125, 140, 93, 30);
 		panelAdress.add(lblNewLabel_AG);
 		
 		JLabel lblNewLabel_DT = new JLabel("Dato og tid:");
@@ -136,14 +136,15 @@ public class ConfirmationView extends JFrame {
 		textField_Email.setBounds(123, 255, 158, 25);
 		panelAdress.add(textField_Email);
 		
-		JButton btnNewButton = new JButton("Bekræft");
+		JButton btnNewButton = new JButton("Bekr\u00E6ft");
+		btnNewButton.setActionCommand("Bekr\u00E6ft");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Reservation bekræftet");		
 			}
 		});
 		btnNewButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		btnNewButton.setBounds(408, 311, 85, 40);
+		btnNewButton.setBounds(408, 311, 93, 40);
 		panelAdress.add(btnNewButton);
 		
 		JLabel lblNewLabel_Note = new JLabel("Note");
@@ -153,7 +154,6 @@ public class ConfirmationView extends JFrame {
 		panelAdress.add(lblNewLabel_Note);
 		
 		txtDfsfd = new JTextField();
-		txtDfsfd.setText("Fxies så teksten kommer i toppen");
 		txtDfsfd.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		txtDfsfd.setHorizontalAlignment(SwingConstants.LEFT);
 		txtDfsfd.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -171,23 +171,23 @@ public class ConfirmationView extends JFrame {
 		btnTilbage.setBounds(15, 312, 91, 40);
 		panelAdress.add(btnTilbage);
 		
+		textField_AG = new JTextField();
+		textField_AG.setColumns(10);
+		textField_AG.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textField_AG.setBounds(218, 145, 63, 25);
+		panelAdress.add(textField_AG);
+		
 		textField_Sted = new JTextField();
-		textField_Sted.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_Sted.setBounds(164, 113, 117, 26);
-		panelAdress.add(textField_Sted);
 		textField_Sted.setColumns(10);
+		textField_Sted.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textField_Sted.setBounds(171, 117, 110, 25);
+		panelAdress.add(textField_Sted);
 		
-		textField_geaster = new JTextField();
-		textField_geaster.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_geaster.setColumns(10);
-		textField_geaster.setBounds(225, 143, 56, 26);
-		panelAdress.add(textField_geaster);
-		
-		textField_DatoTid = new JTextField();
-		textField_DatoTid.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_DatoTid.setColumns(10);
-		textField_DatoTid.setBounds(438, 113, 117, 26);
-		panelAdress.add(textField_DatoTid);
+		textField_DT = new JTextField();
+		textField_DT.setColumns(10);
+		textField_DT.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textField_DT.setBounds(433, 117, 122, 25);
+		panelAdress.add(textField_DT);
 	}
 
 	public void run() {
