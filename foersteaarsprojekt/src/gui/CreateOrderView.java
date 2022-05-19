@@ -116,6 +116,7 @@ public class CreateOrderView extends JFrame {
 		contentPane.add(scrollPane_hovedret);
 
 		table_hovedret = new JTable();
+		table_hovedret.getSelectionModel().addListSelectionListener(this::productSelected1);
 		scrollPane_hovedret.setViewportView(table_hovedret);
 
 		scrollPane_drikkevare = new JScrollPane();
@@ -124,6 +125,7 @@ public class CreateOrderView extends JFrame {
 		contentPane.add(scrollPane_drikkevare);
 
 		table_drikkevare = new JTable();
+		table_drikkevare.getSelectionModel().addListSelectionListener(this::productSelected2);
 		scrollPane_drikkevare.setViewportView(table_drikkevare);
 
 		lblHovedretter = new JLabel("Forret");
@@ -168,10 +170,12 @@ public class CreateOrderView extends JFrame {
 		contentPane.add(btnAddForret);
 
 		JButton btnAddHovedRet = new JButton("Add");
+		btnAddHovedRet.addActionListener(this::addProduct);
 		btnAddHovedRet.setBounds(208, 305, 89, 23);
 		contentPane.add(btnAddHovedRet);
 
 		JButton btnAddDrikkevare = new JButton("Add");
+		btnAddDrikkevare.addActionListener(this::addProduct);
 		btnAddDrikkevare.setBounds(376, 305, 89, 23);
 		contentPane.add(btnAddDrikkevare);
 
@@ -194,13 +198,29 @@ public class CreateOrderView extends JFrame {
 			List<Product> products = productCtrl.findAll();
 			List<Product> forretter = products.stream().filter((p) -> p.getType().getId() == 1)
 					.collect(Collectors.toList());
+			List<Product> hovedretter = products.stream().filter((p) -> p.getType().getId() == 2)
+					.collect(Collectors.toList());
+			List<Product> drikkevarer = products.stream().filter((p) -> p.getType().getId() == 3)
+					.collect(Collectors.toList());
 			DefaultTableModel forretModel = (DefaultTableModel) table_forret.getModel();
-
+			DefaultTableModel hovedretModel = (DefaultTableModel) table_hovedret.getModel();
+			DefaultTableModel drikkevareModel = (DefaultTableModel) table_drikkevare.getModel();
+			
 			forretModel.addColumn("Navn");
 			forretModel.addColumn("Pris");
+			hovedretModel.addColumn("Navn");
+			hovedretModel.addColumn("Pris");
+			drikkevareModel.addColumn("Navn");
+			drikkevareModel.addColumn("Pris");
 
 			for (Product p : forretter) {
 				forretModel.addRow(new Object[] { p.getName(), p.getPrice() });
+			}
+			for (Product p : hovedretter) {
+				hovedretModel.addRow(new Object[] { p.getName(), p.getPrice() });
+			}
+			for (Product p : drikkevarer) {
+				drikkevareModel.addRow(new Object[] { p.getName(), p.getPrice() });
 			}
 
 		} catch (DataAccessException e) {
@@ -251,6 +271,26 @@ public class CreateOrderView extends JFrame {
 	private void productSelected(ListSelectionEvent e) {
 		Product product = new Product();
 		JTable table = table_forret;
+		
+		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
+		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
+		
+		selectedProduct = product;
+	}
+	
+	private void productSelected1(ListSelectionEvent e) {
+		Product product = new Product();
+		JTable table = table_hovedret;
+		
+		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
+		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
+		
+		selectedProduct = product;
+	}
+	
+	private void productSelected2(ListSelectionEvent e) {
+		Product product = new Product();
+		JTable table = table_drikkevare;
 		
 		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
 		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
