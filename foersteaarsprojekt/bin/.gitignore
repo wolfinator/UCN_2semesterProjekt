@@ -1,4 +1,6 @@
-/test/
 /ctrl/
+/db/
 /gui/
 /model/
+/test/
+/ui/

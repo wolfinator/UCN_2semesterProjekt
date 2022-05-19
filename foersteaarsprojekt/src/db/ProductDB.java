@@ -12,6 +12,7 @@ import model.Product;
 import model.ProductType;
 
 public class ProductDB implements ProductDBIF {
+	
 
 	private static final String FIND_BY_PRODUCTID_SQL = "select id, name, price, typeId, pt.id, pt.name from Product, ProductType pt "
 			+ "where typeId = pt.id;";
@@ -65,7 +66,6 @@ public class ProductDB implements ProductDBIF {
 	
 	public Product findProductById(int productId) throws DataAccessException {
 		Product res = null;
-		Connection con = DBConnection.getInstance().getConnection();
 		try {
 			findProductPS.setInt(1, productId);
 			ResultSet rs = findProductPS.executeQuery();
