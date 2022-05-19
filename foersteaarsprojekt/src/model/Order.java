@@ -24,6 +24,20 @@ public class Order {
 		
 		return oli; 
 	}
+	
+	public double getTotalPrice() {
+		double totalPrice = 0;
+		for(OrderLineItem o : orderLineItems) {
+			double productPrice = o.getProduct().getPrice();
+			int quantity = o.getQuantity();
+			double orderLinePrice = quantity * productPrice;
+			totalPrice = orderLinePrice + totalPrice;
+			
+		}
+		
+		return totalPrice;
+		
+	}
 
 	public int getId() {
 		return id;
@@ -50,11 +64,4 @@ public class Order {
 		return orderNo;
 	}
 
-	public int getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(int totalPrice) {
-		this.totalPrice = totalPrice;
-	}
 }
