@@ -163,7 +163,7 @@ public class ConfirmationView extends JFrame {
 		btnTilbage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				LocationView.calendarTimeView.setVisible(true);
+				LocationView.createOrderView.setVisible(true);
 			}
 		});
 		btnTilbage.setBounds(15, 312, 91, 40);

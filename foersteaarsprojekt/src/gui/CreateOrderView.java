@@ -17,6 +17,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class CreateOrderView extends JFrame {
 
@@ -116,15 +118,18 @@ public class CreateOrderView extends JFrame {
 		lblDrikkevarer.setBounds(341, 25, 154, 44);
 		contentPane.add(lblDrikkevarer);
 		
-		JButton btnNewButton = new JButton("Tilbage");
-		btnNewButton.setBounds(10, 366, 89, 23);
-		contentPane.add(btnNewButton);
+		JButton btnTilbage = new JButton("Tilbage");
+		btnTilbage.addActionListener(this::goBack);
+		btnTilbage.setBounds(10, 366, 89, 23);
+		contentPane.add(btnTilbage);
 		
 		JButton btnVidere = new JButton("Videre");
+		btnVidere.addActionListener(this::goNext);
 		btnVidere.setBounds(663, 366, 89, 23);
 		contentPane.add(btnVidere);
 		
 		JButton btnSkip = new JButton("Skip");
+		btnSkip.addActionListener(this::goNext);
 		btnSkip.setBounds(579, 366, 89, 23);
 		contentPane.add(btnSkip);
 		
@@ -152,5 +157,15 @@ public class CreateOrderView extends JFrame {
 		lblNewLabel_1.setBounds(568, 303, 89, 23);
 		contentPane.add(lblNewLabel_1);
 
+	}
+	
+	private void goBack(ActionEvent e) {
+		setVisible(false);
+		LocationView.calendarTimeView.setVisible(true);
+	}
+	
+	private void goNext(ActionEvent e) {
+		setVisible(false);
+		LocationView.confirmationView.setVisible(true);
 	}
 }
