@@ -1,22 +1,24 @@
 package ctrl;
 
-
+import java.util.List;
 
 import db.ProductDB;
 import model.Product;
 
-public class ProductCtrl{
-private ProductDB productDB;
+public class ProductCtrl {
+	private ProductDB productDB;
 
+	public ProductCtrl() throws DataAccessException {
+		productDB = new ProductDB();
+	}
 
-public ProductCtrl() throws DataAccessException {
-	productDB = new ProductDB();
-}
-public Product findProductById(int productId) throws DataAccessException {
-	Product res = productDB.findProductById(productId);
-	return res;
-}
-
-
-
+	public Product findProductByName(String name) throws DataAccessException {
+		Product res = productDB.findByName(name);
+		return res;
+	}
+	
+	public List<Product> findAll() throws DataAccessException{
+		return productDB.findAll();
+	}
+	
 }

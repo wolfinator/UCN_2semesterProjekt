@@ -16,8 +16,8 @@ public class OrderCtrl {
 		productCtrl = new ProductCtrl();
 		orderDb = new OrderDB();
 	}
-	public Order addProduct(int productId, int quantity) throws DataAccessException {
-		Product product = productCtrl.findProductById(productId);
+	public Order addProduct(String name, int quantity) throws DataAccessException {
+		Product product = productCtrl.findProductByName(name);
 		
 		OrderLineItem oli = new OrderLineItem();
 		oli = currOrder.addProduct(product, quantity);

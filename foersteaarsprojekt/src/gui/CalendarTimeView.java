@@ -28,6 +28,8 @@ import ctrl.DataAccessException;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ItemEvent;
 
 public class CalendarTimeView extends JFrame {
@@ -62,6 +64,13 @@ public class CalendarTimeView extends JFrame {
 	 */
 
 	public CalendarTimeView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 649, 336);
 		contentPane = new JPanel();
@@ -133,6 +142,8 @@ public class CalendarTimeView extends JFrame {
 			LocationView.reservationCtrl.setStartingTime(timeSelected);
 			LocationView.confirmationView.textField_DT
 					.setText(calendarPanel.getSelectedDate().toString() + " " + timeSelected.toString());
+			
+			LocationView.createOrderView.initProducts();
 		} catch (DataAccessException e1) {
 			JOptionPane.showMessageDialog(null, "Fejl ved at sætte tid på reservation\n" + e1.getMessage());
 		}

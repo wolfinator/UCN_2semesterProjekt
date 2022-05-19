@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import ctrl.DataAccessException;
 import model.Order;
+import model.Reservation;
 
 public class OrderDB implements OrderDBIF{
 	private Connection con; 
@@ -27,8 +28,8 @@ public class OrderDB implements OrderDBIF{
 			e.printStackTrace();
 		}
 	}
-	public void saveOrder(Order o) {
-	
+	public void saveOrder(Order o, Reservation r) {
+		
 		
 	}
 }

@@ -3,6 +3,8 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,45 +13,71 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+
+import ctrl.DataAccessException;
+import ctrl.OrderCtrl;
+import ctrl.ProductCtrl;
+import model.Order;
+import model.OrderLineItem;
+import model.Product;
+
 import java.awt.Color;
+
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 
 public class CreateOrderView extends JFrame {
 
+	private ProductCtrl productCtrl;
+	private OrderCtrl orderCtrl;
+	
+	private Product selectedProduct;
+
 	private JPanel contentPane;
-	private JTable table;
+	private JTable orderTable;
 	private JLabel lblNewLabel;
-	private JScrollPane scrollPane_1;
-	private JScrollPane scrollPane_2;
-	private JScrollPane scrollPane_3;
-	private JTable table_1;
-	private JTable table_2;
-	private JTable table_3;
+	private JScrollPane scrollPane_forret;
+	private JScrollPane scrollPane_hovedret;
+	private JScrollPane scrollPane_drikkevare;
+	private JTable table_forret;
+	private JTable table_hovedret;
+	private JTable table_drikkevare;
 	private JLabel lblHovedretter;
 	private JLabel lblForret;
 	private JLabel lblDrikkevarer;
-	private JTextField textField;
+	private JTextField totalPrice;
 	private JLabel lblNewLabel_1;
+	private JScrollPane scrollPane;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					CreateOrderView frame = new CreateOrderView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	public CreateOrderView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.exit(0);
 			}
 		});
-	}
-	public CreateOrderView() {
+
+		try {
+			productCtrl = new ProductCtrl();
+			orderCtrl = new OrderCtrl();
+			orderCtrl.createOrder();
+		} catch (DataAccessException e1) {
+			JOptionPane.showMessageDialog(null, "Fejl ved at lave Ctrler til view\n" + e1.getMessage());
+		}
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 776, 437);
 		contentPane = new JPanel();
@@ -57,100 +85,102 @@ public class CreateOrderView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		contentPane.setLayout(null);
-		
-		JScrollPane scrollPane = new JScrollPane();
+
+		scrollPane = new JScrollPane();
 		scrollPane.setBorder(new LineBorder(new Color(130, 135, 144)));
 		scrollPane.setBounds(516, 73, 236, 221);
 		contentPane.add(scrollPane);
-		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
+
+		orderTable = new JTable();
+		scrollPane.setViewportView(orderTable);
+
 		lblNewLabel = new JLabel("Ordre");
 		lblNewLabel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(516, 25, 236, 44);
 		contentPane.add(lblNewLabel);
-		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBorder(new LineBorder(new Color(130, 135, 144)));
-		scrollPane_1.setBounds(10, 73, 154, 221);
-		contentPane.add(scrollPane_1);
-		
-		table_1 = new JTable();
-		scrollPane_1.setViewportView(table_1);
-		
-		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBorder(new LineBorder(new Color(130, 135, 144)));
-		scrollPane_2.setBounds(177, 73, 154, 221);
-		contentPane.add(scrollPane_2);
-		
-		table_2 = new JTable();
-		scrollPane_2.setViewportView(table_2);
-		
-		scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBorder(new LineBorder(new Color(130, 135, 144)));
-		scrollPane_3.setBounds(341, 73, 154, 221);
-		contentPane.add(scrollPane_3);
-		
-		table_3 = new JTable();
-		scrollPane_3.setViewportView(table_3);
-		
+
+		scrollPane_forret = new JScrollPane();
+		scrollPane_forret.setBorder(new LineBorder(new Color(130, 135, 144)));
+		scrollPane_forret.setBounds(10, 73, 154, 221);
+		contentPane.add(scrollPane_forret);
+
+		table_forret = new JTable();
+		table_forret.getSelectionModel().addListSelectionListener(this::productSelected);
+		scrollPane_forret.setViewportView(table_forret);
+
+		scrollPane_hovedret = new JScrollPane();
+		scrollPane_hovedret.setBorder(new LineBorder(new Color(130, 135, 144)));
+		scrollPane_hovedret.setBounds(177, 73, 154, 221);
+		contentPane.add(scrollPane_hovedret);
+
+		table_hovedret = new JTable();
+		scrollPane_hovedret.setViewportView(table_hovedret);
+
+		scrollPane_drikkevare = new JScrollPane();
+		scrollPane_drikkevare.setBorder(new LineBorder(new Color(130, 135, 144)));
+		scrollPane_drikkevare.setBounds(341, 73, 154, 221);
+		contentPane.add(scrollPane_drikkevare);
+
+		table_drikkevare = new JTable();
+		scrollPane_drikkevare.setViewportView(table_drikkevare);
+
 		lblHovedretter = new JLabel("Forret");
 		lblHovedretter.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblHovedretter.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHovedretter.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblHovedretter.setBounds(10, 25, 154, 44);
 		contentPane.add(lblHovedretter);
-		
+
 		lblForret = new JLabel("Hovedret");
 		lblForret.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblForret.setHorizontalAlignment(SwingConstants.CENTER);
 		lblForret.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblForret.setBounds(177, 25, 154, 44);
 		contentPane.add(lblForret);
-		
+
 		lblDrikkevarer = new JLabel("Drikkevarer");
 		lblDrikkevarer.setBorder(new LineBorder(new Color(0, 0, 0)));
 		lblDrikkevarer.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDrikkevarer.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblDrikkevarer.setBounds(341, 25, 154, 44);
 		contentPane.add(lblDrikkevarer);
-		
+
 		JButton btnTilbage = new JButton("Tilbage");
 		btnTilbage.addActionListener(this::goBack);
 		btnTilbage.setBounds(10, 366, 89, 23);
 		contentPane.add(btnTilbage);
-		
+
 		JButton btnVidere = new JButton("Videre");
 		btnVidere.addActionListener(this::goNext);
 		btnVidere.setBounds(663, 366, 89, 23);
 		contentPane.add(btnVidere);
-		
+
 		JButton btnSkip = new JButton("Skip");
 		btnSkip.addActionListener(this::goNext);
 		btnSkip.setBounds(579, 366, 89, 23);
 		contentPane.add(btnSkip);
-		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.setBounds(31, 305, 89, 23);
-		contentPane.add(btnAdd);
-		
-		JButton btnAdd_1 = new JButton("Add");
-		btnAdd_1.setBounds(208, 305, 89, 23);
-		contentPane.add(btnAdd_1);
-		
-		JButton btnAdd_2 = new JButton("Add");
-		btnAdd_2.setBounds(376, 305, 89, 23);
-		contentPane.add(btnAdd_2);
-		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(663, 306, 89, 22);
-		contentPane.add(textField);
-		textField.setColumns(10);
-		
+
+		JButton btnAddForret = new JButton("Add");
+		btnAddForret.addActionListener(this::addProduct);
+		btnAddForret.setBounds(31, 305, 89, 23);
+		contentPane.add(btnAddForret);
+
+		JButton btnAddHovedRet = new JButton("Add");
+		btnAddHovedRet.setBounds(208, 305, 89, 23);
+		contentPane.add(btnAddHovedRet);
+
+		JButton btnAddDrikkevare = new JButton("Add");
+		btnAddDrikkevare.setBounds(376, 305, 89, 23);
+		contentPane.add(btnAddDrikkevare);
+
+		totalPrice = new JTextField();
+		totalPrice.setEditable(false);
+		totalPrice.setBounds(663, 306, 89, 22);
+		contentPane.add(totalPrice);
+		totalPrice.setColumns(10);
+
 		lblNewLabel_1 = new JLabel("Subtotal");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -159,13 +189,72 @@ public class CreateOrderView extends JFrame {
 
 	}
 	
+	public void initProducts() {
+		try {
+			List<Product> products = productCtrl.findAll();
+			List<Product> forretter = products.stream().filter((p) -> p.getType().getId() == 1)
+					.collect(Collectors.toList());
+			DefaultTableModel forretModel = (DefaultTableModel) table_forret.getModel();
+
+			forretModel.addColumn("Navn");
+			forretModel.addColumn("Pris");
+
+			for (Product p : forretter) {
+				forretModel.addRow(new Object[] { p.getName(), p.getPrice() });
+			}
+
+		} catch (DataAccessException e) {
+			JOptionPane.showMessageDialog(null, "Fejl ved at hente produkterne\n" + e.getMessage());
+		}
+
+	}
+
 	private void goBack(ActionEvent e) {
 		setVisible(false);
 		LocationView.calendarTimeView.setVisible(true);
 	}
-	
+
 	private void goNext(ActionEvent e) {
 		setVisible(false);
 		LocationView.confirmationView.setVisible(true);
+	}
+	
+	private void addProduct(ActionEvent e) {
+		if(selectedProduct == null) {
+			JOptionPane.showMessageDialog(null, "Please select a fucking product");
+		}else {
+			try {
+				updateOrder(orderCtrl.addProduct(selectedProduct.getName(), 1));
+			} catch (DataAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+
+	private void updateOrder(Order order) {
+		DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+		if(orderModel.getColumnCount() == 0) {
+			orderModel.addColumn("Navn");
+			orderModel.addColumn("Antal");
+		}
+		orderModel.setRowCount(0);
+		
+		for (OrderLineItem oli : order.getOrderLineItem()) {
+			orderModel.addRow(new Object[] {oli.getProduct().getName(), oli.getQuantity()});
+		}
+		
+		totalPrice.setText(String.valueOf(order.getTotalPrice()));
+	}
+	
+	private void productSelected(ListSelectionEvent e) {
+		Product product = new Product();
+		JTable table = table_forret;
+		
+		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
+		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
+		
+		selectedProduct = product;
 	}
 }
