@@ -30,6 +30,7 @@ public class LocationView extends JFrame {
 	public static CalendarTimeView calendarTimeView;
 	public static ConfirmationView confirmationView;
 	public static ReservationCtrl reservationCtrl;
+	public static CreateOrderView createOrderView;
 
 	/**
 	 * Launch the application.
@@ -42,6 +43,8 @@ public class LocationView extends JFrame {
 					guestCountView = new GuestCountView();
 					calendarTimeView = new CalendarTimeView();
 					confirmationView = new ConfirmationView();
+					createOrderView = new CreateOrderView();
+					
 					
 					reservationCtrl = new ReservationCtrl();
 					

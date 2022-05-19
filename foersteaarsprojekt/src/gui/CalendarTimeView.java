@@ -136,6 +136,6 @@ public class CalendarTimeView extends JFrame {
 		} catch (DataAccessException e1) {
 			JOptionPane.showMessageDialog(null, "Fejl ved at sætte tid på reservation\n" + e1.getMessage());
 		}
-		LocationView.confirmationView.setVisible(true);
+		LocationView.createOrderView.setVisible(true);
 	}
 }
