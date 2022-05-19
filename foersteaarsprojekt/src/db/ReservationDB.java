@@ -129,13 +129,11 @@ public class ReservationDB implements ReservationDBIF {
 		
 		// Gemme Order	
 		try {
-			List<Order> orders = reservation.getOrders();
-			for(Order o : orders) {
-				orderDB.saveOrder(o);
-			}
+			Order order = reservation.getOrder();
+			orderDB.saveOrder(order, reservation);
 		} catch (DataAccessException e) {
 			dbc.rollbackTransaction();
-			throw new DataAccessException("Error saving Orders", e);
+			throw new DataAccessException("Error saving Order", e);
 		}
 		dbc.commitTransaction();
 		return res;

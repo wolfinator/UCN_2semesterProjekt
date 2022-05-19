@@ -14,10 +14,9 @@ public class Reservation {
 	private LocalDateTime date;
 	private String note;
 	
-	private List<Order> orders;
+	private Order order;
 	
 	public Reservation() {
-		orders = new ArrayList<>();
 		tables = new ArrayList<>();
 	}
 	
@@ -31,15 +30,14 @@ public class Reservation {
 		return tables;
 	}
 	
-	public void addOrder(Order o) {
+	public void setOrder(Order o) {
 		if(o != null) {
-			orders.add(o);
+			this.order = o;
 		}
-	
 	}
 	
-	public List<Order> getOrders(){
-		return this.orders;
+	public Order getOrder(){
+		return this.order;
 	}
 	
 	public void setId(int id) {
