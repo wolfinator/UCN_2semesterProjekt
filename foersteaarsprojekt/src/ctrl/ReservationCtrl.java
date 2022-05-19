@@ -34,6 +34,7 @@ public class ReservationCtrl {
 	
 	public Reservation createReservation() {
 		Reservation res = new Reservation();
+		orderCtrl.createOrder();
 		
 		currentReservation = res;
 		
@@ -95,12 +96,10 @@ public class ReservationCtrl {
 		currentReservation.setDate(LocalDateTime.of(date, time));
 	}	
 
-	public Order addOrder(int productId, int quantity) {
-		Order res = new Order();
+	public Order addProduct(int productId, int quantity) throws DataAccessException {
+		Order res = null;
 		
-		//TODO stuff with orderCtrl to add the order to the resrevation
-		
-		//currentReservation.addOrder(res);
+		res = orderCtrl.addProduct(productId, quantity);
 		
 		return res;
 	}
@@ -120,7 +119,12 @@ public class ReservationCtrl {
 		return currentReservation;
 	}
 	
+	/*
+	 * LOCAL FUNCTIONS
+	 */
+	
 	private void calculateAvailableSeats(List<Integer> seatsInTimeSlot, List<LocalTime> timeSlots, List<Table> allTables, List<Reservation> reservationsForTheDay, int maxNumberOfSeats) {
+		// TODO Figure out how it can be negative values
 		for(LocalTime timeSlot : timeSlots) {
 			int seatsInUse = 0;
 			for(Reservation reservation : reservationsForTheDay) {

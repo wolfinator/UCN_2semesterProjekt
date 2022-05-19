@@ -82,46 +82,6 @@ public class ReservationDB implements ReservationDBIF {
 		return res;
 	}
 
-	private List<Reservation> buildObjects(ResultSet rs) throws DataAccessException {
-		List<Reservation> res = new ArrayList<>();
-		
-		try {
-			while(rs.next()) {
-				Reservation reservation = buildObject(rs);
-				res.add(reservation);
-			}
-		} catch (SQLException e) {
-			throw new DataAccessException("Error in building reservation objects (buildObjects())", e);
-		}
-		
-		return res;
-	}
-
-	private Reservation buildObject(ResultSet rs) throws DataAccessException {
-		Reservation res = new Reservation();
-		
-		try {
-			res.setId(rs.getInt("id"));
-			res.setGuestCount(rs.getInt("guestCount"));
-			LocalDateTime ldt = 
-					LocalDateTime.of(
-							rs.getDate("dateTimeslot").toLocalDate(), 
-							rs.getTime("dateTimeslot").toLocalTime());
-			res.setDate(ldt);
-			Customer customer = customerDB.findById(rs.getInt("customerId"));
-			res.setCustomer(customer);
-			List<Table> tables = tableDB.getTables(res.getId());
-			for(Table t : tables) {
-				res.addTable(t);
-			}
-			
-		} catch (SQLException e) {
-			throw new DataAccessException("Error in building a reservation object from resultset(buildObject())", e);
-		}
-		
-		return res;
-	}
-
 	@Override
 	public boolean saveReservation(Reservation reservation) throws DataAccessException {
 		boolean res = false;
@@ -178,6 +138,46 @@ public class ReservationDB implements ReservationDBIF {
 			throw new DataAccessException("Error saving Orders", e);
 		}
 		dbc.commitTransaction();
+		return res;
+	}
+	
+	private List<Reservation> buildObjects(ResultSet rs) throws DataAccessException {
+		List<Reservation> res = new ArrayList<>();
+		
+		try {
+			while(rs.next()) {
+				Reservation reservation = buildObject(rs);
+				res.add(reservation);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException("Error in building reservation objects (buildObjects())", e);
+		}
+		
+		return res;
+	}
+
+	private Reservation buildObject(ResultSet rs) throws DataAccessException {
+		Reservation res = new Reservation();
+		
+		try {
+			res.setId(rs.getInt("id"));
+			res.setGuestCount(rs.getInt("guestCount"));
+			LocalDateTime ldt = 
+					LocalDateTime.of(
+							rs.getDate("dateTimeslot").toLocalDate(), 
+							rs.getTime("dateTimeslot").toLocalTime());
+			res.setDate(ldt);
+			Customer customer = customerDB.findById(rs.getInt("customerId"));
+			res.setCustomer(customer);
+			List<Table> tables = tableDB.getTables(res.getId());
+			for(Table t : tables) {
+				res.addTable(t);
+			}
+			
+		} catch (SQLException e) {
+			throw new DataAccessException("Error in building a reservation object from resultset(buildObject())", e);
+		}
+		
 		return res;
 	}
 

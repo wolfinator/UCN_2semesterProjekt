@@ -90,12 +90,12 @@ create table _Order(
 
 create table ProductType(
 	id int Identity(1,1),
-	name varchar(20)
+	name varchar(20) unique,
 	constraint pk_ProductType_id Primary Key(id)
 );
 create table Product(
 	id int Identity(1,1),
-	name nvarchar(40),
+	name nvarchar(40) unique,
 	price decimal,
 	typeId int,
 	constraint pk_Product_id Primary Key (id),

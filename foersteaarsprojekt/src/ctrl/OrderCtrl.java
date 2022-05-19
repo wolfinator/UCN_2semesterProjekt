@@ -14,15 +14,22 @@ public class OrderCtrl {
 
 	public OrderCtrl() throws DataAccessException {
 		productCtrl = new ProductCtrl();
-		currOrder = new Order();
 		orderDb = new OrderDB();
 	}
-	public OrderLineItem addProduct(int productId, int quantity) throws DataAccessException {
+	public Order addProduct(int productId, int quantity) throws DataAccessException {
 		Product product = productCtrl.findProductById(productId);
 		
 		OrderLineItem oli = new OrderLineItem();
 		oli = currOrder.addProduct(product, quantity);
-		return oli; //Burde man returnere ordren istedet for orderlinen?
+		return currOrder;
+	}
+	
+	public Order createOrder() {
+		Order res = new Order();
+		
+		currOrder = res;
+		
+		return res;
 	}
 	
 }
