@@ -24,6 +24,7 @@ import com.github.lgooddatepicker.zinternaltools.CalendarSelectionEvent;
 import com.github.lgooddatepicker.zinternaltools.YearMonthChangeEvent;
 
 import ctrl.DataAccessException;
+import ui.ReservationUI;
 
 import javax.swing.JComboBox;
 import javax.swing.JList;
@@ -35,6 +36,11 @@ import java.awt.event.ItemEvent;
 public class CalendarTimeView extends JFrame {
 
 	private JPanel contentPane;
+
+	private JFrame previousFrame;
+	private JFrame nextFrame;
+	private ConfirmationView confirm;
+	private ReservationUI uiCtrl;
 
 	public JComboBox comboBox;
 
@@ -61,16 +67,21 @@ public class CalendarTimeView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param confirmationView
+	 * @param reservationUI
 	 */
 
-	public CalendarTimeView() {
+	public CalendarTimeView(ReservationUI reservationUI, ConfirmationView confirmationView) {
+		uiCtrl = reservationUI;
+		confirm = confirmationView;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
 				System.exit(0);
 			}
 		});
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 649, 336);
 		contentPane = new JPanel();
@@ -120,33 +131,38 @@ public class CalendarTimeView extends JFrame {
 		timeSelected = (LocalTime) comboBox.getSelectedItem();
 		btnNext.setEnabled(true);
 	}
-	
+
 	private void dateSelected(CalendarSelectionEvent e) {
-		LocationView.reservationCtrl.setGuestCountAndDate(LocationView.guestCountView.guestCount,
-				e.getNewDate());
+		int guestCount = ((GuestCountView) previousFrame).guestCount;
+		uiCtrl.setGuestCountAndDate(guestCount, e.getNewDate());
 		try {
-			displayTimes(LocationView.reservationCtrl.findAvailableTimes());
+			displayTimes(uiCtrl.findAvailableTimes());
 		} catch (DataAccessException e1) {
-			JOptionPane.showMessageDialog(null, "Fejl ved at sætte dato og antal gæster på reservation\n" + e1.getMessage());
+			JOptionPane.showMessageDialog(null,
+					"Fejl ved at sætte dato og antal gæster på reservation\n" + e1.getMessage());
 		}
 	}
 
 	private void goBack(ActionEvent e) {
 		setVisible(false);
-		LocationView.guestCountView.setVisible(true);
+		previousFrame.setVisible(true);
 	}
-	
+
 	private void goNext(ActionEvent e) {
 		setVisible(false);
 		try {
-			LocationView.reservationCtrl.setStartingTime(timeSelected);
-			LocationView.confirmationView.textField_DT
-					.setText(calendarPanel.getSelectedDate().toString() + " " + timeSelected.toString());
-			
-			LocationView.createOrderView.initProducts();
+			uiCtrl.setStartingTime(timeSelected);
+			confirm.textField_DT.setText(calendarPanel.getSelectedDate().toString() + " " + timeSelected.toString());
 		} catch (DataAccessException e1) {
+			setVisible(true);
 			JOptionPane.showMessageDialog(null, "Fejl ved at sætte tid på reservation\n" + e1.getMessage());
 		}
-		LocationView.createOrderView.setVisible(true);
+		nextFrame.setVisible(true);
+	}
+
+	public void addTransitions(GuestCountView guestCountView, CreateOrderView createOrderView) {
+		previousFrame = guestCountView;
+		nextFrame = createOrderView;
+
 	}
 }

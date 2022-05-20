@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ctrl.ReservationCtrl;
+import ui.ReservationUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,43 +26,43 @@ public class LocationView extends JFrame {
 	 */
 	private static final long serialVersionUID = -1129087465639106253L;
 
-	private JPanel contentPane;
 	
-	public static LocationView locationView;
-	public static GuestCountView guestCountView;
-	public static CalendarTimeView calendarTimeView;
-	public static ConfirmationView confirmationView;
-	public static ReservationCtrl reservationCtrl;
-	public static CreateOrderView createOrderView;
+	private JPanel contentPane;
 
+	private JFrame nextFrame;
+	private ConfirmationView confirm;
+	private ReservationUI uiCtrl;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					locationView = new LocationView();
-					guestCountView = new GuestCountView();
-					calendarTimeView = new CalendarTimeView();
-					confirmationView = new ConfirmationView();
-					createOrderView = new CreateOrderView();
-					
-					
-					reservationCtrl = new ReservationCtrl();
-					
-					locationView.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					locationView = new LocationView();
+//					guestCountView = new GuestCountView();
+//					calendarTimeView = new CalendarTimeView();
+//					confirmationView = new ConfirmationView();
+//					createOrderView = new CreateOrderView();
+//					
+//					
+//					reservationCtrl = new ReservationCtrl();
+//					
+//					locationView.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public LocationView() {
+	public LocationView(ReservationUI reservationUI, ConfirmationView confirmationView) {
+		uiCtrl = reservationUI;
+		confirm = confirmationView;
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -122,10 +123,14 @@ public class LocationView extends JFrame {
 
 	private void locationSelected(ActionEvent e) {
 		setVisible(false);
-		reservationCtrl.createReservation();
+		uiCtrl.createReservation();
 		JButton buttonThatWasClicked = ((JButton) e.getSource());
-		confirmationView.textField_Sted.setText(buttonThatWasClicked.getText());
-		guestCountView.setVisible(true);
+		confirm.textField_Sted.setText(buttonThatWasClicked.getText());
+		nextFrame.setVisible(true);
+	}
+
+	public void addTransitions(GuestCountView guestCountView2) {
+		nextFrame = guestCountView2;
 	}
 	
 }

@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ui.ReservationUI;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -25,13 +28,22 @@ public class GuestCountView extends JFrame {
 
 	public int guestCount;
 
+	private JFrame previousFrame;
+	private JFrame nextFrame;
+	private ConfirmationView confirm;
+	private ReservationUI uiCtrl;
+
 	/**
 	 * Create the frame.
+	 * @param confirmationView 
+	 * @param reservationUI 
 	 * 
 	 * @param string
 	 * @param locationView
 	 */
-	public GuestCountView() {
+	public GuestCountView(ReservationUI reservationUI, ConfirmationView confirmationView) {
+		uiCtrl = reservationUI;
+		confirm = confirmationView;
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -156,13 +168,19 @@ public class GuestCountView extends JFrame {
 		setVisible(false);
 		JButton buttonThatWasClicked = (JButton) e.getSource();
 		String btnText = buttonThatWasClicked.getText();
-		LocationView.confirmationView.textField_AG.setText(btnText);
+		confirm.textField_AG.setText(btnText);
 		guestCount = Integer.parseInt(btnText);
-		LocationView.calendarTimeView.setVisible(true);
+		nextFrame.setVisible(true);
 	}
 
 	private void goBack(ActionEvent e) {
 		setVisible(false);
-		LocationView.locationView.setVisible(true);
+		previousFrame.setVisible(true);
+	}
+
+	public void addTransitions(LocationView locationView, CalendarTimeView calendarTimeView) {
+		previousFrame = locationView;
+		nextFrame = calendarTimeView;
+
 	}
 }

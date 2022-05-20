@@ -104,6 +104,10 @@ public class ReservationCtrl {
 		return res;
 	}
 	
+	public void setOrder(Order order) {
+		currentReservation.setOrder(order);
+	}
+	
 	public void addTable(Table t) {
 		currentReservation.addTable(t);
 	}

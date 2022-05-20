@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-	private int id;
 	private int orderNo;
 	private int totalPrice;
 	private boolean status;
@@ -50,14 +49,6 @@ public class Order {
 		
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public boolean isStatus() {
 		return status;
 	}
@@ -71,8 +62,11 @@ public class Order {
 	}
 
 	public int getOrderNo() {
-		// TODO Auto-generated method stub
-		return orderNo;
+		return this.orderNo;
+	}
+	
+	public void setOrderNo(int orderNo) {
+		this.orderNo = orderNo;
 	}
 
 }

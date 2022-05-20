@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import ctrl.DataAccessException;
+import ui.ReservationUI;
 
 import java.awt.Component;
 import java.awt.ComponentOrientation;
@@ -38,6 +39,10 @@ public class ConfirmationView extends JFrame {
 	public JTextField textField_AG;
 	public JTextField textField_Sted;
 	public JTextField textField_DT;
+	
+	private JFrame previousFrame;
+	private JFrame nextFrame;
+	private ReservationUI uiCtrl;
 
 	/**
 	 * Launch the application.
@@ -57,8 +62,11 @@ public class ConfirmationView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param reservationUI 
 	 */
-	public ConfirmationView() {
+	public ConfirmationView(ReservationUI reservationUI) {
+		uiCtrl = reservationUI;
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -199,16 +207,16 @@ public class ConfirmationView extends JFrame {
 	
 	private void bekræftReservation(ActionEvent e) {
 		try {
-			LocationView.reservationCtrl.endReservation(
+			uiCtrl.endReservation(
 					textField_Navn.getText(), 
 					textField_Mobil.getText(), 
 					textField_Email.getText());
 			
 			JOptionPane.showMessageDialog(null, "Reservation bekræftet");
-			LocationView.calendarTimeView.comboBox.removeAllItems();
-			LocationView.calendarTimeView.btnNext.setEnabled(false);
+			//LocationView.calendarTimeView.comboBox.removeAllItems();
+			//LocationView.calendarTimeView.btnNext.setEnabled(false);
 			this.setVisible(false);
-			LocationView.locationView.setVisible(true);
+			nextFrame.setVisible(true);
 		} catch (DataAccessException e1) {
 			JOptionPane.showMessageDialog(null, "Fejl ved at gemme reservationen\n" + e1.getMessage());
 		}
@@ -217,6 +225,11 @@ public class ConfirmationView extends JFrame {
 	
 	private void goBack(ActionEvent e) {
 		setVisible(false);
-		LocationView.createOrderView.setVisible(true);
+		previousFrame.setVisible(true);
+	}
+
+	public void addTransitions(CreateOrderView createOrderView, LocationView locationView) {
+		previousFrame = createOrderView;
+		nextFrame = locationView;
 	}
 }

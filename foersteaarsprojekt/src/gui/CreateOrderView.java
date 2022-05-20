@@ -28,6 +28,7 @@ import ctrl.ProductCtrl;
 import model.Order;
 import model.OrderLineItem;
 import model.Product;
+import ui.ReservationUI;
 
 import java.awt.Color;
 
@@ -43,6 +44,11 @@ public class CreateOrderView extends JFrame {
 
 	private ProductCtrl productCtrl;
 	private OrderCtrl orderCtrl;
+	
+	private JFrame previousFrame;
+	private JFrame nextFrame;
+	private ConfirmationView confirm;
+	private ReservationUI uiCtrl;
 	
 	private Product selectedProduct;
 
@@ -62,7 +68,10 @@ public class CreateOrderView extends JFrame {
 	private JLabel lblNewLabel_1;
 	private JScrollPane scrollPane;
 
-	public CreateOrderView() {
+	public CreateOrderView(ReservationUI reservationUI, ConfirmationView confirmationView) {
+		uiCtrl = reservationUI;
+		confirm = confirmationView;
+		
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -190,6 +199,8 @@ public class CreateOrderView extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(568, 303, 89, 23);
 		contentPane.add(lblNewLabel_1);
+		
+		initProducts();
 
 	}
 	
@@ -231,12 +242,12 @@ public class CreateOrderView extends JFrame {
 
 	private void goBack(ActionEvent e) {
 		setVisible(false);
-		LocationView.calendarTimeView.setVisible(true);
+		previousFrame.setVisible(true);
 	}
 
 	private void goNext(ActionEvent e) {
 		setVisible(false);
-		LocationView.confirmationView.setVisible(true);
+		nextFrame.setVisible(true);
 	}
 	
 	private void addProduct(ActionEvent e) {
@@ -265,6 +276,7 @@ public class CreateOrderView extends JFrame {
 			orderModel.addRow(new Object[] {oli.getProduct().getName(), oli.getQuantity()});
 		}
 		
+		uiCtrl.setOrder(order);
 		totalPrice.setText(String.valueOf(order.getTotalPrice()));
 	}
 	
@@ -296,5 +308,11 @@ public class CreateOrderView extends JFrame {
 		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
 		
 		selectedProduct = product;
+	}
+
+	public void addTransitions(CalendarTimeView calendarTimeView, ConfirmationView confirmationView) {
+		previousFrame = calendarTimeView;
+		nextFrame = confirmationView;
+		
 	}
 }

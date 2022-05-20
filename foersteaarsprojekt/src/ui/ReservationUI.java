@@ -2,41 +2,91 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class ReservationUI extends JFrame {
+import ctrl.DataAccessException;
+import ctrl.ReservationCtrl;
+import gui.CalendarTimeView;
+import gui.ConfirmationView;
+import gui.CreateOrderView;
+import gui.GuestCountView;
+import gui.LocationView;
+import model.Order;
 
-	private JPanel contentPane;
+public class ReservationUI {
 
-	/**
-	 * Launch the application.
-	 */
+	private LocationView locationView;
+	private GuestCountView guestCountView;
+	private CalendarTimeView calendarTimeView;
+	private CreateOrderView createOrderView;
+	private ConfirmationView confirmationView;
+	
+	private ReservationCtrl reservationCtrl;
+	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ReservationUI frame = new ReservationUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		ReservationUI ui = new ReservationUI();
+		ui.start();
+	}
+	
+	private void start() {
+		confirmationView = new ConfirmationView(this);
+		locationView = new LocationView(this, confirmationView);
+		guestCountView = new GuestCountView(this, confirmationView);
+		calendarTimeView = new CalendarTimeView(this, confirmationView);
+		createOrderView = new CreateOrderView(this, confirmationView);
+		
+		
+		locationView.addTransitions(guestCountView);
+		guestCountView.addTransitions(locationView, calendarTimeView);
+		calendarTimeView.addTransitions(guestCountView, createOrderView);
+		createOrderView.addTransitions(calendarTimeView, confirmationView);
+		confirmationView.addTransitions(createOrderView, locationView);
+		
+		try {
+			reservationCtrl = new ReservationCtrl();
+		} catch (DataAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		locationView.setVisible(true);
+		
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public ReservationUI() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+	public void createReservation() {
+		reservationCtrl.createReservation();
+		
 	}
 
+	public void setStartingTime(LocalTime timeSelected) throws DataAccessException {
+		reservationCtrl.setStartingTime(timeSelected);
+		
+	}
+	
+	public void setGuestCountAndDate(int guestCount, LocalDate newDate) {
+		reservationCtrl.setGuestCountAndDate(guestCount, newDate);
+		
+	}
+
+	public void endReservation(String cusName, String cusPhoneNo, String cusEmail) throws DataAccessException {
+		reservationCtrl.endReservation(cusName, cusPhoneNo, cusEmail);
+		
+	}
+
+	public List<LocalTime> findAvailableTimes() throws DataAccessException {
+		return reservationCtrl.findAvailableTimes();
+	}
+
+	public void setOrder(Order order) {
+		reservationCtrl.setOrder(order);
+		
+	}
+
+	
 }

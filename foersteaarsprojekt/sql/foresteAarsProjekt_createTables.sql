@@ -101,7 +101,7 @@ create table Product(
 	constraint pk_Product_id Primary Key (id),
 	constraint fk_Product_typeId Foreign Key (typeId) references ProductType(id)
 );
-create table SalesLine(
+create table OrderLineItem(
 	orderNo int,
 	productId int,
 	quantity int,
