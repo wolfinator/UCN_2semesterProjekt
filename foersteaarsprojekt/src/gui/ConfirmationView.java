@@ -23,6 +23,8 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 
@@ -57,6 +59,13 @@ public class ConfirmationView extends JFrame {
 	 * Create the frame.
 	 */
 	public ConfirmationView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
@@ -64,21 +73,21 @@ public class ConfirmationView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel panel1 = new JPanel();
-		panel1.setBackground(Color.DARK_GRAY);
-		panel1.setBounds(0, 0, 600, 100);
-		contentPane.add(panel1);
-		panel1.setLayout(null);
+		JPanel panelPicture = new JPanel();
+		panelPicture.setBackground(Color.DARK_GRAY);
+		panelPicture.setBounds(0, 0, 600, 100);
+		contentPane.add(panelPicture);
+		panelPicture.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(0, 0, 271, 100);
-		panel1.add(lblNewLabel);
-		lblNewLabel.setIcon(new ImageIcon(ConfirmationView.class.getResource("/ramen.png")));
+		JLabel lblLeftPicture = new JLabel("");
+		lblLeftPicture.setBounds(0, 0, 271, 100);
+		panelPicture.add(lblLeftPicture);
+		lblLeftPicture.setIcon(new ImageIcon(ConfirmationView.class.getResource("/ramen.png")));
 
-		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon(ConfirmationView.class.getResource("/ramen.png")));
-		lblNewLabel_1.setBounds(302, 22, 298, 267);
-		panel1.add(lblNewLabel_1);
+		JLabel lblRightPicture = new JLabel("");
+		lblRightPicture.setIcon(new ImageIcon(ConfirmationView.class.getResource("/ramen.png")));
+		lblRightPicture.setBounds(302, 22, 298, 267);
+		panelPicture.add(lblRightPicture);
 
 		JPanel panelAdress = new JPanel();
 		panelAdress.setBackground(Color.WHITE);
@@ -86,35 +95,35 @@ public class ConfirmationView extends JFrame {
 		contentPane.add(panelAdress);
 		panelAdress.setLayout(null);
 
-		JLabel lblNewLabel_Sted = new JLabel("Sted:");
-		lblNewLabel_Sted.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_Sted.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_Sted.setBounds(125, 110, 46, 30);
-		panelAdress.add(lblNewLabel_Sted);
+		JLabel lblSted = new JLabel("Sted:");
+		lblSted.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSted.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblSted.setBounds(125, 110, 46, 30);
+		panelAdress.add(lblSted);
 
-		JLabel lblNewLabel_AG = new JLabel("Antal g\u00E6ster:");
-		lblNewLabel_AG.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_AG.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_AG.setBounds(125, 140, 93, 30);
-		panelAdress.add(lblNewLabel_AG);
+		JLabel lblGuestCount = new JLabel("Antal g\u00E6ster:");
+		lblGuestCount.setHorizontalAlignment(SwingConstants.LEFT);
+		lblGuestCount.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblGuestCount.setBounds(125, 140, 93, 30);
+		panelAdress.add(lblGuestCount);
 
-		JLabel lblNewLabel_DT = new JLabel("Dato og tid:");
-		lblNewLabel_DT.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_DT.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_DT.setBounds(350, 110, 93, 30);
-		panelAdress.add(lblNewLabel_DT);
+		JLabel lblDateTime = new JLabel("Dato og tid:");
+		lblDateTime.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDateTime.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblDateTime.setBounds(350, 110, 93, 30);
+		panelAdress.add(lblDateTime);
 
-		JLabel lblNewLabel_Navn = new JLabel("Navn");
-		lblNewLabel_Navn.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_Navn.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_Navn.setBounds(125, 180, 46, 30);
-		panelAdress.add(lblNewLabel_Navn);
+		JLabel lblNavn = new JLabel("Navn");
+		lblNavn.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNavn.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblNavn.setBounds(125, 180, 46, 30);
+		panelAdress.add(lblNavn);
 
-		JLabel lblNewLabel_Mobil = new JLabel("Mobil");
-		lblNewLabel_Mobil.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_Mobil.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_Mobil.setBounds(125, 280, 46, 30);
-		panelAdress.add(lblNewLabel_Mobil);
+		JLabel lblMobil = new JLabel("Mobil");
+		lblMobil.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMobil.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblMobil.setBounds(125, 280, 46, 30);
+		panelAdress.add(lblMobil);
 
 		textField_Mobil = new JTextField();
 		textField_Mobil.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -140,32 +149,21 @@ public class ConfirmationView extends JFrame {
 		textField_Email.setBounds(123, 255, 158, 25);
 		panelAdress.add(textField_Email);
 
-		JButton btnNewButton = new JButton("Bekr\u00E6ft");
-		btnNewButton.setActionCommand("Bekr\u00E6ft");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				bekræftReservation();
-			}
+		JButton btnConfirm = new JButton("Bekr\u00E6ft");
+		btnConfirm.setActionCommand("Bekr\u00E6ft");
+		btnConfirm.addActionListener(this::bekræftReservation);
+		btnConfirm.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		btnConfirm.setBounds(408, 311, 93, 40);
+		panelAdress.add(btnConfirm);
 
-			
-		});
-		btnNewButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		btnNewButton.setBounds(408, 311, 93, 40);
-		panelAdress.add(btnNewButton);
-
-		JLabel lblNewLabel_Note = new JLabel("Note");
-		lblNewLabel_Note.setHorizontalAlignment(SwingConstants.LEFT);
-		lblNewLabel_Note.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
-		lblNewLabel_Note.setBounds(350, 180, 46, 30);
-		panelAdress.add(lblNewLabel_Note);
+		JLabel lblNote = new JLabel("Note");
+		lblNote.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNote.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		lblNote.setBounds(350, 180, 46, 30);
+		panelAdress.add(lblNote);
 
 		JButton btnTilbage = new JButton("Tilbage");
-		btnTilbage.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				LocationView.createOrderView.setVisible(true);
-			}
-		});
+		btnTilbage.addActionListener(this::goBack);
 		btnTilbage.setBounds(15, 312, 91, 40);
 		panelAdress.add(btnTilbage);
 
@@ -199,7 +197,7 @@ public class ConfirmationView extends JFrame {
 		panelAdress.add(textPane);
 	}
 	
-	private void bekræftReservation() {
+	private void bekræftReservation(ActionEvent e) {
 		try {
 			LocationView.reservationCtrl.endReservation(
 					textField_Navn.getText(), 
@@ -211,9 +209,14 @@ public class ConfirmationView extends JFrame {
 			LocationView.calendarTimeView.btnNext.setEnabled(false);
 			this.setVisible(false);
 			LocationView.locationView.setVisible(true);
-		} catch (DataAccessException e) {
-			JOptionPane.showMessageDialog(null, "Fejl ved at gemme reservationen\n" + e.getMessage());
+		} catch (DataAccessException e1) {
+			JOptionPane.showMessageDialog(null, "Fejl ved at gemme reservationen\n" + e1.getMessage());
 		}
 		
+	}
+	
+	private void goBack(ActionEvent e) {
+		setVisible(false);
+		LocationView.createOrderView.setVisible(true);
 	}
 }

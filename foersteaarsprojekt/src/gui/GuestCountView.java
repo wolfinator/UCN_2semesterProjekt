@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GuestCountView extends JFrame {
 
@@ -30,6 +32,12 @@ public class GuestCountView extends JFrame {
 	 * @param locationView
 	 */
 	public GuestCountView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.exit(0);
+			}
+		});
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 400);
@@ -157,5 +165,4 @@ public class GuestCountView extends JFrame {
 		setVisible(false);
 		LocationView.locationView.setVisible(true);
 	}
-
 }

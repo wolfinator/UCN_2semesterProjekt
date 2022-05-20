@@ -15,6 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class LocationView extends JFrame {
 
@@ -60,6 +62,13 @@ public class LocationView extends JFrame {
 	 * Create the frame.
 	 */
 	public LocationView() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 401);
 		contentPane = new JPanel();

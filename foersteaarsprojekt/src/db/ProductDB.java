@@ -13,9 +13,10 @@ import model.ProductType;
 
 public class ProductDB implements ProductDBIF {
 
-	private final String FIND_BY_PRODUCTID_SQL = "select id, name, price, typeId, pt.id, pt.name from Product, ProductType pt "
-			+ "where typeId = pt.id and id = ?;";
-	private final String FIND_ALL_SQL = "select id, name, price, typeId, pt.id, pt.name from Product, ProductType pt;";
+	private final String FIND_BY_NAME_SQL = "select p.id, p.name, p.price, p.typeId, pt.id, pt.name from Product p, ProductType pt "
+			+ "where p.typeId = pt.id and p.name = ?;";
+	private final String FIND_ALL_SQL = "select p.id, p.name, p.price, p.typeId, pt.id, pt.name from Product p, ProductType pt "
+			+ "where p.typeId = pt.id;";
 
 	private PreparedStatement ps_findById;
 	private PreparedStatement ps_findAll;
@@ -27,7 +28,7 @@ public class ProductDB implements ProductDBIF {
 	private void init() throws DataAccessException {
 		Connection con = DBConnection.getInstance().getConnection();
 		try {
-			ps_findById = con.prepareStatement(FIND_BY_PRODUCTID_SQL);
+			ps_findById = con.prepareStatement(FIND_BY_NAME_SQL);
 			ps_findAll = con.prepareStatement(FIND_ALL_SQL);
 
 		} catch (SQLException e) {
@@ -35,15 +36,15 @@ public class ProductDB implements ProductDBIF {
 		}
 	}
 
-	public Product findProductById(int productId) throws DataAccessException {
+	public Product findByName(String name) throws DataAccessException {
 		Product res = null;
 		try {
-			ps_findById.setInt(1, productId);
+			ps_findById.setString(1, name);
 			ResultSet rs = ps_findById.executeQuery();
 			if (rs.next())
 				res = buildObject(rs);
 		} catch (SQLException e) {
-			throw new DataAccessException("Fejl ved at finde product med productId = " + productId, e);
+			throw new DataAccessException("Fejl ved at finde product med navn = " + name, e);
 
 		}
 		return res;

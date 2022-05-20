@@ -76,7 +76,7 @@ public class ReservationDB implements ReservationDBIF {
 			
 			res = buildObjects(rs);
 		} catch (SQLException e) {
-			throw new DataAccessException("SQL error in retreiving Reservations by date (findReservationsByDate)", e);
+			throw new DataAccessException("Fejl ved at finde reservationerne på datoen = " + date, e);
 		}
 		
 		return res;

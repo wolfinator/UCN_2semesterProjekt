@@ -96,10 +96,10 @@ public class ReservationCtrl {
 		currentReservation.setDate(LocalDateTime.of(date, time));
 	}	
 
-	public Order addProduct(int productId, int quantity) throws DataAccessException {
+	public Order addProduct(String name, int quantity) throws DataAccessException {
 		Order res = null;
 		
-		res = orderCtrl.addProduct(productId, quantity);
+		res = orderCtrl.addProduct(name, quantity);
 		
 		return res;
 	}
