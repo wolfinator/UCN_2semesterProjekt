@@ -22,6 +22,7 @@ public class OrderDB implements OrderDBIF {
 			+ " values (?,?,?);";
 
 	private PreparedStatement ps_saveOrder;
+	private PreparedStatement ps_saveOrderItem;
 
 	public OrderDB() throws DataAccessException {
 		init();
@@ -32,7 +33,7 @@ public class OrderDB implements OrderDBIF {
 		try {
 			con = DBConnection.getInstance().getConnection();
 			ps_saveOrder = con.prepareStatement(SAVE_ORDER_SQL);
-			ps_saveOrder = con.prepareStatement(INSERT_ORDERLINEITEM_SQL);
+			ps_saveOrderItem = con.prepareStatement(INSERT_ORDERLINEITEM_SQL);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -73,13 +74,11 @@ public class OrderDB implements OrderDBIF {
 		List<OrderLineItem> oli = o.getOrderLineItem();
 		//Looping all orderLineItems, and executing queries
 		for(OrderLineItem orderLineItem : oli) {
-			ps_saveOrder = con.prepareStatement(INSERT_ORDERLINEITEM_SQL);
+			ps_saveOrderItem.setInt(1, o.getOrderNo());
+			ps_saveOrderItem.setInt(2, orderLineItem.getProduct().getId());
+			ps_saveOrderItem.setInt(3, orderLineItem.getQuantity());
 			
-			ps_saveOrder.setInt(1, o.getOrderNo());
-			ps_saveOrder.setInt(2, orderLineItem.getProduct().getId());
-			ps_saveOrder.setInt(3, orderLineItem.getQuantity());
-			
-			ps_saveOrder.execute();
+			ps_saveOrderItem.execute();
 		}
 		
 		}
