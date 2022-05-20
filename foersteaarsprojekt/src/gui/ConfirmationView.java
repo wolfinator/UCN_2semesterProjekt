@@ -211,13 +211,18 @@ public class ConfirmationView extends JFrame {
 		try {
 			uiCtrl.setNote(textPaneNote.getText());
 			
-			uiCtrl.endReservation(
-					textField_Navn.getText(), 
-					textField_Mobil.getText(), 
-					textField_Email.getText());
+			String navn = textField_Navn.getText();
+			String mobil = textField_Mobil.getText();
+			String email = textField_Email.getText();
+			
+			int tryParseNumber = Integer.parseInt(mobil);
+			
+			uiCtrl.endReservation(navn, mobil, email);
 
 			this.setVisible(false);
 			nextFrame.setVisible(true);
+		} catch (NumberFormatException e1) {
+			JOptionPane.showMessageDialog(null, "Indtast venligst et gyldigt telefon nummer");
 		} catch (DataAccessException e1) {
 			JOptionPane.showMessageDialog(null, "Fejl ved at gemme reservationen\n" + e1.getMessage());
 		}
@@ -238,5 +243,11 @@ public class ConfirmationView extends JFrame {
 		textField_AG.setText("");
 		textField_Sted.setText("");
 		textField_DT.setText("");
+		
+		textField_Mobil.setText("");
+		textField_Navn.setText("");
+		textField_Email.setText("");
+		
+		textPaneNote.setText("");
 	}
 }

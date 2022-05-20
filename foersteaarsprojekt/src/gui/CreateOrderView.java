@@ -44,12 +44,12 @@ public class CreateOrderView extends JFrame {
 
 	private ProductCtrl productCtrl;
 	private OrderCtrl orderCtrl;
-	
+
 	private JFrame previousFrame;
 	private JFrame nextFrame;
 	private ConfirmationView confirm;
 	private ReservationUI uiCtrl;
-	
+
 	private Product selectedProduct;
 
 	private JPanel contentPane;
@@ -71,7 +71,7 @@ public class CreateOrderView extends JFrame {
 	public CreateOrderView(ReservationUI reservationUI, ConfirmationView confirmationView) {
 		uiCtrl = reservationUI;
 		confirm = confirmationView;
-		
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
@@ -199,11 +199,11 @@ public class CreateOrderView extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(568, 303, 89, 23);
 		contentPane.add(lblNewLabel_1);
-		
+
 		initProducts();
 
 	}
-	
+
 	public void initProducts() {
 		try {
 			List<Product> products = productCtrl.findAll();
@@ -216,7 +216,7 @@ public class CreateOrderView extends JFrame {
 			DefaultTableModel forretModel = (DefaultTableModel) table_forret.getModel();
 			DefaultTableModel hovedretModel = (DefaultTableModel) table_hovedret.getModel();
 			DefaultTableModel drikkevareModel = (DefaultTableModel) table_drikkevare.getModel();
-			
+
 			forretModel.addColumn("Navn");
 			forretModel.addColumn("Pris");
 			hovedretModel.addColumn("Navn");
@@ -249,74 +249,85 @@ public class CreateOrderView extends JFrame {
 		setVisible(false);
 		nextFrame.setVisible(true);
 	}
-	
+
 	private void addProduct(ActionEvent e) {
-		if(selectedProduct == null) {
+		if (selectedProduct == null) {
 			JOptionPane.showMessageDialog(null, "Vælg venligst et produkt.");
-		}else {
+		} else {
 			try {
 				updateOrder(orderCtrl.addProduct(selectedProduct.getName(), 1));
 			} catch (DataAccessException e1) {
 				JOptionPane.showMessageDialog(null, "Fejl ved at opdatere ordre\n" + e1.getMessage());
 			}
 		}
-		
+
 	}
 
 	private void updateOrder(Order order) {
 		DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
-		if(orderModel.getColumnCount() == 0) {
+		if (orderModel.getColumnCount() == 0) {
 			orderModel.addColumn("Navn");
 			orderModel.addColumn("Antal");
 		}
 		orderModel.setRowCount(0);
-		
+
 		for (OrderLineItem oli : order.getOrderLineItem()) {
-			orderModel.addRow(new Object[] {oli.getProduct().getName(), oli.getQuantity()});
+			orderModel.addRow(new Object[] { oli.getProduct().getName(), oli.getQuantity() });
 		}
-		
+
 		uiCtrl.setOrder(order);
 		totalPrice.setText(String.valueOf(order.getTotalPrice()));
 	}
-	
+
 	private void productSelected(ListSelectionEvent e) {
 		Product product = new Product();
 		JTable table = table_forret;
-		
-		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
-		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
-		
-		selectedProduct = product;
+
+		int selectedRow = table.getSelectedRow();
+
+		if (selectedRow >= 0) {
+			product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
+			product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
+			selectedProduct = product;
+		}
 	}
-	
+
 	private void productSelected1(ListSelectionEvent e) {
 		Product product = new Product();
 		JTable table = table_hovedret;
-		
-		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
-		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
-		
-		selectedProduct = product;
+
+		int selectedRow = table.getSelectedRow();
+
+		if (selectedRow >= 0) {
+			product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
+			product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
+			selectedProduct = product;
+		}
 	}
-	
+
 	private void productSelected2(ListSelectionEvent e) {
+
 		Product product = new Product();
 		JTable table = table_drikkevare;
-		
-		product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
-		product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
-		
-		selectedProduct = product;
+
+		int selectedRow = table.getSelectedRow();
+
+		if (selectedRow >= 0) {
+			product.setName((String) table.getValueAt(table.getSelectedRow(), 0));
+			product.setPrice((double) table.getValueAt(table.getSelectedRow(), 1));
+			selectedProduct = product;
+		}
 	}
 
 	public void addTransitions(CalendarTimeView calendarTimeView, ConfirmationView confirmationView) {
 		previousFrame = calendarTimeView;
 		nextFrame = confirmationView;
-		
+
 	}
 
 	public void reset() {
 		DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+		orderCtrl.createOrder();
 		orderModel.setRowCount(0);
 		orderModel.setColumnCount(0);
 		selectedProduct = null;
