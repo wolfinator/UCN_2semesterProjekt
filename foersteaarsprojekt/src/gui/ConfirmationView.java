@@ -216,6 +216,7 @@ public class ConfirmationView extends JFrame {
 			String email = textField_Email.getText();
 			
 			int tryParseNumber = Integer.parseInt(mobil);
+			if(mobil.length() > 8) throw new NumberFormatException(); // TODO make more neat
 			
 			uiCtrl.endReservation(navn, mobil, email);
 
