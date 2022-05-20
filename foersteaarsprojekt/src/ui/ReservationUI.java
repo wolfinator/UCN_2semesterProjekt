@@ -66,16 +66,17 @@ public class ReservationUI {
 
 	public void createReservation() {
 		reservationCtrl.createReservation();
-		
-	}
-
-	public void setStartingTime(LocalTime timeSelected) throws DataAccessException {
-		reservationCtrl.setStartingTime(timeSelected);
-		
+		calendarTimeView.reset();
+		confirmationView.reset();
+		createOrderView.reset();
 	}
 	
 	public void setGuestCountAndDate(int guestCount, LocalDate newDate) {
 		reservationCtrl.setGuestCountAndDate(guestCount, newDate);
+	}
+
+	public void setStartingTime(LocalTime timeSelected) throws DataAccessException {
+		reservationCtrl.setStartingTime(timeSelected);
 		
 	}
 

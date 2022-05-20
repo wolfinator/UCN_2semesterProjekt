@@ -84,7 +84,7 @@ public class CreateOrderView extends JFrame {
 			orderCtrl = new OrderCtrl();
 			orderCtrl.createOrder();
 		} catch (DataAccessException e1) {
-			JOptionPane.showMessageDialog(null, "Fejl ved at lave Ctrler til view\n" + e1.getMessage());
+			JOptionPane.showMessageDialog(null, "Fejl ved at lave Ctrlere til view\n" + e1.getMessage());
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -252,13 +252,12 @@ public class CreateOrderView extends JFrame {
 	
 	private void addProduct(ActionEvent e) {
 		if(selectedProduct == null) {
-			JOptionPane.showMessageDialog(null, "Please select a fucking product");
+			JOptionPane.showMessageDialog(null, "Vælg venligst et produkt.");
 		}else {
 			try {
 				updateOrder(orderCtrl.addProduct(selectedProduct.getName(), 1));
 			} catch (DataAccessException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Fejl ved at opdatere ordre\n" + e1.getMessage());
 			}
 		}
 		
@@ -314,5 +313,15 @@ public class CreateOrderView extends JFrame {
 		previousFrame = calendarTimeView;
 		nextFrame = confirmationView;
 		
+	}
+
+	public void reset() {
+		DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+		orderModel.setRowCount(0);
+		orderModel.setColumnCount(0);
+		selectedProduct = null;
+		table_drikkevare.clearSelection();
+		table_forret.clearSelection();
+		table_hovedret.clearSelection();
 	}
 }

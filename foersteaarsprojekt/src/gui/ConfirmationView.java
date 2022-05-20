@@ -233,4 +233,10 @@ public class ConfirmationView extends JFrame {
 		previousFrame = createOrderView;
 		nextFrame = reservationBekræftet;
 	}
+
+	public void reset() {
+		textField_AG.setText("");
+		textField_Sted.setText("");
+		textField_DT.setText("");
+	}
 }

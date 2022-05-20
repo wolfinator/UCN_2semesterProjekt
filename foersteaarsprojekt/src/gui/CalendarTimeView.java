@@ -42,11 +42,11 @@ public class CalendarTimeView extends JFrame {
 	private ConfirmationView confirm;
 	private ReservationUI uiCtrl;
 
-	public JComboBox comboBox;
+	private JComboBox comboBox;
 
-	public LocalTime timeSelected;
+	private LocalTime timeSelected;
 
-	public JButton btnNext;
+	private JButton btnNext;
 	private CalendarPanel calendarPanel;
 
 	/**
@@ -153,16 +153,22 @@ public class CalendarTimeView extends JFrame {
 		try {
 			uiCtrl.setStartingTime(timeSelected);
 			confirm.textField_DT.setText(calendarPanel.getSelectedDate().toString() + " " + timeSelected.toString());
+			nextFrame.setVisible(true);
 		} catch (DataAccessException e1) {
 			setVisible(true);
 			JOptionPane.showMessageDialog(null, "Fejl ved at sætte tid på reservation\n" + e1.getMessage());
 		}
-		nextFrame.setVisible(true);
 	}
 
 	public void addTransitions(GuestCountView guestCountView, CreateOrderView createOrderView) {
 		previousFrame = guestCountView;
 		nextFrame = createOrderView;
 
+	}
+
+	public void reset() {
+		btnNext.setEnabled(false);
+		comboBox.removeAllItems();
+		
 	}
 }
