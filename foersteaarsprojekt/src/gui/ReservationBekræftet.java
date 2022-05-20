@@ -30,7 +30,6 @@ public class ReservationBekræftet extends JFrame {
 	private JTextField textEmail;
 	private JTextField antalGæster;
 	private JTextField datoTid;
-	private JTextField textSted;
 	
 	private JTextPane textPaneNote;
 	
@@ -71,16 +70,10 @@ public class ReservationBekræftet extends JFrame {
 		panelAdress.setBackground(Color.WHITE);
 		contentPane.add(panelAdress, BorderLayout.CENTER);
 		
-		JLabel lblSted = new JLabel("Sted:");
-		lblSted.setHorizontalAlignment(SwingConstants.LEFT);
-		lblSted.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblSted.setBounds(377, 117, 46, 30);
-		panelAdress.add(lblSted);
-		
 		JLabel lblGuestCount = new JLabel("Antal g\u00E6ster:");
 		lblGuestCount.setHorizontalAlignment(SwingConstants.LEFT);
 		lblGuestCount.setFont(new Font("Dialog", Font.PLAIN, 15));
-		lblGuestCount.setBounds(330, 158, 93, 30);
+		lblGuestCount.setBounds(332, 117, 93, 30);
 		panelAdress.add(lblGuestCount);
 		
 		JLabel lblDateTime = new JLabel("Dato og tid:");
@@ -146,7 +139,7 @@ public class ReservationBekræftet extends JFrame {
 		antalGæster.setEditable(false);
 		antalGæster.setColumns(10);
 		antalGæster.setBorder(new LineBorder(new Color(0, 0, 0)));
-		antalGæster.setBounds(433, 163, 63, 25);
+		antalGæster.setBounds(435, 122, 87, 25);
 		panelAdress.add(antalGæster);
 		
 		datoTid = new JTextField();
@@ -162,14 +155,6 @@ public class ReservationBekræftet extends JFrame {
 		textPaneNote.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPaneNote.setBounds(427, 224, 205, 88);
 		panelAdress.add(textPaneNote);
-		
-		textSted = new JTextField();
-		textSted.setHorizontalAlignment(SwingConstants.CENTER);
-		textSted.setEditable(false);
-		textSted.setColumns(10);
-		textSted.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textSted.setBounds(433, 122, 122, 25);
-		panelAdress.add(textSted);
 		
 		JLabel lblOrdreBekrftet = new JLabel("Ordre Bekr\u00E6ftet");
 		lblOrdreBekrftet.setHorizontalAlignment(SwingConstants.LEFT);
