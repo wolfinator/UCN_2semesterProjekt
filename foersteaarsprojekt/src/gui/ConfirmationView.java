@@ -40,6 +40,8 @@ public class ConfirmationView extends JFrame {
 	public JTextField textField_Sted;
 	public JTextField textField_DT;
 	
+	private JTextPane textPaneNote;
+	
 	private JFrame previousFrame;
 	private JFrame nextFrame;
 	private ReservationUI uiCtrl;
@@ -199,22 +201,21 @@ public class ConfirmationView extends JFrame {
 		textField_DT.setBounds(433, 117, 122, 25);
 		panelAdress.add(textField_DT);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBorder(new LineBorder(new Color(0, 0, 0)));
-		textPane.setBounds(350, 205, 205, 88);
-		panelAdress.add(textPane);
+		textPaneNote = new JTextPane();
+		textPaneNote.setBorder(new LineBorder(new Color(0, 0, 0)));
+		textPaneNote.setBounds(350, 205, 205, 88);
+		panelAdress.add(textPaneNote);
 	}
 	
 	private void bekræftReservation(ActionEvent e) {
 		try {
+			uiCtrl.setNote(textPaneNote.getText());
+			
 			uiCtrl.endReservation(
 					textField_Navn.getText(), 
 					textField_Mobil.getText(), 
 					textField_Email.getText());
-			
-			JOptionPane.showMessageDialog(null, "Reservation bekræftet");
-			//LocationView.calendarTimeView.comboBox.removeAllItems();
-			//LocationView.calendarTimeView.btnNext.setEnabled(false);
+
 			this.setVisible(false);
 			nextFrame.setVisible(true);
 		} catch (DataAccessException e1) {
@@ -228,8 +229,8 @@ public class ConfirmationView extends JFrame {
 		previousFrame.setVisible(true);
 	}
 
-	public void addTransitions(CreateOrderView createOrderView, LocationView locationView) {
+	public void addTransitions(CreateOrderView createOrderView, ReservationBekræftet reservationBekræftet) {
 		previousFrame = createOrderView;
-		nextFrame = locationView;
+		nextFrame = reservationBekræftet;
 	}
 }

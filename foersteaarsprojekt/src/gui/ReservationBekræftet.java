@@ -12,6 +12,11 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import model.Customer;
+import model.Reservation;
+import ui.ReservationUI;
+
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
@@ -26,6 +31,12 @@ public class ReservationBekræftet extends JFrame {
 	private JTextField antalGæster;
 	private JTextField datoTid;
 	private JTextField textSted;
+	
+	private JTextPane textPaneNote;
+	
+	private JFrame previousFrame;
+	private JFrame nextFrame;
+	private ReservationUI uiCtrl;
 
 	/**
 	 * Launch the application.
@@ -45,8 +56,9 @@ public class ReservationBekræftet extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param reservationUI 
 	 */
-	public ReservationBekræftet() {
+	public ReservationBekræftet(ReservationUI reservationUI) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 694, 435);
 		contentPane = new JPanel();
@@ -117,6 +129,7 @@ public class ReservationBekræftet extends JFrame {
 		panelAdress.add(textEmail);
 		
 		JButton btnLuk = new JButton("Luk");
+		btnLuk.addActionListener(this::goNext);
 		btnLuk.setFont(new Font("Dialog", Font.BOLD, 15));
 		btnLuk.setActionCommand("Bekr\u00E6ft");
 		btnLuk.setBounds(285, 317, 93, 40);
@@ -144,9 +157,8 @@ public class ReservationBekræftet extends JFrame {
 		datoTid.setBounds(433, 76, 122, 25);
 		panelAdress.add(datoTid);
 		
-		JTextPane textPaneNote = new JTextPane();
+		textPaneNote = new JTextPane();
 		textPaneNote.setEditable(false);
-		textPaneNote.setEnabled(false);
 		textPaneNote.setBorder(new LineBorder(new Color(0, 0, 0)));
 		textPaneNote.setBounds(427, 224, 205, 88);
 		panelAdress.add(textPaneNote);
@@ -164,5 +176,25 @@ public class ReservationBekræftet extends JFrame {
 		lblOrdreBekrftet.setFont(new Font("Dialog", Font.PLAIN, 20));
 		lblOrdreBekrftet.setBounds(241, 23, 164, 30);
 		panelAdress.add(lblOrdreBekrftet);
+	}
+
+	public void setReservation(Reservation r) {
+		Customer c = r.getCustomer();
+		textMobil.setText(c.getPhoneNo());
+		textNavn.setText(c.getName());
+		textEmail.setText(c.getEmail());
+		antalGæster.setText(String.valueOf(r.getGuestCount()));
+		datoTid.setText(r.getDate().toString());
+		textPaneNote.setText(r.getNote());
+	}
+	
+	private void goNext(ActionEvent e) {
+		setVisible(false);
+		nextFrame.setVisible(true);
+	}
+
+	public void addTransitions(LocationView locationView) {
+		nextFrame = locationView;
+		
 	}
 }

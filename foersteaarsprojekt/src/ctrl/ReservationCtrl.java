@@ -108,6 +108,10 @@ public class ReservationCtrl {
 		currentReservation.setOrder(order);
 	}
 	
+	public void setNote(String note) {
+		currentReservation.setNote(note);
+	}
+	
 	public void addTable(Table t) {
 		currentReservation.addTable(t);
 	}

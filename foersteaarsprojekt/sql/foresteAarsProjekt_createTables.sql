@@ -2,7 +2,7 @@ use Booking;
 go
 drop table if exists TakeAway;
 drop table if exists ReservationTable;
-drop table if exists SalesLine;
+drop table if exists OrderLineItem;
 drop table if exists Product;
 drop table if exists ProductType;
 drop table if exists _Order;

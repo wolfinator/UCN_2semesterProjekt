@@ -17,7 +17,9 @@ import gui.ConfirmationView;
 import gui.CreateOrderView;
 import gui.GuestCountView;
 import gui.LocationView;
+import gui.ReservationBekræftet;
 import model.Order;
+import model.Reservation;
 
 public class ReservationUI {
 
@@ -26,6 +28,7 @@ public class ReservationUI {
 	private CalendarTimeView calendarTimeView;
 	private CreateOrderView createOrderView;
 	private ConfirmationView confirmationView;
+	private ReservationBekræftet reservationBekræftet;
 	
 	private ReservationCtrl reservationCtrl;
 	
@@ -40,13 +43,15 @@ public class ReservationUI {
 		guestCountView = new GuestCountView(this, confirmationView);
 		calendarTimeView = new CalendarTimeView(this, confirmationView);
 		createOrderView = new CreateOrderView(this, confirmationView);
+		reservationBekræftet = new ReservationBekræftet(this);
 		
 		
 		locationView.addTransitions(guestCountView);
 		guestCountView.addTransitions(locationView, calendarTimeView);
 		calendarTimeView.addTransitions(guestCountView, createOrderView);
 		createOrderView.addTransitions(calendarTimeView, confirmationView);
-		confirmationView.addTransitions(createOrderView, locationView);
+		confirmationView.addTransitions(createOrderView, reservationBekræftet);
+		reservationBekræftet.addTransitions(locationView);
 		
 		try {
 			reservationCtrl = new ReservationCtrl();
@@ -75,8 +80,8 @@ public class ReservationUI {
 	}
 
 	public void endReservation(String cusName, String cusPhoneNo, String cusEmail) throws DataAccessException {
-		reservationCtrl.endReservation(cusName, cusPhoneNo, cusEmail);
-		
+		Reservation r = reservationCtrl.endReservation(cusName, cusPhoneNo, cusEmail);
+		reservationBekræftet.setReservation(r);
 	}
 
 	public List<LocalTime> findAvailableTimes() throws DataAccessException {
@@ -86,6 +91,10 @@ public class ReservationUI {
 	public void setOrder(Order order) {
 		reservationCtrl.setOrder(order);
 		
+	}
+	
+	public void setNote(String note) {
+		reservationCtrl.setNote(note);
 	}
 
 	
