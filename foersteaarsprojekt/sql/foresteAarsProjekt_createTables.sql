@@ -1,5 +1,6 @@
-use Booking;
+use [DMA-CSD-S212_10436664];
 go
+
 drop table if exists TakeAway;
 drop table if exists ReservationTable;
 drop table if exists OrderLineItem;
@@ -120,7 +121,3 @@ create table TakeAway(
 	constraint fk_TakeAway_customerId Foreign Key(customerId) references Customer(id), 
 	constraint fk_TakeAway_employeeId Foreign Key(employeeId) references Employee(id)
 );
-go
-
-use Master;
-go

@@ -1,4 +1,4 @@
-﻿use Booking;
+﻿use [DMA-CSD-S212_10436664];
 go
 
 insert into _Table (tableNo, seats) values (1, 2);
@@ -32,6 +32,3 @@ insert into Product (name, price, typeId) values (N'Bánh Hỏi Heo Quay', 89, 2
 insert into Product (name, price, typeId) values (N'Ramlösa uden brus', 20, 3);
 insert into Product (name, price, typeId) values (N'Hjemmelavet lemonade', 39, 3);
 insert into Product (name, price, typeId) values (N'Bia saigon, vietnamesisk øl ', 49, 3);
-
-use Master;
-go
