@@ -18,7 +18,7 @@ public class ReservationCtrl {
 	private OrderCtrl orderCtrl;
 	private TableCtrl tableCtrl;
 	private ReservationDB reservationDB;
-	private Reservation currentReservation;
+	public Reservation currentReservation;
 	
 	private final int TIMESLOT_INTERVAL_MINUTES = 30;
 	private final int TIMESLOT_DURATION_MINUTES = 90;
@@ -90,7 +90,7 @@ public class ReservationCtrl {
 	
 	
 
-	public void setStartingTime(LocalTime time) throws DataAccessException {
+	public void setStartingTime(LocalTime time) {
 		LocalDate date = currentReservation.getDate().toLocalDate();
 		
 		currentReservation.setDate(LocalDateTime.of(date, time));

@@ -69,4 +69,39 @@ public class Order {
 		this.orderNo = orderNo;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((orderLineItems == null) ? 0 : orderLineItems.hashCode());
+		result = prime * result + orderNo;
+		result = prime * result + (status ? 1231 : 1237);
+		result = prime * result + totalPrice;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		if (orderLineItems == null) {
+			if (other.orderLineItems != null)
+				return false;
+		} else if (!orderLineItems.equals(other.orderLineItems))
+			return false;
+		if (orderNo != other.orderNo)
+			return false;
+		if (status != other.status)
+			return false;
+		if (totalPrice != other.totalPrice)
+			return false;
+		return true;
+	}
+
+	
 }
