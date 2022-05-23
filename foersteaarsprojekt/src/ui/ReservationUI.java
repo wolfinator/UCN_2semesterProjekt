@@ -80,9 +80,10 @@ public class ReservationUI {
 		
 	}
 
-	public void endReservation(String cusName, String cusPhoneNo, String cusEmail) throws DataAccessException {
+	public Reservation endReservation(String cusName, String cusPhoneNo, String cusEmail) throws DataAccessException {
 		Reservation r = reservationCtrl.endReservation(cusName, cusPhoneNo, cusEmail);
 		reservationBekræftet.setReservation(r);
+		return r;
 	}
 
 	public List<LocalTime> findAvailableTimes() throws DataAccessException {

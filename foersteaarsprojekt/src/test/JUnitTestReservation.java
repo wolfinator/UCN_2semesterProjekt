@@ -34,19 +34,6 @@ import model.Reservation;
 import model.Table;
 
 class JUnitTestReservation {
-//	private static CustomerCtrl customerCtrl;
-//	private static OrderCtrl orderCtrl;
-//	private static ProductCtrl productCtrl;
-//	private static ReservationCtrl reservationCtrl;
-//	private static TableCtrl tableCtrl;
-//	private static CustomerDB customerDb;
-//	private static OrderDB orderDb;
-//	private static ProductDB productDb;
-//	private static ReservationDB reservationDb;
-//	private static TableDB tableDb;
-//	private static Customer c1, c2, c3;
-//	private static Product p1, p2, p3;
-//	private static Order o1;
 	
 	private static ReservationCtrl reservationCtrl;
 	private static OrderCtrl orderCtrl;
@@ -60,8 +47,7 @@ class JUnitTestReservation {
 			fail("Fejl ved at lave et controller objekt");
 		}
 	}
-
-	// UnitTest for at se om reservation virker.
+	
 	@Test
 	void testCreateReservation() {
 		// Arrange
