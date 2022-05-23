@@ -60,6 +60,7 @@ create table Reservation(
 	customerId int,
 	constraint pk_Reservation_id Primary Key (id),
 	constraint fk_Reservation_customerId Foreign Key (customerId) references Customer(id)
+		on delete cascade
 );
 create table _Table(
 	id int Identity(1,1),
@@ -71,7 +72,8 @@ create table ReservationTable(
 	reservationId int,
 	tableId int,
 	constraint pk_reservationTable Primary Key(reservationId, tableId),
-	constraint fk_reservationId Foreign Key (reservationId) references Reservation(id),
+	constraint fk_reservationId Foreign Key (reservationId) references Reservation(id)
+		on delete cascade,
 	constraint fk_tableId Foreign Key (tableId) references _Table(id)
 );
 
@@ -87,6 +89,7 @@ create table _Order(
 	constraint fk_Order_tableId Foreign Key(tableId) references _Table(id),
 	constraint fk_Order_employeeId Foreign Key(employeeId) references Employee(id),
 	constraint fk_Order_reservationId Foreign Key(reservationId) references Reservation(id)
+		on delete cascade
 );
 
 create table ProductType(
@@ -107,7 +110,8 @@ create table OrderLineItem(
 	productId int,
 	quantity int,
 	constraint pk_orderNoProductId Primary Key (orderNo, productId),
-	constraint fk_SaleLine_orderNo Foreign Key (orderNo) references _Order(orderNo),
+	constraint fk_SaleLine_orderNo Foreign Key (orderNo) references _Order(orderNo)
+		on delete cascade,
 	constraint fk_SaleLine_productId Foreign Key (productId) references Product(id)
 );
 create table TakeAway(
