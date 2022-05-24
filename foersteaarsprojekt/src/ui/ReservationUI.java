@@ -17,7 +17,7 @@ import gui.ConfirmationView;
 import gui.CreateOrderView;
 import gui.GuestCountView;
 import gui.LocationView;
-import gui.ReservationBekræftet;
+import gui.ReservationConfirmed;
 import model.Order;
 import model.Reservation;
 
@@ -28,7 +28,7 @@ public class ReservationUI {
 	private CalendarTimeView calendarTimeView;
 	private CreateOrderView createOrderView;
 	private ConfirmationView confirmationView;
-	private ReservationBekræftet reservationBekræftet;
+	private ReservationConfirmed reservationConfirmed;
 	
 	private ReservationCtrl reservationCtrl;
 	
@@ -43,15 +43,15 @@ public class ReservationUI {
 		guestCountView = new GuestCountView(this, confirmationView);
 		calendarTimeView = new CalendarTimeView(this, confirmationView);
 		createOrderView = new CreateOrderView(this, confirmationView);
-		reservationBekræftet = new ReservationBekræftet(this);
+		reservationConfirmed = new ReservationConfirmed(this);
 		
 		
 		locationView.addTransitions(guestCountView);
 		guestCountView.addTransitions(locationView, calendarTimeView);
 		calendarTimeView.addTransitions(guestCountView, createOrderView);
 		createOrderView.addTransitions(calendarTimeView, confirmationView);
-		confirmationView.addTransitions(createOrderView, reservationBekræftet);
-		reservationBekræftet.addTransitions(locationView);
+		confirmationView.addTransitions(createOrderView, reservationConfirmed);
+		reservationConfirmed.addTransitions(locationView);
 		
 		try {
 			reservationCtrl = new ReservationCtrl();
@@ -82,7 +82,7 @@ public class ReservationUI {
 
 	public Reservation endReservation(String cusName, String cusPhoneNo, String cusEmail) throws DataAccessException {
 		Reservation r = reservationCtrl.endReservation(cusName, cusPhoneNo, cusEmail);
-		reservationBekræftet.setReservation(r);
+		reservationConfirmed.setReservation(r);
 		return r;
 	}
 

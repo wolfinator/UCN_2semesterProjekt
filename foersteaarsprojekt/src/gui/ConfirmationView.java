@@ -235,7 +235,7 @@ public class ConfirmationView extends JFrame {
 		previousFrame.setVisible(true);
 	}
 
-	public void addTransitions(CreateOrderView createOrderView, ReservationBekræftet reservationBekræftet) {
+	public void addTransitions(CreateOrderView createOrderView, ReservationConfirmed reservationBekræftet) {
 		previousFrame = createOrderView;
 		nextFrame = reservationBekræftet;
 	}

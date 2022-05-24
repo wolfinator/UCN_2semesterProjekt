@@ -22,13 +22,13 @@ import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ReservationBekræftet extends JFrame {
+public class ReservationConfirmed extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textMobil;
 	private JTextField textNavn;
 	private JTextField textEmail;
-	private JTextField antalGæster;
+	private JTextField antalGaester;
 	private JTextField datoTid;
 	
 	private JTextPane textPaneNote;
@@ -57,7 +57,7 @@ public class ReservationBekræftet extends JFrame {
 	 * Create the frame.
 	 * @param reservationUI 
 	 */
-	public ReservationBekræftet(ReservationUI reservationUI) {
+	public ReservationConfirmed(ReservationUI reservationUI) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 694, 435);
 		contentPane = new JPanel();
@@ -134,13 +134,13 @@ public class ReservationBekræftet extends JFrame {
 		lblNote.setBounds(371, 217, 46, 30);
 		panelAdress.add(lblNote);
 		
-		antalGæster = new JTextField();
-		antalGæster.setHorizontalAlignment(SwingConstants.CENTER);
-		antalGæster.setEditable(false);
-		antalGæster.setColumns(10);
-		antalGæster.setBorder(new LineBorder(new Color(0, 0, 0)));
-		antalGæster.setBounds(435, 122, 87, 25);
-		panelAdress.add(antalGæster);
+		antalGaester = new JTextField();
+		antalGaester.setHorizontalAlignment(SwingConstants.CENTER);
+		antalGaester.setEditable(false);
+		antalGaester.setColumns(10);
+		antalGaester.setBorder(new LineBorder(new Color(0, 0, 0)));
+		antalGaester.setBounds(435, 122, 87, 25);
+		panelAdress.add(antalGaester);
 		
 		datoTid = new JTextField();
 		datoTid.setHorizontalAlignment(SwingConstants.CENTER);
@@ -168,7 +168,7 @@ public class ReservationBekræftet extends JFrame {
 		textMobil.setText(c.getPhoneNo());
 		textNavn.setText(c.getName());
 		textEmail.setText(c.getEmail());
-		antalGæster.setText(String.valueOf(r.getGuestCount()));
+		antalGaester.setText(String.valueOf(r.getGuestCount()));
 		datoTid.setText(r.getDate().toString());
 		textPaneNote.setText(r.getNote());
 	}
