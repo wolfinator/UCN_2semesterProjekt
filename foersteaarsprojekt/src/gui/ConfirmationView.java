@@ -161,7 +161,7 @@ public class ConfirmationView extends JFrame {
 
 		JButton btnConfirm = new JButton("Bekr\u00E6ft");
 		btnConfirm.setActionCommand("Bekr\u00E6ft");
-		btnConfirm.addActionListener(this::bekræftReservation);
+		btnConfirm.addActionListener(this::confirmReservation);
 		btnConfirm.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		btnConfirm.setBounds(408, 311, 93, 40);
 		panelAdress.add(btnConfirm);
@@ -207,7 +207,7 @@ public class ConfirmationView extends JFrame {
 		panelAdress.add(textPaneNote);
 	}
 	
-	private void bekræftReservation(ActionEvent e) {
+	private void confirmReservation(ActionEvent e) {
 		try {
 			uiCtrl.setNote(textPaneNote.getText());
 			
@@ -235,9 +235,9 @@ public class ConfirmationView extends JFrame {
 		previousFrame.setVisible(true);
 	}
 
-	public void addTransitions(CreateOrderView createOrderView, ReservationConfirmed reservationBekræftet) {
+	public void addTransitions(CreateOrderView createOrderView, ReservationConfirmed reservationConfirmed) {
 		previousFrame = createOrderView;
-		nextFrame = reservationBekræftet;
+		nextFrame = reservationConfirmed;
 	}
 
 	public void reset() {
