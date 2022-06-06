@@ -126,17 +126,21 @@ public class CalendarTimeView extends JFrame {
 	}
 
 	private void displayTimes(List<LocalTime> availableTimeSlots) {
-		comboBox.removeAllItems();
-		comboBox.setModel(new DefaultComboBoxModel(availableTimeSlots.toArray()));
-		timeSelected = (LocalTime) comboBox.getSelectedItem();
-		btnNext.setEnabled(true);
+		if(availableTimeSlots != null) {
+			comboBox.removeAllItems();
+			comboBox.setModel(new DefaultComboBoxModel(availableTimeSlots.toArray()));
+			timeSelected = (LocalTime) comboBox.getSelectedItem();
+			btnNext.setEnabled(true);
+		}	
 	}
 
 	private void dateSelected(CalendarSelectionEvent e) {
 		int guestCount = ((GuestCountView) previousFrame).guestCount;
-		uiCtrl.setGuestCountAndDate(guestCount, e.getNewDate());
+		List<LocalTime> availableTimes = null;
+		
 		try {
-			displayTimes(uiCtrl.findAvailableTimes());
+			availableTimes = uiCtrl.setGuestCountAndDate(guestCount, e.getNewDate());
+			displayTimes(availableTimes);
 		} catch (DataAccessException e1) {
 			JOptionPane.showMessageDialog(null,
 					"Fejl ved at sætte dato og antal gæster på reservation\n" + e1.getMessage());

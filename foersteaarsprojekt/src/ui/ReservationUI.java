@@ -18,6 +18,8 @@ import gui.CreateOrderView;
 import gui.GuestCountView;
 import gui.LocationView;
 import gui.ReservationConfirmed;
+import gui.ReservationList;
+import gui.ReservationListTable;
 import model.Order;
 import model.Reservation;
 
@@ -31,6 +33,7 @@ public class ReservationUI {
 	private ReservationConfirmed reservationConfirmed;
 	
 	private ReservationCtrl reservationCtrl;
+	private ReservationList reservationList;
 	
 	public static void main(String[] args) {
 		ReservationUI ui = new ReservationUI();
@@ -61,7 +64,7 @@ public class ReservationUI {
 		}
 		
 		locationView.setVisible(true);
-		
+		ReservationListTable.start();
 	}
 
 	public void createReservation() {
@@ -71,8 +74,8 @@ public class ReservationUI {
 		createOrderView.reset();
 	}
 	
-	public void setGuestCountAndDate(int guestCount, LocalDate newDate) {
-		reservationCtrl.setGuestCountAndDate(guestCount, newDate);
+	public List<LocalTime> setGuestCountAndDate(int guestCount, LocalDate newDate) throws DataAccessException {
+		return reservationCtrl.setGuestCountAndDate(guestCount, newDate);
 	}
 
 	public void setStartingTime(LocalTime timeSelected) throws DataAccessException {
@@ -84,10 +87,6 @@ public class ReservationUI {
 		Reservation r = reservationCtrl.endReservation(cusName, cusPhoneNo, cusEmail);
 		reservationConfirmed.setReservation(r);
 		return r;
-	}
-
-	public List<LocalTime> findAvailableTimes() throws DataAccessException {
-		return reservationCtrl.findAvailableTimes();
 	}
 
 	public void setOrder(Order order) {

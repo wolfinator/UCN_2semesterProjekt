@@ -91,13 +91,18 @@ class JUnitTestReservation {
 		List<LocalTime> expected = new ArrayList<>();
 		int increment = 30;
 		LocalTime startTime = LocalTime.of(15, 0);
-		while(startTime.isBefore(LocalTime.of(19, 30))) {
+		while(startTime.isBefore(LocalTime.of(19, 31))) {
 			expected.add(startTime);
 			startTime = startTime.plusMinutes(increment);
 		}
 		
 		//Act
-		List<LocalTime> timeReturned = reservationCtrl.setGuestCountAndDate(5, testDate);
+		List<LocalTime> timeReturned = null;
+		try {
+			timeReturned = reservationCtrl.setGuestCountAndDate(5, testDate);
+		} catch (DataAccessException e) {
+			fail(e.getMessage());
+		}
 		
 		//Assert
 		for (LocalTime localTime : timeReturned) {
@@ -111,7 +116,11 @@ class JUnitTestReservation {
 		reservationCtrl.createReservation();
 		LocalDate testDate = LocalDate.of(2000, 5, 20);
 		LocalTime testTime = LocalTime.of(17, 0);
-		reservationCtrl.setGuestCountAndDate(9, testDate);
+		try {
+			reservationCtrl.setGuestCountAndDate(9, testDate);
+		} catch (DataAccessException e) {
+			fail(e.getMessage());
+		}
 		
 		//Act
 		reservationCtrl.setStartingTime(testTime);
@@ -149,7 +158,11 @@ class JUnitTestReservation {
 		reservationCtrl.createReservation();
 		LocalDate testDate = LocalDate.of(2000, 5, 5);
 		LocalTime testTime = LocalTime.of(18, 0);
-		reservationCtrl.setGuestCountAndDate(3, testDate);
+		try {
+			reservationCtrl.setGuestCountAndDate(3, testDate);
+		} catch (DataAccessException e1) {
+			fail(e1.getMessage());
+		}
 		reservationCtrl.setStartingTime(testTime);
 		String testName = "Kaywan Wu";
 		String testPhoneNo = "12345678";

@@ -29,9 +29,11 @@ public class ReservationDB implements ReservationDBIF {
 			"and dateTimeslot < cast(? as datetime);";
 	private final String SAVE_SQL = "insert into Reservation(guestCount, dateTimeslot, note, customerId) "
 			+ "values(?, ?, ?, ?);";
+	private final String FIND_ALL_SQL = "select id, guestCount, dateTimeslot, note, customerId from Reservation;";
 
 	private PreparedStatement ps_findByDate;
 	private PreparedStatement ps_save;
+	private PreparedStatement ps_findAll;
 
 	private OrderDBIF orderDB;
 	private CustomerDBIF customerDB;
@@ -51,6 +53,7 @@ public class ReservationDB implements ReservationDBIF {
 			con = dbc.getConnection();
 			ps_findByDate = con.prepareStatement(FIND_BY_DATE_SQL);
 			ps_save = con.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS);
+			ps_findAll = con.prepareStatement(FIND_ALL_SQL);
 		} catch (DataAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -78,30 +81,35 @@ public class ReservationDB implements ReservationDBIF {
 		
 		return res;
 	}
+	
+	@Override
+	public List<Reservation> findAll() throws DataAccessException {
+		List<Reservation> res = null;
+		try {
+			ResultSet rs = ps_findAll.executeQuery();
+			res = buildObjects(rs);
+		} catch (SQLException e) {
+			throw new DataAccessException("Error in finding all reservations", e);
+		}
+		return res;
+	}
 
 	@Override
 	public boolean saveReservation(Reservation reservation) throws DataAccessException {
 		boolean res = false;
 		dbc.startTransaction();
-		// Gemme Customer
+		
 		try {
+			// Gemme Customer
 			int customerId = customerDB.saveCustomer(reservation.getCustomer());
 			reservation.getCustomer().setId(customerId);
-		} catch (DataAccessException e) {
-			dbc.rollbackTransaction();
-			throw new DataAccessException("Error saving Customer", e);
-		}
-		
-		// Gemme Reservation
-
-		try {
+			
+			// Gemme Reservation
 			ps_save.setInt(1, reservation.getGuestCount());
 			ps_save.setObject(2, java.sql.Timestamp.valueOf(reservation.getDate()));
 			ps_save.setString(3, reservation.getNote());
 			ps_save.setInt(4, reservation.getCustomer().getId());
 			res = ps_save.executeUpdate() > 0; //TODO idk about this solution
-			
-			
 			
 			ResultSet generatedKeys = ps_save.getGeneratedKeys();
 			if(generatedKeys.next()) {
@@ -110,29 +118,20 @@ public class ReservationDB implements ReservationDBIF {
 				// Maybe throw exception
 			}
 			
-		} catch (SQLException e) {
-			dbc.rollbackTransaction();
-			throw new DataAccessException("Error saving Reservation", e);
-		}
-		
-		
-		// Gemme tables i ReservationTable join tabellen
-		try {
+			// Gemme tables i ReservationTable join tabellen
 			for(Table table : reservation.getTables()) {
 				tableDB.saveTableToReservation(table, reservation);
 			}
-		} catch (DataAccessException e) {
-			dbc.rollbackTransaction();
-			throw new DataAccessException("Error in saving tables to reservation", e);
-		}
-		
-		// Gemme Order	
-		try {
+			
+			// Gemme Order	
 			Order order = reservation.getOrder();
 			orderDB.saveOrder(order, reservation);
+		} catch (SQLException e) {
+			dbc.rollbackTransaction();
+			throw new DataAccessException("Error saving reservation", e);
 		} catch (DataAccessException e) {
 			dbc.rollbackTransaction();
-			throw new DataAccessException("Error saving Order", e);
+			throw e;
 		}
 		dbc.commitTransaction();
 		return res;
@@ -164,6 +163,7 @@ public class ReservationDB implements ReservationDBIF {
 							rs.getDate("dateTimeslot").toLocalDate(), 
 							rs.getTime("dateTimeslot").toLocalTime());
 			res.setDate(ldt);
+			res.setNote(rs.getString("note"));
 			Customer customer = customerDB.findById(rs.getInt("customerId"));
 			res.setCustomer(customer);
 			List<Table> tables = tableDB.getTables(res.getId());
@@ -177,5 +177,7 @@ public class ReservationDB implements ReservationDBIF {
 		
 		return res;
 	}
+
+	
 
 }
