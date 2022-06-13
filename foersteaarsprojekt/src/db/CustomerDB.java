@@ -11,11 +11,11 @@ import model.Customer;
 
 public class CustomerDB implements CustomerDBIF {
 	private DBConnection dbc;
-	
+
 	private static final String FIND_BY_ID_SQL = "select firstname, lastname, phoneNo, email,"
-			+ " addressId, id from Customer "+ "where id = ?;";
+			+ " addressId, id from Customer " + "where id = ?;";
 	private static final String SAVE_SQL = "insert into Customer (firstname, lastname, phoneNo, email) values (?,?,?,?)";
-	
+
 	private PreparedStatement ps_findById;
 	private PreparedStatement ps_saveId;
 
@@ -30,7 +30,7 @@ public class CustomerDB implements CustomerDBIF {
 			ps_findById = con.prepareStatement(FIND_BY_ID_SQL);
 			ps_saveId = con.prepareStatement(SAVE_SQL, Statement.RETURN_GENERATED_KEYS);
 		} catch (SQLException e) {
-			e.printStackTrace(); // TODO not Finished
+			throw new DataAccessException("Error initializing customerDB", e);
 		}
 
 	}
@@ -44,21 +44,21 @@ public class CustomerDB implements CustomerDBIF {
 			rs.next();
 			res = buildObject(rs);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DataAccessException("Error finding customer with id: " + id, e);
 		}
 		return res;
 	}
 
 	private Customer buildObject(ResultSet rs) throws DataAccessException {
-	Customer customer = new Customer();
-	try {
-		customer.setName(rs.getString(1) + " " + (rs.getString(2)));
-		customer.setPhoneNo(rs.getString(3));
-		customer.setEmail(rs.getString(4));
-		
-	}catch(SQLException e) {
-		e.printStackTrace();
-	}
+		Customer customer = new Customer();
+		try {
+			customer.setName(rs.getString(1) + " " + (rs.getString(2)));
+			customer.setPhoneNo(rs.getString(3));
+			customer.setEmail(rs.getString(4));
+
+		} catch (SQLException e) {
+			throw new DataAccessException("Error building customer object", e);
+		}
 		return customer;
 	}
 
@@ -72,18 +72,16 @@ public class CustomerDB implements CustomerDBIF {
 			ps_saveId.setString(3, customer.getPhoneNo());
 			ps_saveId.setString(4, customer.getEmail());
 			ps_saveId.executeUpdate();
-			
-			ResultSet generatedKeys = ps_saveId.getGeneratedKeys();
-			if(generatedKeys.next()) customerId = generatedKeys.getInt(1);
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 
-			e.printStackTrace();
-		}	
-		
+			ResultSet generatedKeys = ps_saveId.getGeneratedKeys();
+			if (generatedKeys.next())
+				customerId = generatedKeys.getInt(1);
+
+		} catch (SQLException e) {
+			throw new DataAccessException("Error saving customer: " + customer.getName(), e);
+		}
+
 		return customerId;
 	}
 
-}
-;
+};
